@@ -11,10 +11,14 @@ possible ideas:
 1/5/15
 start work on finals week simulator
 
-multiple slots in the day for choices (mon-fri)
-  ex: during study hall, choose to sleep/talk/study
+multiple slots in the day for choices (mon-fri) --> ex: during study hall, choose to sleep/talk/study
+
 make abstract student class then instances for each grade level
-  --beginning stress level increases as grade level increases
-  --efficiency of study?
-  --difficulty of finals/classes increases
--can choose to cheat on finals with chance of getting caught based on sleep, preparedness, etc
+
+  beginning stress level increases as grade level increases
+
+  efficiency of study increases?
+
+  difficulty of finals/classes increases
+
+can choose to cheat on finals with chance of getting caught based on sleep, preparedness, etc
