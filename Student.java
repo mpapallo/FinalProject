@@ -51,5 +51,4 @@ public class Student{
 	this.setEnergy(this.getEnergy() + hrs * 10);
     }
 
-
 }
