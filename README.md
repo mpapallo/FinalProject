@@ -11,7 +11,7 @@ possible ideas:
 1/5/15
 start work on finals week simulator
 
--multiple slots in the day for choices (mon-fri)<\n>
+-multiple slots in the day for choices (mon-fri)<newline>
   -- ex: during study hall, choose to sleep/talk/study
 -make abstract student class then instances for each grade level
   --beginning stress level increases as grade level increases
