@@ -11,6 +11,8 @@ possible ideas:
 1/5/15
 start work on finals week simulator
 
+features discussed:
+
 multiple slots in the day for choices (mon-fri) --> ex: during study hall, choose to sleep/talk/study
 
 make abstract student class then instances for each grade level
@@ -22,3 +24,6 @@ make abstract student class then instances for each grade level
   difficulty of finals/classes increases
 
 can choose to cheat on finals with chance of getting caught based on sleep, preparedness, etc
+
+created Student class and subclasses
+
