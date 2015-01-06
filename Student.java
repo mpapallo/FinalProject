@@ -34,16 +34,16 @@ public class Student{
     public int getStress(){
 	return stress;
     }
-    public int setKnow(int k){
+    public void setKnow(int k){
 	knowledge = k;
     }
-    public void getKnow(){
+    public int getKnow(){
 	return knowledge;
     }
-    public int setSocial(int c){
+    public void setSocial(int c){
 	social = c;
     }
-    public void getSocial(){
+    public int getSocial(){
 	return social;
     }
 
