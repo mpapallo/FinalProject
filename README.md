@@ -17,11 +17,11 @@ features discussed:
   
   make abstract student class then instances for each grade level
   
-    beginning stress level increases as grade level increases
+  beginning stress level increases as grade level increases
   
-    efficiency of study increases?
+  efficiency of study increases?
   
-    difficulty of finals/classes increases
+  difficulty of finals/classes increases
   
   can choose to cheat on finals with chance of getting caught based on sleep, preparedness, etc
 
