@@ -50,5 +50,11 @@ public class Student{
     public void sleep(int hrs){
 	this.setEnergy(this.getEnergy() + hrs * 10);
     }
+    public void study(int hrs){
+	
+    }
+    public void socialize(int hrs){
+	
+    }
 
 }
