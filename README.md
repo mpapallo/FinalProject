@@ -4,11 +4,13 @@ FinalProject
 Michaela Papallo &amp; Emily Redler, period 6 APCS
 
 12/22/14
+
 possible ideas:
 -solar system creator
 -finals week simulator
 
 1/5/15
+
 start work on finals week simulator
 
 features discussed:
@@ -28,9 +30,13 @@ features discussed:
 created Student class and subclasses
 
 1/6/15
+
 github problems with forked repository
 
 work on parent and subclasses
+
+1/7/15
+mapping out our plan on paper
 
 
 

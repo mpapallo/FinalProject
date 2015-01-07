@@ -1,11 +1,11 @@
-public class Driver {
-
+public class Driver{
+    
     public static void main(String[]args){
-	Freshman f = new Freshman("fiona");
-	Student j = new Junior("joey");
+        GUI f = new GUI();
+	f.setVisible(true);
 
-	System.out.println(f.getName());
-	System.out.println(j.getName());
+	Freshman f = new Freshman("Fiona");
+	Student j = new Junior("Joey");
     }
 
 }

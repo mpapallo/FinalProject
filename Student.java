@@ -1,19 +1,19 @@
 public class Student{
     private String name;
-    private int energy, stress, knowledge, social;
+    private int energy, stress, knowledge;
+    private int grade;
     
-    public Student(String n, int e, int s, int k, int c){
+    public Student(String n, int e, int s, int k){
 	setName(n);
 	setEnergy(e);
 	setStress(s);
 	setKnow(k);
-	setSocial(c);
     }
     public Student(String n){
-	this(n, 80, 50, 30, 50);
+	this(n, 80, 50, 30);
     }
     public Student(){
-	this("Student", 80, 50, 30, 50);
+	this("Student", 80, 50, 30);
     }
     
     public void setName(String n){
@@ -34,17 +34,11 @@ public class Student{
     public int getStress(){
 	return stress;
     }
-    public int setKnow(int k){
+    public void setKnow(int k){
 	knowledge = k;
     }
-    public void getKnow(){
+    public int getKnow(){
 	return knowledge;
-    }
-    public int setSocial(int c){
-	social = c;
-    }
-    public void getSocial(){
-	return social;
     }
 
     public void sleep(int hrs){
