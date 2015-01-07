@@ -36,7 +36,7 @@ github problems with forked repository
 work on parent and subclasses
 
 1/7/15
-mapping out our plan on paper
+mapping out our plan on paper, started GUI creation, added to methods
 
 
 

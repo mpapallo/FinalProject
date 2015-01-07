@@ -44,11 +44,16 @@ public class Student{
     public void sleep(int hrs){
 	this.setEnergy(this.getEnergy() + hrs * 10);
     }
+
     public void study(int hrs){
-	
+	setKnow(getKnow() + hrs*5);
+	setStress(getStress() + hrs*3);
+	setEnergy(getEnergy() - hrs*5);
     }
+
     public void socialize(int hrs){
-	
+	setStress(getStress() - hrs*5);
+	setEnergy(getEnergy() - hrs*4);
     }
 
 }
