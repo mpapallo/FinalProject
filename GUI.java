@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class GUI extends JFrame{
-    //later add: implements ActionListener//
+public class GUI extends JFrame implements ActionListener{
     
     private Container window;
     private JPanel pane1, pane2, pane3, pane4;
@@ -26,10 +25,9 @@ public class GUI extends JFrame{
 	window.add(pane3);
 	window.add(pane4);
     }
-    
-    public static void main(String[]args){
-        GUI f = new GUI();
-	f.setVisible(true);
+
+    public void actionPerformed(ActionEvent e){
+	String action = e.getActionCommand();
     }
 
 }
