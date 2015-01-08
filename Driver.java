@@ -23,11 +23,11 @@ public class Driver{
     public static Student playerChooseDifficulty(String name){
 	Student player;
 	Scanner in = new Scanner(System.in);
-	System.out.println("Nice to meet you! Now, what grade are you in?");
+	System.out.println("\nNice to meet you, " + name + "! Now, what grade are you in?");
 	boolean done;
 	do{
 	    done = true;
-	    System.out.println("A - Freshman (Easy Street)\nB - Sophomore\nC - Junior\nD - Senior (Hell Week)");
+	    System.out.println("\nA - Freshman (Easy Street)\nB - Sophomore\nC - Junior\nD - Senior (Hell Week)");
 	    String input = in.nextLine();
 	    if (input.toLowerCase().equals("a")){
 		player = new Freshman();;
