@@ -2,6 +2,7 @@ FinalProject
 ============
 
 Michaela Papallo &amp; Emily Redler, period 6 APCS
+============
 
 12/22/14
 
@@ -36,7 +37,10 @@ github problems with forked repository
 work on parent and subclasses
 
 1/7/15
-mapping out our plan on paper, started GUI creation, added to methods
+
+mapping out our plan on paper
+
+started GUI creation and Driver, initializing player
 
 
 
