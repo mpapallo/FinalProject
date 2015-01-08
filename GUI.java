@@ -7,7 +7,6 @@ public class GUI extends JFrame implements ActionListener{
     private Container window;
     private JSplitPane pane;
     private JPanel stats, interact;
-    private JPanel pane1, pane2, pane3, pane4;
     private JLabel stress, knowledge, energy, story;
 
     public GUI(){
@@ -20,10 +19,8 @@ public class GUI extends JFrame implements ActionListener{
 	window.setLayout(new FlowLayout());
 
 	stats = new JPanel(new BorderLayout());
-	stats.setSize(400, 400);
 	stats.setBorder(BorderFactory.createRaisedBevelBorder());
 	interact = new JPanel(new BorderLayout());
-	interact.setSize(400, 400);
 	interact.setBorder(BorderFactory.createRaisedBevelBorder());
 	Dimension minSize = new Dimension(100, 100);
 	stats.setMinimumSize(minSize);
@@ -36,7 +33,6 @@ public class GUI extends JFrame implements ActionListener{
 	pane.setResizeWeight(0.5);
 	
 	story = new JLabel("It's Finals Week!");
-	story.setBorder(BorderFactory.createLineBorder(Color.black));
 	interact.add(story, BorderLayout.CENTER);
 
 	stress = new JLabel();
