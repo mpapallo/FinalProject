@@ -11,25 +11,30 @@ public class GUI extends JFrame implements ActionListener{
 
     public GUI(){
 	this.setTitle("Stuyvesant Finals Week Simulator");
-	this.setSize(900, 900);
+	this.setSize(600, 600);
 	this.setLocation(100, 100);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 	window = this.getContentPane();
-	window.setLayout(new FlowLayout());
-
-	stats = new JPanel(new BorderLayout());
+	window.setLayout(new BorderLayout());
+	
+	stats = new JPanel();
+	BoxLayout b = new BoxLayout(stats, BoxLayout.Y_AXIS);
+	stats.setLayout(b);
 	stats.setBorder(BorderFactory.createRaisedBevelBorder());
+
 	interact = new JPanel(new BorderLayout());
 	interact.setBorder(BorderFactory.createRaisedBevelBorder());
-	Dimension minSize = new Dimension(100, 100);
+
+	Dimension minSize = new Dimension(50,50);
 	stats.setMinimumSize(minSize);
 	interact.setMinimumSize(minSize);
+	Dimension prefSize = new Dimension(100,100);
+	stats.setPreferredSize(prefSize);
+	interact.setPreferredSize(prefSize);
 
 	pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, stats, interact);
 	pane.setOneTouchExpandable(true);
-	pane.setDividerLocation(100);
-	pane.setSize(800, 800);
+	pane.setSize(500,500);
 	pane.setResizeWeight(0.5);
 	
 	story = new JLabel("It's Finals Week!");
@@ -48,10 +53,10 @@ public class GUI extends JFrame implements ActionListener{
 	stress.setText("stress: " + player.getStress());
 	knowledge.setText("knowledge: " + player.getKnow());
 	energy.setText("energy: " + player.getEnergy());
-	stats.add(stress, BorderLayout.PAGE_START);
-	stats.add(knowledge, BorderLayout.CENTER);
-	stats.add(energy, BorderLayout.PAGE_END);
-	window.add(pane);
+	stats.add(stress);
+	stats.add(knowledge);
+	stats.add(energy);
+	window.add(pane, BorderLayout.CENTER);
     }
 
     public void updateStress(int s){
