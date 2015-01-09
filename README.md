@@ -42,5 +42,11 @@ mapping out our plan on paper
 
 started GUI creation and Driver, initializing player
 
+1/8/15
+
+added random events 
+
+work on GUI display
+
 
 
