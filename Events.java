@@ -67,7 +67,12 @@ public class Events {
     }
 
     public void popQuiz(){
-	System.out.println("Your teacher springs a pop quiz on you. Good luck!");
+	int score = 100 - getStress() + getEnergy() + getKnowledge();
+	score /= 3;
+	System.out.println("Your teacher springs a pop quiz on you. Based on your knowledge, stress, and energy, you score a " + score + ".");
+	setGrade(getGrade() + score / 10);
+	setStress(getStress + 5);
+	setEnergy(getEnergy - 5);
     }
 
     public void eatenHomework(){
@@ -79,4 +84,13 @@ public class Events {
 	System.out.println("There is a huge subway delay and you end up missing your first class.");
 	setGrade(getGrade() - 7);
     }
+
+    public void cheat(int chance){
+	if (r.nextInt(100) < chance){
+	    setGrade(getGrade() + (100 - getKnow())/2);
+	} else {
+	    setGrade(0);
+	}
+    }
+
 }

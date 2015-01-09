@@ -56,4 +56,22 @@ public class Student{
 	setEnergy(getEnergy() - hrs*4);
     }
 
+    // check if attributes are between 0 and 100
+    public void check(){
+	if (getKnow() > 100){
+	    setKnow(100);
+	} else if (getKnow() < 0) {
+	    setKnow(0);
+	} else if (getStress() > 100){
+	    setStress(100);
+	} else if (getStress() < 0) {
+	    setStress(0);
+	} else if (getEnergy() > 100){
+	    setKnow(100);
+	} else if (getEnergy() < 0) {
+	    setKnow(0);
+	}
+
+    }
+
 }
