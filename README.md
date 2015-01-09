@@ -4,6 +4,12 @@ FinalProject
 Michaela Papallo &amp; Emily Redler, period 6 APCS
 ============
 
+Project Description
+============
+Our project is a finals week simulator. Choose your age (difficulty level), freshman-senior. After that you will be taken through a week (Monday-Friday) in the life of a Stuyvesant student during finals week. You can choose whether you want to study or sleep, cut class or pass notes, and more. Random events will occur to undermine (or help) you--some may ask you to make more decisions. Energy, knowledge, and stress will be affected by your decisions and are taken into account for your test grade and final grade. At the end of the week, you take your finals. During the test, you can choose to cheat (with a chance of being caught), sleep, take the test normally, or skip it all together. At the end of the week, you will be given a final grade based on your choices. 
+
+Daily Logs
+============
 12/22/14
 
 possible ideas:
