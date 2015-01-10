@@ -41,6 +41,10 @@ public class Student{
 	return knowledge;
     }
 
+    public String getLevel(){
+	return "Student";
+    }
+
     public void sleep(int hrs){
 	this.setEnergy(this.getEnergy() + hrs * 10);
     }
@@ -62,16 +66,16 @@ public class Student{
 	    setKnow(100);
 	} else if (getKnow() < 0) {
 	    setKnow(0);
-	} else if (getStress() > 100){
+	}
+	if (getStress() > 100){
 	    setStress(100);
 	} else if (getStress() < 0) {
 	    setStress(0);
-	} else if (getEnergy() > 100){
-	    setKnow(100);
-	} else if (getEnergy() < 0) {
-	    setKnow(0);
 	}
-
+	if (getEnergy() > 100){
+	    setEnergy(100);
+	} else if (getEnergy() < 0) {
+	    setEnergy(0);
+	}
     }
-
 }
