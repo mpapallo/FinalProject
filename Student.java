@@ -1,4 +1,4 @@
-public class Student{
+abstract class Student{
     private String name;
     private int energy, stress, knowledge;
     private int grade;
@@ -41,9 +41,10 @@ public class Student{
 	return knowledge;
     }
 
-    public String getLevel(){
-	return "Student";
+    public String toString(){
+	return this.getName();
     }
+    abstract String getLevel();
 
     public void sleep(int hrs){
 	this.setEnergy(this.getEnergy() + hrs * 10);

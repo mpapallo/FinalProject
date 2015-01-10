@@ -5,4 +5,8 @@ public class Freshman extends Student {
     public Freshman(){
 	super("Freshman", 85, 50, 30);
     }
+
+    public String getLevel(){
+	return "Freshman";
+    }
 }

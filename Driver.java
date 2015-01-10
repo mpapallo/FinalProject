@@ -5,5 +5,4 @@ public class Driver{
 	GUI G = new GUI();
 	G.setVisible(true);
     }
-
 }
