@@ -158,4 +158,39 @@ abstract class Student{
 	}
     }
 
+    public String classTime(){
+	int chance = getStress() + getEnergy() + getKnowledge();
+	chance /= 3;
+	if (r.nextInt(100) < chance){
+	    int e = r.nextInt(2);
+	    switch (e) {
+	    case 0: return popQuiz();
+		break;
+	    case 1: return fireDrill();
+		break;
+	    case 2: return brokenEscalator();
+		break;
+	    }
+	} else {
+	    time += 2;
+	    return "Do you want to sleep, pass notes, or pay attention?";
+	}
+    }
+
+    public String classTimeResponse(String response){
+	if (response == "sleep"){
+	    setGrade(getGrade() - 15);
+	    setEnergy(getEnergy() + 20);
+	    setStress(getStress() - 5);
+	} else if (response == "pass notes"){
+	    setGrade(getGrade() - 10);
+	    setStress(getStress() - 10);
+	    setEnergy(getEnergy() - 5);
+	} else {
+	    setEnergy(getEnergy() - 10);
+	    setKnow(getKnow() + 15);
+	    setStress(getStress() + 5);
+	}
+    }
+
 }
