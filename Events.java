@@ -1,88 +1,74 @@
 import java.util.*;
 
 public class Events { 
-    public int time;
-    public String 
+    public int time = 0;
+
+    public void checkTime(){
+	if (time > 24){
+	    time = 0;
+	}
+    }
    
-    public void randomEvent(){
-	int chance = 100 - getEnergy() + getStress();       
-	chance /= 2;
-
-	if (r.nextInt(100) <= chance){
-	    int event = r.nextInt(8);
-	    switch (event){
-	    case 0: 
-	
-		break;
-	    case 1:
-	
-		break;
-	    case 2: 
-
-		break;
-	    case 3: 
-		
-		break;
-	    case 4: 
-
-	    }
-	}
-    }
-
-    public void sickDay(String ans){
-	System.out.println("You wake up feeling terrible. Do you want to take a sick day or brave it out?");
+    public static void sickDay(String ans){
 	if (ans == "stay home"){
-	    
+	    time+=24;
+	    setGrade(getGrade() - 20);
+	    setEnergy(100);
+	    setStress(getStress() - 10);
 	}
     }
 
-    public void helpAFriend(String ans){
-	System.out.println("A friend asks you to help them with their act for the talent show after school, but it will take up two hours of your time. Do you want to help them?");
+    public static void helpAFriend(String ans){
 	if (ans == "yes"){
 	    setStress(getStress() - 20);
 	    setEnergy(getEnergy() - 10);
+	    time += 2;
 	}
     }
 
-    public void coffeeSpill(){
-	System.out.println("Coffee spills on your notes. Lose 20 knowledge.");
-	setKnow(getKnow() - 20);
+    public static String coffeeSpill(){
+	setKnow(getKnow() - 20);	
+	return "Coffee spills on your notes. Lose 20 knowledge.";
     }
 
-    public void fireDrill(){
-	System.out.println("There is a fire drill during class which ends up taking the entire period. I guess you're not going to that class today!");
+    public static String fireDrill(){
 	setStress(getStress() - 5);
 	setEnergy(getEnergy() - 5);
+	return "There is a fire drill during class which ends up taking the entire period. I guess you're not going to that class today!";
+	time += 2;
 	
     }
 
     public void brokenEscalator(String ans){
-	System.out.println("The escalator is broken...again. You can climb up the stairs and lose 15 energy or you can just cut class. Which will you choose?");
 	if (ans == "climb up the stairs"){
 	    setEnergy(getEnergy - 15);
 	} else {
 	    setGrade(getGrade() - 15);
 	    setStress(getStress() - 10);
+	    time += 2;
 	}
     }
 
-    public void popQuiz(){
+    public static String popQuiz(){
 	int score = 100 - getStress() + getEnergy() + getKnowledge();
 	score /= 3;
-	System.out.println("Your teacher springs a pop quiz on you. Based on your knowledge, stress, and energy, you score a " + score + ".");
 	setGrade(getGrade() + score / 10);
 	setStress(getStress + 5);
-	setEnergy(getEnergy - 5);
+	setEnergy(getEnergy - 5);	
+	String ans = "Your teacher springs a pop quiz on you. Based on your knowledge, stress, and energy, you score a " + score + ".";
+	time += 2;
+	return ans;
     }
 
-    public void eatenHomework(){
-	System.out.println("Your piranha eats your homework. Not again!");
+    public static String eatenHomework(){
 	setGrade(getGrade() - 5);
+	return "Your piranha eats your homework. Not again!";
     }
 
-    public void subwayDelay(){
-	System.out.println("There is a huge subway delay and you end up missing your first class.");
+    public static String subwayDelay(){
 	setGrade(getGrade() - 7);
+	return "There is a huge subway delay and you end up missing your first class.";
+	time += 2;
     }
 
     public void cheat(int chance){
