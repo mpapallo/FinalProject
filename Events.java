@@ -1,11 +1,11 @@
 import java.util.*;
 
 public class Events { 
-    public int time = 0;
 
     public void checkTime(){
 	if (time > 24){
 	    time = 0;
+	    
 	}
     }
    
