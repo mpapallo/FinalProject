@@ -9,6 +9,7 @@ public class GUI extends JFrame implements ActionListener{
     private JPanel stats, interact;
     private JLabel stress, knowledge, energy, time, story;
     private JTextField llamo;
+    private JButton b;
 
     public GUI(){
 	player = new Freshman();
@@ -82,10 +83,10 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(intro);
 	interact.add(llamo);
 	addDifficultyOptions();
-	JButton begin = new JButton("Begin");
-	begin.setActionCommand("begin");
+	JButton next = new JButton("Next");
+	begin.setActionCommand("next");
 	begin.addActionListener(this);
-	interact.add(begin);
+	interact.add(next);
     }
 
     public void addDifficultyOptions(){
@@ -125,13 +126,23 @@ public class GUI extends JFrame implements ActionListener{
 	interact.removeAll();
 	story = new JLabel("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
 	interact.add(story);
+	b = new JButton("Begin");
+	b.setActionCommand("begin");
+	b.addActionListener(this);
+	interact.add(b);
 	interact.revalidate();
 	window.repaint();
-	day();
     }
     
-    public void day(){
-	
+    public void day(String d){
+	interact.removeAll();
+	story.setText("Today is " + d);
+	JLabel q = new JLabel();
+	q.setText(player.classTime());
+	interact.add(story);
+	interact.add(q);
+	interact.revalidate();
+	window.repaint();
     }
 
     public void actionPerformed(ActionEvent e){
@@ -145,9 +156,14 @@ public class GUI extends JFrame implements ActionListener{
 	}else if (action.equals("Senior")){
 	    player = new Senior();
 	}
-	if (action.equals("begin")){
+	if (action.equals("next")){
 	    initializePlayerAndStats(llamo.getText());
 	    startGame();	    
+	}
+	if (action.equals("begin")){
+	    String d = "Monday";
+	    day(d);
+	    //then make d = tuesday, day() again, d = wednesday, day() again
 	}
     }
     
