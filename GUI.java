@@ -7,7 +7,7 @@ public class GUI extends JFrame implements ActionListener{
     private Container window;
     private JSplitPane pane;
     private JPanel stats, interact;
-    private JLabel stress, knowledge, energy, story;
+    private JLabel stress, knowledge, energy, time, story;
     private JTextField llamo;
 
     public GUI(){
@@ -43,6 +43,9 @@ public class GUI extends JFrame implements ActionListener{
     public void updateEnergy(int e){
 	energy.setText("energy: " + e);
     }
+    public void updateTime(int t){
+	time.setText("time: " + t);
+    }
 
     public void setupStatsPanel(){
 	stats = new JPanel();
@@ -61,6 +64,9 @@ public class GUI extends JFrame implements ActionListener{
 	energy = new JLabel("energy: ");	
 	energy.setBorder(BorderFactory.createLoweredBevelBorder());
 	stats.add(energy);
+	time = new JLabel("time: ");
+	time.setBorder(BorderFactory.createLoweredBevelBorder());
+	stats.add(time);
     }
     public void setupInteractPanel(){
 	interact = new JPanel();
@@ -70,7 +76,7 @@ public class GUI extends JFrame implements ActionListener{
 	  BorderFactory.createTitledBorder("Story"),
 	  BorderFactory.createRaisedBevelBorder()));
 
-	JLabel intro = new JLabel("<html><center>Welcome to the Stuyvesant Finals Week Simulator! Please enter your name and choose a difficulty:</center></html>");
+	JLabel intro = new JLabel("<html><center>Welcome to the Stuyvesant Finals Week Simulator!<br>Please enter your name and choose a difficulty:</center></html>");
 	llamo = new JTextField("Harry Potter");
 	llamo.setSize(20, 10);
 	interact.add(intro);
@@ -112,14 +118,20 @@ public class GUI extends JFrame implements ActionListener{
 	updateStress(player.getStress());
 	updateKnowledge(player.getKnow());
 	updateEnergy(player.getEnergy());
+	updateTime(player.time);
     }
 
     public void startGame(){
 	interact.removeAll();
-	story = new JLabel("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads... Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
+	story = new JLabel("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
 	interact.add(story);
 	interact.revalidate();
 	window.repaint();
+	day();
+    }
+    
+    public void day(){
+	
     }
 
     public void actionPerformed(ActionEvent e){
