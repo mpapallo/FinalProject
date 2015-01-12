@@ -1,4 +1,4 @@
-public class Student{
+abstract class Student{
     private String name;
     private int energy, stress, knowledge;
     private int grade;
@@ -41,6 +41,11 @@ public class Student{
 	return knowledge;
     }
 
+    public String toString(){
+	return this.getName();
+    }
+    abstract String getLevel();
+
     public void sleep(int hrs){
 	this.setEnergy(this.getEnergy() + hrs * 10);
     }
@@ -62,16 +67,16 @@ public class Student{
 	    setKnow(100);
 	} else if (getKnow() < 0) {
 	    setKnow(0);
-	} else if (getStress() > 100){
+	}
+	if (getStress() > 100){
 	    setStress(100);
 	} else if (getStress() < 0) {
 	    setStress(0);
-	} else if (getEnergy() > 100){
-	    setKnow(100);
-	} else if (getEnergy() < 0) {
-	    setKnow(0);
 	}
-
+	if (getEnergy() > 100){
+	    setEnergy(100);
+	} else if (getEnergy() < 0) {
+	    setEnergy(0);
+	}
     }
-
 }

@@ -1,18 +1,18 @@
 FinalProject
 ============
 
-<h1>
-Michaela Papallo &amp; Emily Redler, period 6 APCS
-</h1>
-
 <h2>
-Project Description
+Michaela Papallo &amp; Emily Redler, period 6 APCS
 </h2>
+
+<h3>
+Project Description
+</h3>
 Our project is a finals week simulator. Choose your age (difficulty level), freshman-senior. After that you will be taken through a week (Monday-Friday) in the life of a Stuyvesant student during finals week. You can choose whether you want to study or sleep, cut class or pass notes, and more. Random events will occur to undermine (or help) you--some may ask you to make more decisions. Energy, knowledge, and stress will be affected by your decisions and are taken into account for your test grade and final grade. At the end of the week, you take your finals. During the test, you can choose to cheat (with a chance of being caught), sleep, take the test normally, or skip it all together. At the end of the week, you will be given a final grade based on your choices. 
 
-<h2>
+<h3>
 Daily Logs
-</h2>
+</h3>
 
 <h4>
 12/22/14
@@ -20,7 +20,6 @@ Daily Logs
 * possible ideas:
     * solar system creator
     * finals week simulator
-    
 
 <h4>
 1/5/15
@@ -65,4 +64,10 @@ created Student class and subclasses
 * moved initialization of character from terminal to GUI
 
 
+<h4>
+1/10/14
+</h4>
+* finished GUI setup
+* initialization of character process is complete
+* made Student abstract
 

@@ -7,4 +7,8 @@ public class Sophomore extends Student {
 	super("Sophomore", 80, 60, 30);
     }
 
+    public String getLevel(){
+	return "Sophomore";
+    }
+
 }
