@@ -7,8 +7,9 @@ public class GUI extends JFrame implements ActionListener{
     private Container window;
     private JSplitPane pane;
     private JPanel stats, interact;
-    private JLabel stress, knowledge, energy, story;
+    private JLabel stress, knowledge, energy, time, story;
     private JTextField llamo;
+    private JButton b;
 
     public GUI(){
 	player = new Freshman();
@@ -43,6 +44,9 @@ public class GUI extends JFrame implements ActionListener{
     public void updateEnergy(int e){
 	energy.setText("energy: " + e);
     }
+    public void updateTime(int t){
+	time.setText("time: " + t);
+    }
 
     public void setupStatsPanel(){
 	stats = new JPanel();
@@ -61,6 +65,9 @@ public class GUI extends JFrame implements ActionListener{
 	energy = new JLabel("energy: ");	
 	energy.setBorder(BorderFactory.createLoweredBevelBorder());
 	stats.add(energy);
+	time = new JLabel("time: ");
+	time.setBorder(BorderFactory.createLoweredBevelBorder());
+	stats.add(time);
     }
     public void setupInteractPanel(){
 	interact = new JPanel();
@@ -70,16 +77,16 @@ public class GUI extends JFrame implements ActionListener{
 	  BorderFactory.createTitledBorder("Story"),
 	  BorderFactory.createRaisedBevelBorder()));
 
-	JLabel intro = new JLabel("<html><center>Welcome to the Stuyvesant Finals Week Simulator! Please enter your name and choose a difficulty:</center></html>");
+	JLabel intro = new JLabel("<html><center>Welcome to the Stuyvesant Finals Week Simulator!<br>Please enter your name and choose a difficulty:</center></html>");
 	llamo = new JTextField("Harry Potter");
 	llamo.setSize(20, 10);
 	interact.add(intro);
 	interact.add(llamo);
 	addDifficultyOptions();
-	JButton begin = new JButton("Begin");
-	begin.setActionCommand("begin");
+	JButton next = new JButton("Next");
+	begin.setActionCommand("next");
 	begin.addActionListener(this);
-	interact.add(begin);
+	interact.add(next);
     }
 
     public void addDifficultyOptions(){
@@ -112,12 +119,28 @@ public class GUI extends JFrame implements ActionListener{
 	updateStress(player.getStress());
 	updateKnowledge(player.getKnow());
 	updateEnergy(player.getEnergy());
+	updateTime(player.time);
     }
 
     public void startGame(){
 	interact.removeAll();
-	story = new JLabel("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads... Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
+	story = new JLabel("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
 	interact.add(story);
+	b = new JButton("Begin");
+	b.setActionCommand("begin");
+	b.addActionListener(this);
+	interact.add(b);
+	interact.revalidate();
+	window.repaint();
+    }
+    
+    public void day(String d){
+	interact.removeAll();
+	story.setText("Today is " + d);
+	JLabel q = new JLabel();
+	q.setText(player.classTime());
+	interact.add(story);
+	interact.add(q);
 	interact.revalidate();
 	window.repaint();
     }
@@ -133,9 +156,14 @@ public class GUI extends JFrame implements ActionListener{
 	}else if (action.equals("Senior")){
 	    player = new Senior();
 	}
-	if (action.equals("begin")){
+	if (action.equals("next")){
 	    initializePlayerAndStats(llamo.getText());
 	    startGame();	    
+	}
+	if (action.equals("begin")){
+	    String d = "Monday";
+	    day(d);
+	    //then make d = tuesday, day() again, d = wednesday, day() again
 	}
     }
     
