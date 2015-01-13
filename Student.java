@@ -135,13 +135,18 @@ abstract class Student{
 	}
     }
 
-    public String popQuiz(){
+    public String popQuiz(String ans){
 	int score = 100 - getStress() + getEnergy() + getKnow();
 	score /= 3;
-	setGrade(getGrade() + score / 10);
-	setStress(getStress() + 5);
-	setEnergy(getEnergy() - 5);	
-	String ans = "Your teacher springs a pop quiz on you. Based on your knowledge, stress, and energy, you score a " + score + ".";
+	if (ans == "cheat"){
+	    setEnergy(getEnergy() - 10);
+	    return cheat();
+	} else {
+	    return "You score a " + score + " on your pop quiz.";
+	    setGrade(getGrade() + score / 10);
+	    setStress(getStress() + 5);
+	    setEnergy(getEnergy() - 5);
+	}
 	time += 2;
 	return ans;
     }
@@ -157,11 +162,15 @@ abstract class Student{
 	return "There is a huge subway delay and you end up missing your first class.";	
     }
 
-    public void cheat(int chance){
+    public String cheat(int chance){
 	if (r.nextInt(100) < chance){
 	    setGrade(getGrade() + (100 - getKnow())/2);
+	    setStress(getStress() - 10);
+	    return "You got away with it--this time...";
 	} else {
-	    setGrade(0);
+	    setGrade(getGrade() - 25);
+	    setStress(getStress() + 15);
+	    return "D'uh oh! You were caught! Your teacher decided to give you a zero on the quiz and lowered your grade by 25 points.";
 	}
     }
 
@@ -171,11 +180,11 @@ abstract class Student{
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
-	    case 0: return popQuiz();
+	    case 0: return popQuiz("take the quiz");
 		break;
 	    case 1: return fireDrill();
 		break;
-	    case 2: return brokenEscalator();
+	    case 2: return brokenEscalator("climb up the stairs");
 		break;
 	    }
 	} else {
