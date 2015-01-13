@@ -162,7 +162,9 @@ abstract class Student{
 	return "There is a huge subway delay and you end up missing your first class.";	
     }
 
-    public String cheat(int chance){
+    public String cheat(){
+	int chance = getKnow() + 100 - getStress() + getEnergy();
+	chance /= 3;
 	if (r.nextInt(100) < chance){
 	    setGrade(getGrade() + (100 - getKnow())/2);
 	    setStress(getStress() - 10);
@@ -175,7 +177,7 @@ abstract class Student{
     }
 
     public String classTime(){
-	int chance = getStress() + getEnergy() + getKnow();
+	int chance = 100 - getStress() + getEnergy() + getKnow();
 	chance /= 3;
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
