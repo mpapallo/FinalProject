@@ -177,7 +177,7 @@ abstract class Student{
     }
 
     public String classTime(){
-	int chance = getStress() + getEnergy() + getKnow();
+	int chance = 100 - getStress() + getEnergy() + getKnow();
 	chance /= 3;
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
