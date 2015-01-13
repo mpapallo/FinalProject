@@ -136,11 +136,15 @@ public class GUI extends JFrame implements ActionListener{
     
     public void day(String d){
 	interact.removeAll();
+
 	story.setText("Today is " + d);
 	JLabel q = new JLabel();
+
 	q.setText(player.classTime());
+
 	interact.add(story);
 	interact.add(q);
+
 	interact.revalidate();
 	window.repaint();
     }
@@ -161,9 +165,14 @@ public class GUI extends JFrame implements ActionListener{
 	    startGame();	    
 	}
 	if (action.equals("begin")){
-	    String d = "Monday";
-	    day(d);
-	    //then make d = tuesday, day() again, d = wednesday, day() again
+	    String[] days = new String[4];
+	    days[0] = "Monday";
+	    days[1] = "Tuesday";
+	    days[2] = "Wednesday";
+	    days[3] = "Thursday";
+	    
+	    day(days[0]);		
+	    //it will be a for loop, need to call day for each day in the array
 	}
     }
     
