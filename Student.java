@@ -148,7 +148,6 @@ abstract class Student{
 	    setEnergy(getEnergy() - 5);
 	}
 	time += 2;
-	return ans;
     }
 
     public String eatenHomework(){
@@ -168,7 +167,7 @@ abstract class Student{
 	if (r.nextInt(100) < chance){
 	    setGrade(getGrade() + (100 - getKnow())/2);
 	    setStress(getStress() - 10);
-	    return "You got away with it--this time...";
+	    return "You got away with it, you lucky duck...";
 	} else {
 	    setGrade(getGrade() - 25);
 	    setStress(getStress() + 15);
@@ -176,38 +175,24 @@ abstract class Student{
 	}
     }
 
-    public String classTime(){
-	int chance = 100 - getStress() + getEnergy() + getKnow();
-	chance /= 3;
-	if (r.nextInt(100) < chance){
-	    int e = r.nextInt(2);
-	    switch (e) {
-	    case 0: return popQuiz("take the quiz");
-		break;
-	    case 1: return fireDrill();
-		break;
-	    case 2: return brokenEscalator("climb up the stairs");
-		break;
-	    }
-	} else {
-	    time += 2;
-	    return "Do you want to sleep, pass notes, or pay attention?";
-	}
-    }
+    
 
-    public String classTimeResponse(String response){
+    public String goToClass(String response){
 	if (response == "sleep"){
 	    setGrade(getGrade() - 15);
 	    setEnergy(getEnergy() + 20);
 	    setStress(getStress() - 5);
+	    return "You slept like a baby for two hours and learned nothing. Wayto go, Sleeping Beauty.";
 	} else if (response == "pass notes"){
 	    setGrade(getGrade() - 10);
 	    setStress(getStress() - 10);
 	    setEnergy(getEnergy() - 5);
+	    return "You passed notes all period. You didn't learn anything useful, but you can now act out a whole season of Keeping Up With the Kardashians.";
 	} else {
 	    setEnergy(getEnergy() - 10);
 	    setKnow(getKnow() + 15);
 	    setStress(getStress() + 5);
+	    return "You sat through class and learned like a good little student.";
 	}
     }
 
