@@ -71,3 +71,8 @@ created Student class and subclasses
 * initialization of character process is complete
 * made Student abstract
 
+<h4>
+1/12/14
+</h4>
+* got rid of Events class, added to Students
+* incorporating the story into the gui
