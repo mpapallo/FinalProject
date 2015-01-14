@@ -10,6 +10,7 @@ public class GUI extends JFrame implements ActionListener{
     private JLabel stress, knowledge, energy, time, story, q;
     private JTextField llamo;
     private JButton b;
+    private boolean cheat = false;
 
     public GUI(){
 	player = new Freshman();
@@ -153,11 +154,11 @@ public class GUI extends JFrame implements ActionListener{
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
-	    case 0: q.setText(player.popQuiz(popQuizResponse()));
+	    case 0: q.setText("Your teacher decides to spring a pop quiz on your class!" + player.popQuiz(popQuizResponse()));
 		break;
 	    case 1: q.setText(player.fireDrill());
 		break;
-	    case 2: q.setText(player.brokenEscalator(brokenEscalatorResponse()));
+	    case 2: q.setText("What a surprise, the escalators leading up to your class are broken!" + player.brokenEscalator(brokenEscalatorResponse()));
 		break;
 	    }
 	} else {
@@ -167,19 +168,91 @@ public class GUI extends JFrame implements ActionListener{
     }
     
     public String popQuizResponse(){
-	String s = "Your teacher decides to spring a pop quiz on your class!";
 	JRadioButton cheat = new JRadioButton("cheat");
 	cheat.setActionCommand("cheat");
-	cheat.addActionListener();
+	cheat.addActionListener(this);
 	JRadioButton quiz = new JRadioButton("honestly take the quiz");
-	
+	quiz.setActionCommand("takeQuiz");
+	quiz.addActionListener(this);
+	ButtonGroup quizGroup = new ButtonGroup;
+	quizGroup.add(cheat);
+	quizGroup.add(quiz);
+	interact.add(cheat);
+	interact.add(quiz);
+	if (cheat = true){
+	    return "cheat";
+	}else{
+	    return "";
+	}
     }
     public String brokenEscalatorResponse(){
-	
+	JRadioButton cimb = new JRadioButton("climb up the escalators");
+	climb.setActionCommand("climb");
+	climb.addActionListener(this);
+	JRadioButton();
     }
     public String classTimeResponse(){
 	
     }
+
+    public void afterSchool(){
+	int chance = getStress() + 100 - getKnow() + 100 - getEnergy();
+	chance /= 3;
+	String activity = afterSchoolResponse();
+	setHomework(false);
+	if (r.nextInt(100) < chance) {
+	    helpAFriend(helpAFriendResponse());
+	} else {
+	    if (activity == "study") {
+		study(1);
+	    } else if (activity == "homework") {
+		doHomework();
+	    } else if (activity == "facebook"){
+		socialize(1);
+	    } else if (activity == "text"){
+		socialize(1);
+	    } else {
+		time = 7;
+		if (time >= 6) {
+		    sleep(24-time);
+		} else {
+		    sleep(6-time);
+		}
+	    } 
+	}
+    }
+
+    public void morning(){
+	time = 7;
+	chance = getStress() + 100 - getEnergy() + 100 - getKnow();
+	chance /= 3;
+	if (r.nextInt(100) < chance){
+	    int x = r.nextInt(4);
+	    switch (x) {
+	    case 0: eatenHomework();
+		break;
+	    case 1: subwayDelay();
+		break;
+	    case 2: coffeeSpill();
+		break;
+	    case 3: sickDay(sickDayResponse);
+		break;
+	    }
+	}
+    }
+
+    public String afterSchoolResponse(){
+	
+    }
+
+    public String helpAFriendResponse(){
+
+    }
+
+    public String sickDayResponse(){
+
+    }
+
 
     public void actionPerformed(ActionEvent e){
 	String action = e.getActionCommand();
@@ -205,6 +278,11 @@ public class GUI extends JFrame implements ActionListener{
 	    
 	    day(days[0]);		
 	    //it will be a for loop, need to call day for each day in the array
+	}
+	if (action.equals("cheat")){
+	    cheat = true;
+	}else if (action.equals("takeQuiz")){
+	    cheat = false;
 	}
     }
     

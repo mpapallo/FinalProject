@@ -4,8 +4,6 @@ abstract class Student{
     private int energy, stress, knowledge;
     private int grade;
     public int time;
-    public boolean homework;
-
     Random r = new Random();
 
     public Student(String n, int e, int s, int k){
@@ -52,12 +50,7 @@ abstract class Student{
     public int getGrade(){
 	return grade;
     }
-    public void setHomework(boolean h){
-	homework = h;
-    }
-    public boolean getHomework() {
-	return homework;
-    }
+
     public String toString(){
 	return this.getName();
     }
@@ -77,9 +70,7 @@ abstract class Student{
 	setStress(getStress() - hrs*5);
 	setEnergy(getEnergy() - hrs*4);
     }
-    public void doHomework(){
-	setHomework(true);
-    }
+
     // check if attributes are between 0 and 100
     public void check(){
 	if (getKnow() > 100){
@@ -131,7 +122,7 @@ abstract class Student{
 	setStress(getStress() - 5);
 	setEnergy(getEnergy() - 5);
 	time += 2;
-	return "There is a fire drill during class which ends up taking the entire period. I guess you're not going to that class today!";
+	return "FIIRREEEEE (drill)! The microwave in the chemistry department office goes up in flames, so you miss an entire period of class time.";
     }
 
     public void brokenEscalator(String ans){
@@ -149,9 +140,9 @@ abstract class Student{
 	score /= 3;
 	if (ans == "cheat"){
 	    setEnergy(getEnergy() - 10);
-	    return cheat();
+	    return "You decided to cheat..." + cheat();
 	} else {
-	    return "You score a " + score + " on your pop quiz.";
+	    return "You take the pop quiz... And score a " + score + ".";
 	    setGrade(getGrade() + score / 10);
 	    setStress(getStress() + 5);
 	    setEnergy(getEnergy() - 5);
