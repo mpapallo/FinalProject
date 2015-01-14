@@ -4,6 +4,8 @@ abstract class Student{
     private int energy, stress, knowledge;
     private int grade;
     public int time;
+    public boolean homework;
+
     Random r = new Random();
 
     public Student(String n, int e, int s, int k){
@@ -50,7 +52,12 @@ abstract class Student{
     public int getGrade(){
 	return grade;
     }
-
+    public void setHomework(boolean h){
+	homework = h;
+    }
+    public boolean getHomework() {
+	return homework;
+    }
     public String toString(){
 	return this.getName();
     }
@@ -70,7 +77,9 @@ abstract class Student{
 	setStress(getStress() - hrs*5);
 	setEnergy(getEnergy() - hrs*4);
     }
-
+    public void doHomework(){
+	setHomework(true);
+    }
     // check if attributes are between 0 and 100
     public void check(){
 	if (getKnow() > 100){
