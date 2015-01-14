@@ -81,3 +81,10 @@ created Student class and subclasses
 1/13/15
 </h4>
 * progress with incorporating events into the gui function that asks for user input
+
+
+<h4>
+1/14/15
+</h4>
+* added morning and after school
+* continued user response methods
