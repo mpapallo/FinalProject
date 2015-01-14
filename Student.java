@@ -140,9 +140,9 @@ abstract class Student{
 	score /= 3;
 	if (ans == "cheat"){
 	    setEnergy(getEnergy() - 10);
-	    return cheat();
+	    return "You decided to cheat..." + cheat();
 	} else {
-	    return "You score a " + score + " on your pop quiz.";
+	    return "You take the quiz... And score a " + score + " on your pop quiz.";
 	    setGrade(getGrade() + score / 10);
 	    setStress(getStress() + 5);
 	    setEnergy(getEnergy() - 5);

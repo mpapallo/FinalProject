@@ -10,6 +10,7 @@ public class GUI extends JFrame implements ActionListener{
     private JLabel stress, knowledge, energy, time, story, q;
     private JTextField llamo;
     private JButton b;
+    private String quizResponse = "";
 
     public GUI(){
 	player = new Freshman();
@@ -153,7 +154,7 @@ public class GUI extends JFrame implements ActionListener{
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
-	    case 0: q.setText(player.popQuiz(popQuizResponse()));
+	    case 0: q.setText("Your teacher decides to spring a pop quiz on your class!" + player.popQuiz(popQuizResponse()));
 		break;
 	    case 1: q.setText(player.fireDrill());
 		break;
@@ -167,12 +168,18 @@ public class GUI extends JFrame implements ActionListener{
     }
     
     public String popQuizResponse(){
-	String s = "Your teacher decides to spring a pop quiz on your class!";
 	JRadioButton cheat = new JRadioButton("cheat");
 	cheat.setActionCommand("cheat");
-	cheat.addActionListener();
+	cheat.addActionListener(this);
 	JRadioButton quiz = new JRadioButton("honestly take the quiz");
-	
+	quiz.setActionCommand("takeQuiz");
+	quiz.addActionListener(this);
+	ButtonGroup quizGroup = new ButtonGroup;
+	quizGroup.add(cheat);
+	quizGroup.add(quiz);
+	interact.add(cheat);
+	interact.add(quiz);
+	return quizResponse;
     }
     public String brokenEscalatorResponse(){
 	
