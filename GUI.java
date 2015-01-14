@@ -174,7 +174,7 @@ public class GUI extends JFrame implements ActionListener{
 	JRadioButton quiz = new JRadioButton("honestly take the quiz");
 	quiz.setActionCommand("takeQuiz");
 	quiz.addActionListener(this);
-	ButtonGroup quizGroup = new ButtonGroup;
+	ButtonGroup quizGroup = new ButtonGroup();
 	quizGroup.add(cheat);
 	quizGroup.add(quiz);
 	interact.add(cheat);
@@ -186,10 +186,18 @@ public class GUI extends JFrame implements ActionListener{
 	}
     }
     public String brokenEscalatorResponse(){
-	JRadioButton cimb = new JRadioButton("climb up the escalators");
+	JRadioButton climb = new JRadioButton("climb up the escalators");
 	climb.setActionCommand("climb");
 	climb.addActionListener(this);
-	JRadioButton();
+	JRadioButton no = new JRadioButton("absolutely not");
+	no.setActionCommand("noClimb");
+	no.addActionListener(this);
+	ButtonGroup escalator = new ButtonGroup();
+	escalator.add(climb);
+	escalator.add(no);
+	interact.add(climb);
+	interact.add(no);
+	return "";
     }
     public String classTimeResponse(){
 	
