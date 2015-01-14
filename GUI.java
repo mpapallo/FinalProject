@@ -7,7 +7,7 @@ public class GUI extends JFrame implements ActionListener{
     private Container window;
     private JSplitPane pane;
     private JPanel stats, interact;
-    private JLabel stress, knowledge, energy, time, story;
+    private JLabel stress, knowledge, energy, time, story, q;
     private JTextField llamo;
     private JButton b;
 
@@ -136,13 +136,44 @@ public class GUI extends JFrame implements ActionListener{
     
     public void day(String d){
 	interact.removeAll();
+
 	story.setText("Today is " + d);
-	JLabel q = new JLabel();
-	q.setText(player.classTime());
 	interact.add(story);
 	interact.add(q);
+	classTime();
+	
+
 	interact.revalidate();
 	window.repaint();
+    }
+
+    public void classTime(){
+	int chance = 100 - getStress() + getEnergy() + getKnow();
+	chance /= 3;
+	if (r.nextInt(100) < chance){
+	    int e = r.nextInt(2);
+	    switch (e) {
+	    case 0: q.setText(player.popQuiz(popQuizResponse()));
+		break;
+	    case 1: q.setText(player.fireDrill());
+		break;
+	    case 2: q.setText(player.brokenEscalator(brokenEscalatorResponse()));
+		break;
+	    }
+	} else {
+	    player.time += 2;
+	    q.setText(player.goToClass(classTimeResponse()));
+	}
+    }
+    
+    public String popQuizResponse(){
+	
+    }
+    public String brokenEscalatorResponse(){
+
+    }
+    public String classTimeResponse(){
+		
     }
 
     public void actionPerformed(ActionEvent e){
@@ -161,9 +192,14 @@ public class GUI extends JFrame implements ActionListener{
 	    startGame();	    
 	}
 	if (action.equals("begin")){
-	    String d = "Monday";
-	    day(d);
-	    //then make d = tuesday, day() again, d = wednesday, day() again
+	    String[] days = new String[4];
+	    days[0] = "Monday";
+	    days[1] = "Tuesday";
+	    days[2] = "Wednesday";
+	    days[3] = "Thursday";
+	    
+	    day(days[0]);		
+	    //it will be a for loop, need to call day for each day in the array
 	}
     }
     

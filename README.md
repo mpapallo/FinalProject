@@ -57,7 +57,7 @@ created Student class and subclasses
 
 
 <h4>
-1/9/14
+1/9/15
 </h4>
 * fixed formatting in readme
 * added more methods in events
@@ -65,14 +65,19 @@ created Student class and subclasses
 
 
 <h4>
-1/10/14
+1/10/15
 </h4>
 * finished GUI setup
 * initialization of character process is complete
 * made Student abstract
 
 <h4>
-1/12/14
+1/12/15
 </h4>
 * got rid of Events class, added to Students
 * incorporating the story into the gui
+
+<h4>
+1/13/15
+</h4>
+* progress with incorporating events into the gui function that asks for user input
