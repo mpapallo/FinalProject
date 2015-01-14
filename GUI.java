@@ -140,15 +140,15 @@ public class GUI extends JFrame implements ActionListener{
 	story.setText("Today is " + d);
 	interact.add(story);
 	interact.add(q);
-	classTime();
+	inSchool();
 	
 
 	interact.revalidate();
 	window.repaint();
     }
 
-    public void classTime(){
-	int chance = 100 - getStress() + getEnergy() + getKnow();
+    public void inSchool(){
+	int chance = getStress() + 100 - getEnergy() + 100 - getKnow();
 	chance /= 3;
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
@@ -167,13 +167,18 @@ public class GUI extends JFrame implements ActionListener{
     }
     
     public String popQuizResponse(){
+	String s = "Your teacher decides to spring a pop quiz on your class!";
+	JRadioButton cheat = new JRadioButton("cheat");
+	cheat.setActionCommand("cheat");
+	cheat.addActionListener();
+	JRadioButton quiz = new JRadioButton("honestly take the quiz");
 	
     }
     public String brokenEscalatorResponse(){
-
+	
     }
     public String classTimeResponse(){
-		
+	
     }
 
     public void actionPerformed(ActionEvent e){

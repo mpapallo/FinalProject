@@ -162,7 +162,7 @@ abstract class Student{
     }
 
     public String cheat(){
-	int chance = getKnow() + 100 - getStress() + getEnergy();
+	int chance = 100 - getKnow() + getStress() + 100 - getEnergy();
 	chance /= 3;
 	if (r.nextInt(100) < chance){
 	    setGrade(getGrade() + (100 - getKnow())/2);
@@ -171,7 +171,7 @@ abstract class Student{
 	} else {
 	    setGrade(getGrade() - 25);
 	    setStress(getStress() + 15);
-	    return "D'uh oh! You were caught! Your teacher decided to give you a zero on the quiz and lowered your grade by 25 points.";
+	    return "D'oh! You were caught! Your teacher decided to give you a zero on the quiz and lowered your grade by 25 points.";
 	}
     }
 
