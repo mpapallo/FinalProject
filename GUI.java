@@ -10,12 +10,12 @@ public class GUI extends JFrame implements ActionListener{
     private Container window;
     private JSplitPane pane;
     private JPanel stats, interact;
-    private JLabel stress, knowledge, energy, time, story, q;
+    private JLabel stress, knowledge, energy, time, day, story, q;
     private JTextField llamo;
-    private JButton b;
     private boolean bcheat = false;
     private boolean bclimb = true;
     private int inClass = 2;
+    private String s;
 
     public GUI(){
 	player = new Freshman();
@@ -61,6 +61,15 @@ public class GUI extends JFrame implements ActionListener{
 	updateEnergy(player.getEnergy());
 	updateTime(player.time);
     }
+    public void updateDay(String d){
+	day.setText("Today is: " + d);
+    }
+
+    public void reset(){
+	interact.removeAll();
+	interact.revalidate();
+	window.repaint();
+    }
 
     public void setupStatsPanel(){
 	stats = new JPanel();
@@ -82,6 +91,9 @@ public class GUI extends JFrame implements ActionListener{
 	time = new JLabel("time: ");
 	time.setBorder(BorderFactory.createLoweredBevelBorder());
 	stats.add(time);
+	day = new JLabel("Today is: ");
+	day.setBorder(BorderFactory.createLoweredBevelBorder());
+	stats.add(day);
     }
     public void setupInteractPanel(){
 	interact = new JPanel();
@@ -93,7 +105,7 @@ public class GUI extends JFrame implements ActionListener{
 
 	JLabel intro = new JLabel("<html><center>Welcome to the Stuyvesant Finals Week Simulator!<br>Please enter your name and choose a difficulty:</center></html>");
 	llamo = new JTextField("Harry Potter");
-	llamo.setSize(20, 10);
+	llamo.setSize(5, 10);
 	interact.add(intro);
 	interact.add(llamo);
 	addDifficultyOptions();
@@ -130,53 +142,62 @@ public class GUI extends JFrame implements ActionListener{
 
     public void initializePlayerAndStats(String name){
 	player.setName(name);
-	autoUpdate();
+        updateStress(player.getStress());
+	updateEnergy(player.getEnergy());
+	updateKnowledge(player.getKnow());
     }
 
     public void startGame(){
-	interact.removeAll();
+        reset();
 	story.setText("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
 	interact.add(story);
-	b = new JButton("Begin");
+	JButton b = new JButton("Begin");
 	b.setActionCommand("begin");
 	b.addActionListener(this);
 	interact.add(b);
-	interact.revalidate();
-	window.repaint();
     }
     
     public void day(String d){
-	interact.removeAll();
-
-	story.setText("Today is " + d);
-	interact.add(story);
-	interact.add(q);
-	interact.revalidate();
-	window.repaint();
-	inSchool();
+	reset();
 	autoUpdate();
+	updateDay(d);
+	inSchool("first");
+	interact.add(q);
+	player.time += 2;
+	autoUpdate();
+	//inSchool("last");
+
 	
+	//autoUpdate();
     }
 
-    public void inSchool(){
-	player.time += 2;
+    public void inSchool(String x){
+	reset();
+	story.setText("You are in your " + x + " class of the day.");
+	interact.add(story);
 	int chance = player.calculateChanceNeg();
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
-	    case 0: q.setText("Your teacher decides to spring a pop quiz on your class!" + player.popQuiz(popQuizResponse()));
+	    case 0: JLabel l = new JLabel("Your teacher decides to spring a pop quiz on your class!");
+		interact.add(l);
+		popQuizResponse();
 		break;
 	    case 1: q.setText(player.fireDrill());
 		break;
-	    case 2: q.setText("What a surprise, the escalators leading up to your class are broken!" + player.brokenEscalator(brokenEscalatorResponse()));
+	    case 2: JLabel m = new JLabel("What a surprise, the escalators leading up to your class are broken!");
+		interact.add(m);
+		brokenEscalatorResponse();
 		break;
 	    }
 	} else {
-	    q.setText(player.goToClass(classTimeResponse()));
+	    JLabel n = new JLabel("Nothing special is happening. What should you do?");
+	    interact.add(n);
+	    classTimeResponse();
 	}
     }
     
-    public String popQuizResponse(){
+    public void popQuizResponse(){
 	JRadioButton cheat = new JRadioButton("cheat off of the kid next to you");
 	cheat.setActionCommand("cheat");
 	cheat.addActionListener(this);
@@ -188,13 +209,12 @@ public class GUI extends JFrame implements ActionListener{
 	quizGroup.add(quiz);
 	interact.add(cheat);
 	interact.add(quiz);
-	if (bcheat){
-	    return "cheat";
-	}else{
-	    return "";
-	}
+	JButton b = new JButton("Submit");
+	b.setActionCommand("popQuizResponse");
+	b.addActionListener(this);
+	interact.add(b);
     }
-    public String brokenEscalatorResponse(){
+    public void brokenEscalatorResponse(){
 	JRadioButton climb = new JRadioButton("climb up the escalators");
 	climb.setActionCommand("climb");
 	climb.addActionListener(this);
@@ -206,13 +226,12 @@ public class GUI extends JFrame implements ActionListener{
 	escalator.add(no);
 	interact.add(climb);
 	interact.add(no);
-        if (bclimb){
-	    return "climb up the stairs";
-	}else{
-	    return "";
-	}
+	JButton b = new JButton("Submit");
+	b.setActionCommand("brokenEscalatorResponse");
+	b.addActionListener(this);
+	interact.add(b);
     }
-    public String classTimeResponse(){
+    public void classTimeResponse(){
 	JRadioButton sleep = new JRadioButton("doze off");
 	sleep.setActionCommand("nap");
 	sleep.addActionListener(this);
@@ -229,13 +248,10 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(sleep);
 	interact.add(passNotes);
 	interact.add(learn);
-	if (inClass == 0){
-	    return "sleep";
-	}else if (inClass == 1){
-	    return "pass notes";
-	}else{
-	    return "";
-	}
+	JButton b = new JButton("Submit");
+	b.setActionCommand("classTimeResponse");
+	b.addActionListener(this);
+	interact.add(b);
     }
     /*
     public void afterSchool(){
@@ -327,10 +343,26 @@ public class GUI extends JFrame implements ActionListener{
 	}else if (action.equals("takeQuiz")){
 	    bcheat = false;
 	}
+	if (action.equals("popQuizResponse")){
+	    if (bcheat){
+		s = "cheat";
+	    }else{
+		s = "";
+	    }
+	    q.setText(player.popQuiz(s));
+	}
 	if (action.equals("climb")){
 	    bclimb = true;
 	}else if(action.equals("noClimb")){
 	    bclimb = false;
+	}
+	if (action.equals("brokenEscalatorResponse")){
+	    if (bclimb){
+		s = "climb up the stairs";
+	    }else{
+		s = "";
+	    }
+	    q.setText(player.brokenEscalator(s));
 	}
 	if (action.equals("nap")){
 	    inClass = 0;
@@ -338,6 +370,16 @@ public class GUI extends JFrame implements ActionListener{
 	    inClass = 1;
 	}else if (action.equals("learn")){
 	    inClass = 2;
+	}
+	if (action.equals("classTimeResponse")){
+	    if (inClass == 0){
+	        s = "sleep";
+	    }else if (inClass == 1){
+	        s = "pass notes";
+	    }else{
+	        s ="";
+	    }
+	    q.setText(player.goToClass(s));
 	}
     }
     
