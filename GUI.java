@@ -166,8 +166,6 @@ public class GUI extends JFrame implements ActionListener{
 	player.time += 2;
 	autoUpdate();
 	//inSchool("last");
-
-	
 	//autoUpdate();
     }
 
@@ -283,8 +281,7 @@ public class GUI extends JFrame implements ActionListener{
 
     public void morning(){
 	time = 7;
-	chance = getStress() + 100 - getEnergy() + 100 - getKnow();
-	chance /= 3;
+	chance = player.calculateChanceNeg();
 	if (r.nextInt(100) < chance){
 	    int x = r.nextInt(4);
 	    switch (x) {
@@ -294,7 +291,7 @@ public class GUI extends JFrame implements ActionListener{
 		break;
 	    case 2: coffeeSpill();
 		break;
-	    case 3: sickDay(sickDayResponse);
+	    case 3: sickDay(sickDayResponse());
 		break;
 	    }
 	}
