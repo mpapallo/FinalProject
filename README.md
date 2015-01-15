@@ -88,4 +88,3 @@ created Student class and subclasses
 </h4>
 * added morning and after school
 * continued user response methods
-* remember to add student method calculate chance positive and negative
