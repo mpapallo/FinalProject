@@ -5,7 +5,8 @@ import java.util.*;
 public class GUI extends JFrame implements ActionListener{
     
     Random r = new Random();
-    
+    String[] days = new String[4];
+    String[] activities = new String[4];
     private Student player;
     private Container window;
     private JSplitPane pane;
@@ -16,12 +17,16 @@ public class GUI extends JFrame implements ActionListener{
     private boolean bclimb = true;
     private int inClass = 2;
     private String s;
-
+	    
     public GUI(){
 	player = new Freshman();
 	story = new JLabel();
 	q = new JLabel();
-
+	days[0] = "Monday";
+	days[1] = "Tuesday";
+	days[2] = "Wednesday";
+	days[3] = "Thursday";
+	
 	this.setTitle("Stuyvesant Finals Week Simulator");
 	this.setSize(700, 400);
 	this.setLocation(100, 100);
@@ -55,16 +60,16 @@ public class GUI extends JFrame implements ActionListener{
     public void updateTime(int t){
 	time.setText("time: " + t);
     }
+    public void updateDay(String d){
+	day.setText("Today is: " + d);
+    }
     public void autoUpdate(){
 	updateStress(player.getStress());
 	updateKnowledge(player.getKnow());
 	updateEnergy(player.getEnergy());
 	updateTime(player.time);
     }
-    public void updateDay(String d){
-	day.setText("Today is: " + d);
-    }
-
+    
     public void reset(){
 	interact.removeAll();
 	interact.revalidate();
@@ -103,7 +108,7 @@ public class GUI extends JFrame implements ActionListener{
 	  BorderFactory.createTitledBorder("Story"),
 	  BorderFactory.createRaisedBevelBorder()));
 
-	JLabel intro = new JLabel("<html><center>Welcome to the Stuyvesant Finals Week Simulator!<br>Please enter your name and choose a difficulty:</center></html>");
+	JLabel intro = new JLabel("<html>Welcome to the Stuyvesant Finals Week Simulator!<br>Please enter your name and choose a difficulty:</html>");
 	llamo = new JTextField("Harry Potter");
 	llamo.setSize(5, 10);
 	interact.add(intro);
@@ -149,28 +154,29 @@ public class GUI extends JFrame implements ActionListener{
 
     public void startGame(){
         reset();
-	story.setText("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
+	story.setText("<html>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</html>");
 	interact.add(story);
 	JButton b = new JButton("Begin");
 	b.setActionCommand("begin");
 	b.addActionListener(this);
 	interact.add(b);
     }
-    
+
+    /*
     public void day(String d){
 	reset();
 	autoUpdate();
 	updateDay(d);
-	inSchool("first");
-	interact.add(q);
-	player.time += 2;
-	autoUpdate();
-	//inSchool("last");
-	//autoUpdate();
-    }
+	//inSchool("first");
 
-    public void inSchool(String x){
+	//inSchool("last");
+    }
+    */
+
+    public void inSchool(String d, String x){
 	reset();
+	autoUpdate();
+	updateDay(d);
 	story.setText("You are in your " + x + " class of the day.");
 	interact.add(story);
 	int chance = player.calculateChanceNeg();
@@ -182,6 +188,7 @@ public class GUI extends JFrame implements ActionListener{
 		popQuizResponse();
 		break;
 	    case 1: q.setText(player.fireDrill());
+		displayResponse();
 		break;
 	    case 2: JLabel m = new JLabel("What a surprise, the escalators leading up to your class are broken!");
 		interact.add(m);
@@ -326,13 +333,7 @@ public class GUI extends JFrame implements ActionListener{
 	    startGame();	    
 	}
 	if (action.equals("begin")){
-	    String[] days = new String[4];
-	    days[0] = "Monday";
-	    days[1] = "Tuesday";
-	    days[2] = "Wednesday";
-	    days[3] = "Thursday";
-	    
-	    day(days[0]);		
+	    inSchool(days[0], "first");
 	    //it will be a for loop, need to call day for each day in the array
 	}
 	if (action.equals("cheat")){
@@ -347,6 +348,7 @@ public class GUI extends JFrame implements ActionListener{
 		s = "";
 	    }
 	    q.setText(player.popQuiz(s));
+	    displayResponse();
 	}
 	if (action.equals("climb")){
 	    bclimb = true;
@@ -360,6 +362,7 @@ public class GUI extends JFrame implements ActionListener{
 		s = "";
 	    }
 	    q.setText(player.brokenEscalator(s));
+	    displayResponse();
 	}
 	if (action.equals("nap")){
 	    inClass = 0;
@@ -377,7 +380,22 @@ public class GUI extends JFrame implements ActionListener{
 	        s ="";
 	    }
 	    q.setText(player.goToClass(s));
+	    displayResponse();
+	}
+	if (action.equals("cont")){
+	    
 	}
     }
     
+    public void displayResponse(){
+	reset();
+	player.checkStats();
+	player.checkTime();
+	autoUpdate();
+	interact.add(q);
+	JButton next = new JButton("Continue");
+	next.setActionCommand("cont");
+	next.addActionListener(this);
+	interact.add(next);
+    }
 }
