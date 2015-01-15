@@ -20,6 +20,7 @@ abstract class Student{
 	this("Student", 80, 50, 30);
     }
     
+    /// variable set and gets ///
     public void setName(String n){
 	name = n;
     }
@@ -51,13 +52,15 @@ abstract class Student{
 	return grade;
     }
 
+    abstract String getLevel();
+
     public String toString(){
 	return this.getName();
     }
-    abstract String getLevel();
+    ////////////////////
 
     public void sleep(int hrs){
-	this.setEnergy(this.getEnergy() + hrs * 10);
+        setEnergy(getEnergy() + hrs * 10);
     }
 
     public void study(int hrs){
@@ -95,7 +98,16 @@ abstract class Student{
 	    time = 1;
 	}
     }
-   
+    
+    public int calculateChancePos(){
+	int chance = getKnow() + 100 - getStress() + getEnergy();
+	return chance / 3;
+    }
+    public int calculateChanceNeg(){
+	int chance = 100 - getKnow() + getStress() + 100 - getEnergy();
+	return chance / 3;
+    }
+
     public void sickDay(String ans){
 	if (ans == "stay home"){
 	    time+=24;
@@ -115,7 +127,7 @@ abstract class Student{
 
     public String coffeeSpill(){
 	setKnow(getKnow() - 20);	
-	return "Coffee spills on your notes. Lose 20 knowledge.";
+	return "You got a free coffe from Starbucks by pretending it was your birthday, then it spills all over your notes. Lose 20 knowledge.";
     }
 
     public String fireDrill(){
@@ -125,29 +137,31 @@ abstract class Student{
 	return "FIIRREEEEE (drill)! The microwave in the chemistry department office goes up in flames, so you miss an entire period of class time.";
     }
 
-    public void brokenEscalator(String ans){
+    public String brokenEscalator(String ans){
 	if (ans == "climb up the stairs"){
 	    setEnergy(getEnergy() - 15);
+	    return "It's a physical struggle that makes you feel like one of those guys who just free-climbed El Capitan, but you bear the pain for the sake of learning. How inspiring.";
 	} else {
 	    setGrade(getGrade() - 15);
 	    setStress(getStress() - 10);
 	    time += 2;
+	    return "'Sweating' is not in your lexicon... The stairs win this round, you're not even going to try getting to class.";
 	}
     }
 
     public String popQuiz(String ans){
+	time += 2;
 	int score = 100 - getStress() + getEnergy() + getKnow();
 	score /= 3;
 	if (ans == "cheat"){
 	    setEnergy(getEnergy() - 10);
-	    return "You decided to cheat..." + cheat();
+	    return "You decide to cheat..." + cheat();
 	} else {
-	    return "You take the pop quiz... And score a " + score + ".";
 	    setGrade(getGrade() + score / 10);
 	    setStress(getStress() + 5);
 	    setEnergy(getEnergy() - 5);
+	    return "You take the pop quiz... And score a " + score + ".";
 	}
-	time += 2;
     }
 
     public String eatenHomework(){
@@ -158,12 +172,11 @@ abstract class Student{
     public String subwayDelay(){
 	setGrade(getGrade() - 7);
 	time += 2;
-	return "There is a huge subway delay and you end up missing your first class.";	
+	return "A dead rat on the subway tracks caused a major delay and you end up missing your first class. Thanks, MTA...";	
     }
 
     public String cheat(){
-	int chance = 100 - getKnow() + getStress() + 100 - getEnergy();
-	chance /= 3;
+	int chance = calculateChanceNeg();
 	if (r.nextInt(100) < chance){
 	    setGrade(getGrade() + (100 - getKnow())/2);
 	    setStress(getStress() - 10);
@@ -175,24 +188,22 @@ abstract class Student{
 	}
     }
 
-    
-
     public String goToClass(String response){
 	if (response == "sleep"){
 	    setGrade(getGrade() - 15);
 	    setEnergy(getEnergy() + 20);
 	    setStress(getStress() - 5);
-	    return "You slept like a baby for two hours and learned nothing. Wayto go, Sleeping Beauty.";
+	    return "You slept like a baby for two hours and learned nothing. Way to go, Sleeping Beauty.";
 	} else if (response == "pass notes"){
 	    setGrade(getGrade() - 10);
 	    setStress(getStress() - 10);
 	    setEnergy(getEnergy() - 5);
-	    return "You passed notes all period. You didn't learn anything useful, but you can now act out a whole season of Keeping Up With the Kardashians.";
+	    return "You passed notes all period. You didn't learn anything useful, but at least you're up to date with the latest season of Keeping Up With the Kardashians.";
 	} else {
 	    setEnergy(getEnergy() - 10);
 	    setKnow(getKnow() + 15);
 	    setStress(getStress() + 5);
-	    return "You sat through class and learned like a good little student.";
+	    return "You sat through class and learned like a good little student. ";
 	}
     }
 

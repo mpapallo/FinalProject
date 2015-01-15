@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 public class GUI extends JFrame implements ActionListener{
+    
+    Random r = new Random();
     
     private Student player;
     private Container window;
@@ -10,10 +13,14 @@ public class GUI extends JFrame implements ActionListener{
     private JLabel stress, knowledge, energy, time, story, q;
     private JTextField llamo;
     private JButton b;
-    private boolean cheat = false;
+    private boolean bcheat = false;
+    private boolean bclimb = true;
+    private int inClass = 2;
 
     public GUI(){
 	player = new Freshman();
+	story = new JLabel();
+	q = new JLabel();
 
 	this.setTitle("Stuyvesant Finals Week Simulator");
 	this.setSize(700, 400);
@@ -47,6 +54,12 @@ public class GUI extends JFrame implements ActionListener{
     }
     public void updateTime(int t){
 	time.setText("time: " + t);
+    }
+    public void autoUpdate(){
+	updateStress(player.getStress());
+	updateKnowledge(player.getKnow());
+	updateEnergy(player.getEnergy());
+	updateTime(player.time);
     }
 
     public void setupStatsPanel(){
@@ -85,8 +98,8 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(llamo);
 	addDifficultyOptions();
 	JButton next = new JButton("Next");
-	begin.setActionCommand("next");
-	begin.addActionListener(this);
+	next.setActionCommand("next");
+	next.addActionListener(this);
 	interact.add(next);
     }
 
@@ -117,15 +130,12 @@ public class GUI extends JFrame implements ActionListener{
 
     public void initializePlayerAndStats(String name){
 	player.setName(name);
-	updateStress(player.getStress());
-	updateKnowledge(player.getKnow());
-	updateEnergy(player.getEnergy());
-	updateTime(player.time);
+	autoUpdate();
     }
 
     public void startGame(){
 	interact.removeAll();
-	story = new JLabel("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
+	story.setText("<html><left>Hi, " + player + "! So you're a " + player.getLevel() + " at Stuyvesant, and it's finally time for the week everyone dreads...<br>Will you die in 5 days, or emerge victorious? It all depends on your choices...</left></html>");
 	interact.add(story);
 	b = new JButton("Begin");
 	b.setActionCommand("begin");
@@ -141,16 +151,16 @@ public class GUI extends JFrame implements ActionListener{
 	story.setText("Today is " + d);
 	interact.add(story);
 	interact.add(q);
-	inSchool();
-	
-
 	interact.revalidate();
 	window.repaint();
+	inSchool();
+	autoUpdate();
+	
     }
 
     public void inSchool(){
-	int chance = getStress() + 100 - getEnergy() + 100 - getKnow();
-	chance /= 3;
+	player.time += 2;
+	int chance = player.calculateChanceNeg();
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
@@ -162,13 +172,12 @@ public class GUI extends JFrame implements ActionListener{
 		break;
 	    }
 	} else {
-	    player.time += 2;
 	    q.setText(player.goToClass(classTimeResponse()));
 	}
     }
     
     public String popQuizResponse(){
-	JRadioButton cheat = new JRadioButton("cheat");
+	JRadioButton cheat = new JRadioButton("cheat off of the kid next to you");
 	cheat.setActionCommand("cheat");
 	cheat.addActionListener(this);
 	JRadioButton quiz = new JRadioButton("honestly take the quiz");
@@ -179,7 +188,7 @@ public class GUI extends JFrame implements ActionListener{
 	quizGroup.add(quiz);
 	interact.add(cheat);
 	interact.add(quiz);
-	if (cheat = true){
+	if (bcheat){
 	    return "cheat";
 	}else{
 	    return "";
@@ -189,7 +198,7 @@ public class GUI extends JFrame implements ActionListener{
 	JRadioButton climb = new JRadioButton("climb up the escalators");
 	climb.setActionCommand("climb");
 	climb.addActionListener(this);
-	JRadioButton no = new JRadioButton("absolutely not");
+	JRadioButton no = new JRadioButton("absolutely not, just cut class");
 	no.setActionCommand("noClimb");
 	no.addActionListener(this);
 	ButtonGroup escalator = new ButtonGroup();
@@ -197,12 +206,38 @@ public class GUI extends JFrame implements ActionListener{
 	escalator.add(no);
 	interact.add(climb);
 	interact.add(no);
-	return "";
+        if (bclimb){
+	    return "climb up the stairs";
+	}else{
+	    return "";
+	}
     }
     public String classTimeResponse(){
-	
+	JRadioButton sleep = new JRadioButton("doze off");
+	sleep.setActionCommand("nap");
+	sleep.addActionListener(this);
+	JRadioButton passNotes = new JRadioButton("whisper/ pass notes to your friends");
+        passNotes.setActionCommand("passNotes");
+	passNotes.addActionListener(this);
+	JRadioButton learn  = new JRadioButton("actually pay attention");
+	learn.setActionCommand("learn");
+	learn.addActionListener(this);
+	ButtonGroup classTime = new ButtonGroup();
+	classTime.add(sleep);
+        classTime.add(passNotes);
+	classTime.add(learn);
+	interact.add(sleep);
+	interact.add(passNotes);
+	interact.add(learn);
+	if (inClass == 0){
+	    return "sleep";
+	}else if (inClass == 1){
+	    return "pass notes";
+	}else{
+	    return "";
+	}
     }
-
+    /*
     public void afterSchool(){
 	int chance = getStress() + 100 - getKnow() + 100 - getEnergy();
 	chance /= 3;
@@ -260,7 +295,7 @@ public class GUI extends JFrame implements ActionListener{
     public String sickDayResponse(){
 
     }
-
+    */
 
     public void actionPerformed(ActionEvent e){
 	String action = e.getActionCommand();
@@ -288,9 +323,21 @@ public class GUI extends JFrame implements ActionListener{
 	    //it will be a for loop, need to call day for each day in the array
 	}
 	if (action.equals("cheat")){
-	    cheat = true;
+	    bcheat = true;
 	}else if (action.equals("takeQuiz")){
-	    cheat = false;
+	    bcheat = false;
+	}
+	if (action.equals("climb")){
+	    bclimb = true;
+	}else if(action.equals("noClimb")){
+	    bclimb = false;
+	}
+	if (action.equals("nap")){
+	    inClass = 0;
+	}else if (action.equals("passNotes")){
+	    inClass = 1;
+	}else if (action.equals("learn")){
+	    inClass = 2;
 	}
     }
     
