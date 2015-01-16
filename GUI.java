@@ -17,6 +17,7 @@ public class GUI extends JFrame implements ActionListener{
     private JTextField llamo;
     private boolean bcheat = false;
     private boolean bclimb = true;
+    private boolean bstayHome = false;
     private int inClass = 2;
     private String s;
 	    
@@ -168,7 +169,7 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(b);
     }
     /*
-    public void doADay(String d){
+    public void nextAct(String d){
 	updateDay(d);
 	if (activity == 0){
 	    morning();
@@ -183,8 +184,9 @@ public class GUI extends JFrame implements ActionListener{
     */
 
     public void inSchool(String x){
+	reset();
 	autoUpdate();
-	activity = 2;
+	activity += 1;
 	String z = "You are in your " + x + " class of the day.";
 	if (x.equals("last")){
 	    story.setText("<html>One eternity later...<br>" + z + "</html>");
@@ -271,10 +273,56 @@ public class GUI extends JFrame implements ActionListener{
 	b.addActionListener(this);
 	interact.add(b);
     }
+
+    public void morning(){
+	reset();
+	time = 7;
+	autoUpdate();
+	activity += 1;
+	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...</html>";
+	story.setText(z);
+	interact.add(story);
+	chance = player.calculateChanceNeg();
+	if (r.nextInt(100) < chance){
+	    int x = r.nextInt(4);
+	    switch (x) {
+	    case 0: q.setText(player.eatenHomework());
+		displayResponse();
+		break;
+	    case 1: q.setText(player.subwayDelay());
+		displayResponse();
+		break;
+	    case 2: q.setText(player.coffeeSpill());
+		displayResponse();
+		break;
+	    case 3: JLabel l = new JLabel("You couldn't escape the flu forever... Should you stay or should you go (to school)?");
+		interact.add(l);
+		sickDayResponse();
+		break;
+	    }
+	}else{
+	    
+	}
+    }
+
+    public String sickDayResponse(){
+	JRadioButton stay = new JRadioButton("'What!? I can't go to school like this!'");
+	stay.setActionCommand("stayHome");
+	stay.addActionListener(this);
+	JRadioButton go = new JRadioButton("'I'm a survivor, I can do it'");
+	go.setActionCommand("goToSchool");
+	go.addActionListener(this);
+	ButtonGroup sickDay = new ButtonGroup();
+	sickDay.add(stay);
+	sickDay.add(go);
+	interact.add(stay);
+	interact.add(go);	
+    }
+
     /*
     public void afterSchool(){
-	int chance = getStress() + 100 - getKnow() + 100 - getEnergy();
-	chance /= 3;
+	activity = 0;
+	int chance = player.calculateChanceNeg();
 	String activity = afterSchoolResponse();
 	setHomework(false);
 	if (r.nextInt(100) < chance) {
@@ -299,36 +347,25 @@ public class GUI extends JFrame implements ActionListener{
 	}
     }
 
-    public void morning(){
-	time = 7;
-	chance = player.calculateChanceNeg();
-	if (r.nextInt(100) < chance){
-	    int x = r.nextInt(4);
-	    switch (x) {
-	    case 0: eatenHomework();
-		break;
-	    case 1: subwayDelay();
-		break;
-	    case 2: coffeeSpill();
-		break;
-	    case 3: sickDay(sickDayResponse());
-		break;
-	    }
-	}
-    }
-
     public String afterSchoolResponse(){
 	
     }
-
     public String helpAFriendResponse(){
-
-    }
-
-    public String sickDayResponse(){
-
+	
     }
     */
+
+    public void displayResponse(){
+	reset();
+	player.checkStats();
+	player.checkTime();
+	autoUpdate();
+	interact.add(q);
+	JButton next = new JButton("Continue");
+	next.setActionCommand("cont");
+	next.addActionListener(this);
+	interact.add(next);
+    }
 
     public void actionPerformed(ActionEvent e){
 	String action = e.getActionCommand();
@@ -351,6 +388,11 @@ public class GUI extends JFrame implements ActionListener{
 	    inSchool("first");
 	    //at the end of the day we will increment day by 1, have another button with this action command so a new day begins
 	    //we should start in the morning of monday not in school...
+	}
+	if (action.equals("stayHome")){
+	    bstayHome = true;
+	}else if (action.equals("goToSchool")){
+	    bstayHome = false;
 	}
 	if (action.equals("cheat")){
 	    bcheat = true;
@@ -404,15 +446,4 @@ public class GUI extends JFrame implements ActionListener{
 	}
     }
     
-    public void displayResponse(){
-	reset();
-	player.checkStats();
-	player.checkTime();
-	autoUpdate();
-	interact.add(q);
-	JButton next = new JButton("Continue");
-	next.setActionCommand("cont");
-	next.addActionListener(this);
-	interact.add(next);
-    }
 }

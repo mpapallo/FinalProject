@@ -127,8 +127,9 @@ abstract class Student{
     }
 
     public String coffeeSpill(){
-	setKnow(getKnow() - 20);	
-	return "<html>You got a free coffee from Starbucks by pretending it was your birthday, and it spills all over your notes. <br>Lose 20 knowledge.</html>";
+	setKnow(getKnow() - 20);
+	time += 2;
+	return "<html>You got a free coffee from Starbucks by pretending it was your birthday. You congratulate yourself on your cunning, but while you're sneaking the drink into school, it spills all over your notes! </html>";
     }
 
     public String fireDrill(){
@@ -166,12 +167,13 @@ abstract class Student{
 
     public String eatenHomework(){
 	setGrade(getGrade() - 5);
-	return "<html>Your piranha eats your homework. <br>Not again!</html>";
+	time += 2
+	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that pirahna.</html>";
     }
 
     public String subwayDelay(){
 	setGrade(getGrade() - 7);
-	time += 2;
+	time += 4;
 	return "<html>A dead rat on the subway tracks caused a major delay and you end up missing your first class.<br> Thanks, MTA...</html>";	
     }
 
