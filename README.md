@@ -82,9 +82,15 @@ created Student class and subclasses
 </h4>
 * progress with incorporating events into the gui function that asks for user input
 
-
 <h4>
 1/14/15
 </h4>
 * added morning and after school
 * continued user response methods
+
+<h4>
+1/15/15
+</h4>
+* inSchool function working
+* make each activity (commute, one class, after school) increment activity by 1, when u click continue it goes to the next activity in the array
+* do morning and after school response functions first so that it will be all ready, then you put them together
