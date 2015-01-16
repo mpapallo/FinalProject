@@ -1,9 +1,12 @@
 import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 abstract class Student{
     private String name;
-    private int energy, stress, knowledge;
+    private static int energy, stress, knowledge;
     private int grade;
-    public int time;
+    public static int time;
     Random r = new Random();
 
     public Student(String n, int e, int s, int k){
@@ -27,22 +30,22 @@ abstract class Student{
     public String getName(){
 	return name;
     }
-    public void setEnergy(int e){
+    public static void setEnergy(int e){
 	energy = e;
     }
-    public int getEnergy(){
+    public static int getEnergy(){
 	return energy;
     }
-    public void setStress(int s){
+    public static void setStress(int s){
 	stress = s;
     }
-    public int getStress(){
+    public static int getStress(){
 	return stress;
     }
-    public void setKnow(int k){
+    public static void setKnow(int k){
 	knowledge = k;
     }
-    public int getKnow(){
+    public static int getKnow(){
 	return knowledge;
     }
     public void setGrade(int g){
@@ -167,7 +170,7 @@ abstract class Student{
 
     public String eatenHomework(){
 	setGrade(getGrade() - 5);
-	time += 2
+	time += 2;
 	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that pirahna.</html>";
     }
 
