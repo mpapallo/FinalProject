@@ -128,36 +128,35 @@ abstract class Student{
 
     public String coffeeSpill(){
 	setKnow(getKnow() - 20);	
-	return "<html>You got a free coffee from Starbucks by pretending it was your birthday,<br> and it spills all over your notes. <br>Lose 20 knowledge.</html>";
+	return "<html>You got a free coffee from Starbucks by pretending it was your birthday, and it spills all over your notes. <br>Lose 20 knowledge.</html>";
     }
 
     public String fireDrill(){
+	time += 2;
 	setStress(getStress() - 5);
 	setEnergy(getEnergy() - 5);
-	time += 2;
 	return "<html>FIIRREEEEE (drill)! <br>The microwave in the chemistry department office goes up in flames, so you miss an entire period of class time.</html>";
     }
 
     public String brokenEscalator(String ans){
+	time += 2;
 	if (ans == "climb up the stairs"){
 	    setEnergy(getEnergy() - 15);
 	    return "<html>It's a physical struggle that makes you feel like one of those guys who just free-climbed El Capitan, but you bear the pain for the sake of learning.<br> How inspiring.</html>";
 	} else {
 	    setGrade(getGrade() - 15);
 	    setStress(getStress() - 10);
-	    time += 2;
 	    return "<html>'Sweating' is not in your lexicon... <br>The stairs win this round, you're not even going to try getting to class.</html>";
 	}
     }
 
     public String popQuiz(String ans){
 	time += 2;
-	int score = 100 - getStress() + getEnergy() + getKnow();
-	score /= 3;
 	if (ans == "cheat"){
 	    setEnergy(getEnergy() - 10);
 	    return "<html>You decide to cheat...<br>" + cheat() + "</html>";
 	} else {
+	    int score = calculateChancePos();
 	    setGrade(getGrade() + score / 10);
 	    setStress(getStress() + 5);
 	    setEnergy(getEnergy() - 5);
@@ -190,11 +189,12 @@ abstract class Student{
     }
 
     public String goToClass(String response){
+	time += 2;
 	if (response == "sleep"){
 	    setGrade(getGrade() - 15);
 	    setEnergy(getEnergy() + 20);
 	    setStress(getStress() - 5);
-	    return "<html>You slept like a baby for two hours and learned nothing.<br> Way to go, Sleeping Beauty.</html>";
+	    return "<html>You slept like a baby for two hours and learned nothing.<br>Way to go, Sleeping Beauty.</html>";
 	} else if (response == "pass notes"){
 	    setGrade(getGrade() - 10);
 	    setStress(getStress() - 10);

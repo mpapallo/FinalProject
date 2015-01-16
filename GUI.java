@@ -6,7 +6,9 @@ public class GUI extends JFrame implements ActionListener{
     
     Random r = new Random();
     String[] days = new String[4];
+    int dayi = 0;
     String[] activities = new String[4];
+    int activity = 1;
     private Student player;
     private Container window;
     private JSplitPane pane;
@@ -26,6 +28,10 @@ public class GUI extends JFrame implements ActionListener{
 	days[1] = "Tuesday";
 	days[2] = "Wednesday";
 	days[3] = "Thursday";
+	activities[0] = "morning";
+	activities[1] = "inSchool1";
+	activities[2] = "inSchool2";
+	activities[3] = "afterSchool";
 	
 	this.setTitle("Stuyvesant Finals Week Simulator");
 	this.setSize(700, 400);
@@ -161,42 +167,49 @@ public class GUI extends JFrame implements ActionListener{
 	b.addActionListener(this);
 	interact.add(b);
     }
-
     /*
-    public void day(String d){
-	reset();
-	autoUpdate();
+    public void doADay(String d){
 	updateDay(d);
-	//inSchool("first");
-
-	//inSchool("last");
+	if (activity == 0){
+	    morning();
+	}else if (activity == 1){
+	    inSchool("first");
+	}else if (activity == 2){
+	    inSchool("last");
+	}else{
+	    afterSchool();
+	}
     }
     */
 
-    public void inSchool(String d, String x){
-	reset();
+    public void inSchool(String x){
 	autoUpdate();
-	updateDay(d);
-	story.setText("You are in your " + x + " class of the day.");
+	activity = 2;
+	String z = "You are in your " + x + " class of the day.";
+	if (x.equals("last")){
+	    story.setText("<html>One eternity later...<br>" + z + "</html>");
+	}else{
+	    story.setText("<html>" + z + "</html>");
+	}
 	interact.add(story);
 	int chance = player.calculateChanceNeg();
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
-	    case 0: JLabel l = new JLabel("Your teacher decides to spring a pop quiz on your class!");
+	    case 0: JLabel l = new JLabel("<html>Your teacher decides to spring a pop quiz on your class!</html>");
 		interact.add(l);
 		popQuizResponse();
 		break;
 	    case 1: q.setText(player.fireDrill());
 		displayResponse();
 		break;
-	    case 2: JLabel m = new JLabel("What a surprise, the escalators leading up to your class are broken!");
+	    case 2: JLabel m = new JLabel("<html>What a surprise, the escalators leading up to your class are broken!</html>");
 		interact.add(m);
 		brokenEscalatorResponse();
 		break;
 	    }
 	} else {
-	    JLabel n = new JLabel("Nothing special is happening. What should you do?");
+	    JLabel n = new JLabel("<html>Nothing special is happening. What should you do?</html>");
 	    interact.add(n);
 	    classTimeResponse();
 	}
@@ -333,8 +346,11 @@ public class GUI extends JFrame implements ActionListener{
 	    startGame();	    
 	}
 	if (action.equals("begin")){
-	    inSchool(days[0], "first");
-	    //it will be a for loop, need to call day for each day in the array
+	    reset();
+	    updateDay(days[dayi]);
+	    inSchool("first");
+	    //at the end of the day we will increment day by 1, have another button with this action command so a new day begins
+	    //we should start in the morning of monday not in school...
 	}
 	if (action.equals("cheat")){
 	    bcheat = true;
@@ -383,7 +399,8 @@ public class GUI extends JFrame implements ActionListener{
 	    displayResponse();
 	}
 	if (action.equals("cont")){
-	    
+	    reset();
+	    inSchool("last");
 	}
     }
     
