@@ -121,12 +121,16 @@ abstract class Student{
     /////////////////////////
     ///   morning stuff   ///
     /////////////////////////
-    public void sickDay(String ans){
+    public String sickDay(String ans){
 	if (ans == "stay home"){
 	    time+=24;
 	    setGrade(getGrade() - 20);
 	    setEnergy(100);
 	    setStress(getStress() - 10);
+	    return "<html>Instead of going to school, you lay in bed and marathoned all 6 Lord of the Rings movies. <br>24 hours well spent.</html>";
+	}else{
+	    //there should still be a chance that you're too sick to go to school
+	    return "<html>The sacrifices you make for your education are truly heroic. <br>On the other hand, none of your classmates will sit within 10 ft of you.</html>";
 	}
     }
     public String coffeeSpill(){
