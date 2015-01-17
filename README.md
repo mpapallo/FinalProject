@@ -97,6 +97,7 @@ created Student class and subclasses
 1/16/15
 </h4>
 * finished morning
+* btw the popQuiz function calculates the score weirdly- never above 50- fix that
 
 <h3>
 To do list
