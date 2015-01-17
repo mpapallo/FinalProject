@@ -3,12 +3,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 abstract class Student{
+
+    /////////////////////////
     private String name;
     private static int energy, stress, knowledge;
     private int grade;
     public static int time;
     Random r = new Random();
-
+    /////////////////////////
     public Student(String n, int e, int s, int k){
 	setName(n);
 	setEnergy(e);
@@ -22,8 +24,10 @@ abstract class Student{
     public Student(){
 	this("Student", 80, 50, 30);
     }
-    
+
+    /////////////////////////////
     /// variable set and gets ///
+    /////////////////////////////
     public void setName(String n){
 	name = n;
     }
@@ -60,8 +64,8 @@ abstract class Student{
     public String toString(){
 	return this.getName();
     }
-    ////////////////////
 
+    /////////////////////////
     public void sleep(int hrs){
         setEnergy(getEnergy() + hrs * 10);
     }
@@ -77,7 +81,9 @@ abstract class Student{
 	setEnergy(getEnergy() - hrs*4);
     }
 
-    // check stats //
+    /////////////////////////
+    ///    check stats    ///
+    /////////////////////////
     public void checkStats(){
 	if (getKnow() > 100){
 	    setKnow(100);
@@ -101,8 +107,8 @@ abstract class Student{
 	    time = 1;
 	}
     }
-    /////
 
+    /////////////////////////
     public int calculateChancePos(){
 	int chance = getKnow() + 100 - getStress() + getEnergy();
 	return chance / 3;
@@ -112,6 +118,9 @@ abstract class Student{
 	return chance / 3;
     }
 
+    /////////////////////////
+    ///   morning stuff   ///
+    /////////////////////////
     public void sickDay(String ans){
 	if (ans == "stay home"){
 	    time+=24;
@@ -120,21 +129,28 @@ abstract class Student{
 	    setStress(getStress() - 10);
 	}
     }
-
-    public void helpAFriend(String ans){
-	if (ans == "yes"){
-	    setStress(getStress() - 20);
-	    setEnergy(getEnergy() - 10);
-	    time += 2;
-	}
-    }
-
     public String coffeeSpill(){
 	setKnow(getKnow() - 20);
 	time += 2;
 	return "<html>You got a free coffee from Starbucks by pretending it was your birthday. You congratulate yourself on your cunning, but while you're sneaking the drink into school, it spills all over your notes! </html>";
     }
+    
+    public String eatenHomework(){
+	setGrade(getGrade() - 5);
+	time += 2;
+	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that pirahna.</html>";
+    }
+    
+     
+    public String subwayDelay(){
+	setGrade(getGrade() - 7);
+	time += 4;
+	return "<html>A dead rat on the subway tracks caused a major delay and you end up missing your first class.<br> Thanks, MTA...</html>";	
+    }
 
+    /////////////////////////
+    ///  in school stuff  ///
+    /////////////////////////
     public String fireDrill(){
 	time += 2;
 	setStress(getStress() - 5);
@@ -167,19 +183,7 @@ abstract class Student{
 	    return "<html>You take the pop quiz...<br>And score a " + score + ".</html>";
 	}
     }
-
-    public String eatenHomework(){
-	setGrade(getGrade() - 5);
-	time += 2;
-	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that pirahna.</html>";
-    }
-
-    public String subwayDelay(){
-	setGrade(getGrade() - 7);
-	time += 4;
-	return "<html>A dead rat on the subway tracks caused a major delay and you end up missing your first class.<br> Thanks, MTA...</html>";	
-    }
-
+    
     public String cheat(){
 	int chance = calculateChanceNeg();
 	if (r.nextInt(100) < chance){
@@ -210,6 +214,17 @@ abstract class Student{
 	    setKnow(getKnow() + 15);
 	    setStress(getStress() + 5);
 	    return "<html>You sat through class and learned like a good little student. <br>Hooray!</html> ";
+	}
+    }
+
+    /////////////////////////
+    ///after school stuff ///
+    /////////////////////////
+    public void helpAFriend(String ans){
+	if (ans == "yes"){
+	    setStress(getStress() - 20);
+	    setEnergy(getEnergy() - 10);
+	    time += 2;
 	}
     }
 
