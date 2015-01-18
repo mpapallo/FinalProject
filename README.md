@@ -97,22 +97,45 @@ created Student class and subclasses
 1/16/15
 </h4>
 * finished morning
-* btw the popQuiz function calculates the score weirdly- never above 50- fix that
+* btw the popQuiz function calculates the score weirdly- never above 50- fix that // FIXED 1/18/15
+
+<h4>
+1/17/15
+</h4>
+* added fonts, prettified GUI
+* added energy, knowledge, stress bars
+* made time am and pm
+
+<h4>
+1/18/19
+</h4>
+* finished after school
+* made three class periods instead of two and fixed going from one period to another (was infinitely going to "last class of the day")
+* changed so the next function (after school, in school, morning, etc.) is based on a string returned by previous function
+* added homework (for some reason it got deleted or never saved before)
+* fixed pop quiz scoring (just added 25 pts to score)
+* FIX: after school: study, homework, facebook don't change the time (each should add 2 hrs)
+* FIX: after school: after time is 7am (when you sleep or when you get to that time by doing things), does one more cycle of after school --> maybe it isn't returning "morn" until time has already been 7? maybe time isn't updating?
+
 
 <h3>
 To do list
 </h3>
+
 <h4>
 Most important
 </h4>
-* finish after school function
-* make each activity (commute, one class, after school) increment activity by 1, when u click continue it goes to the next activity in the array (obviosuly last thing will also increment dayi by 1 so that it becomes a new day next morning when u call udpateday(days[dayi]))
-* friday aka finals day function (will be called when activity = 0 on dayi = 3)
+* fix after school function
+* have activities return strings to start next activity (ex. in school last class returns "last" which starts after school)
+* fix morning function for tuesday-thursday
+* friday aka finals day function (will be called on dayi = 3 after morning)
+
 <h4>
 Cooler stuff
 </h4>
 * array with teacher names, can choose a random one to incorporate
 * array with classes, can choose a random one to incorporate
 * can have different text for same events, randomly chosen
-* add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different leves mor different in general
+* add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different leves more different in general
+* prettify more --> maybe add pictures, graphics, etc? make energy, etc. bars colored? add delay?
 
