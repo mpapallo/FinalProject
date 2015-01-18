@@ -41,7 +41,7 @@ public class GUI extends JFrame implements ActionListener{
 	days[1] = "Tuesday";
 	days[2] = "Wednesday";
 	days[3] = "Thursday";
-	
+
 	this.setTitle("Stuyvesant Finals Week Simulator");
 	this.setSize(800, 400);
 	this.setLocation(100, 100);
@@ -182,6 +182,7 @@ public class GUI extends JFrame implements ActionListener{
 	updateKnowledge(player.getKnow());
 	updateEnergy(player.getEnergy());
 	updateTime(player.time);
+	updateDay(days[dayi]);
 	window.repaint();
     }
     public void reset(){
@@ -412,7 +413,7 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
-
+	chance -= 20;
 	Student.setHomework(false);
 
 	if (r.nextInt(100) < chance) {
@@ -427,11 +428,13 @@ public class GUI extends JFrame implements ActionListener{
 	    afterSchoolResponse();
 
 	}
-	if (player.time != 7) {
+
+	if (Student.time < 7 || Student.time > 14) {
 	    return "aS";
 	} else {
 	    return "morn";
 	}
+
     }
 
     public void afterSchoolResponse(){

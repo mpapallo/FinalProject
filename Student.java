@@ -81,11 +81,13 @@ abstract class Student{
 	setKnow(getKnow() + hrs*5);
 	setStress(getStress() + hrs*3);
 	setEnergy(getEnergy() - hrs*5);
+	time += hrs;
     }
 
     public void socialize(int hrs){
 	setStress(getStress() - hrs*5);
 	setEnergy(getEnergy() - hrs*4);
+	time += hrs;
     }
 
     /////////////////////////
@@ -229,13 +231,13 @@ abstract class Student{
     }
 
     public String afterSchoolTime(String response){
-	if (response.equals("study")){
+	if (response == "study"){
 	    study(2);
 	    return "<html>You studied your class materials, ignoring the temptation of your Wii and iPhone. Impressive.</html>";
-	} else if (response.equals("homework")){
+	} else if (response == "homework"){
 	    doHomework();
 	    return "<html>You completed your homework. Even though your teacher won't check it, you're glad you did it. It feels nice to be a good student once in a while.</html>"; 
-	} else if (response.equals("facebook")){
+	} else if (response == "facebook"){
 	    socialize(2);
 	    return "<html>You surfed Facebook for a while, Facebook-stalking random aquaintances. Dang it! You accidentally liked a post from three years ago! Unlike, unlike, unlike!</html>";
 	} else {
@@ -273,6 +275,7 @@ abstract class Student{
 
     public void doHomework(){
 	setHomework(true);
+	time += 2;
     }
 
 }
