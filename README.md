@@ -121,17 +121,21 @@ created Student class and subclasses
 <h3>
 To do list
 </h3>
+
 <h4>
 Most important
 </h4>
-* finish after school function
-* make each activity (commute, one class, after school) increment activity by 1, when u click continue it goes to the next activity in the array (obviosuly last thing will also increment dayi by 1 so that it becomes a new day next morning when u call udpateday(days[dayi]))
-* friday aka finals day function (will be called when activity = 0 on dayi = 3)
+* fix after school function
+* have activities return strings to start next activity (ex. in school last class returns "last" which starts after school)
+* fix morning function for tuesday-thursday
+* friday aka finals day function (will be called on dayi = 3 after morning)
+
 <h4>
 Cooler stuff
 </h4>
 * array with teacher names, can choose a random one to incorporate
 * array with classes, can choose a random one to incorporate
 * can have different text for same events, randomly chosen
-* add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different leves mor different in general
+* add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different leves more different in general
+* prettify more --> maybe add pictures, graphics, etc? make energy, etc. bars colored? add delay?
 
