@@ -190,6 +190,7 @@ abstract class Student{
 	    return "<html>You decide to cheat...<br>" + cheat() + "</html>";
 	} else {
 	    int score = calculateChancePos();
+	    score += 25;
 	    setGrade(getGrade() + score / 10);
 	    setStress(getStress() + 5);
 	    setEnergy(getEnergy() - 5);
