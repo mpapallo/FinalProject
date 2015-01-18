@@ -99,6 +99,20 @@ created Student class and subclasses
 * finished morning
 * btw the popQuiz function calculates the score weirdly- never above 50- fix that
 
+<h4>
+1/17/15
+</h4>
+* added fonts, prettified GUI
+* added energy, knowledge, stress bars
+* made time am and pm
+
+<h4>
+1/18/19
+</h4>
+* finished after school
+* made three class periods instead of two and fixed going from one period to another (was infinitely going to "last class of the day")
+
+
 <h3>
 To do list
 </h3>
