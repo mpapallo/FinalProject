@@ -21,7 +21,9 @@ public class GUI extends JFrame implements ActionListener{
     private boolean bclimb = true;
     private boolean bstayHome = false;
     private int inClass = 2;
+    private int afSchool = 3;
     private String s = "";
+    private String y = "";
     
     Font font = new Font("Optima", Font.PLAIN, 16);
     Font eventFont = new Font("Optima", Font.PLAIN, 16);
@@ -233,7 +235,8 @@ public class GUI extends JFrame implements ActionListener{
 	reset();
 	Student.time = 7;
 	autoUpdate();
-	activity += 1;
+	activity = 0;
+	dayi += 1;
 	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...</html>";
 	story.setText(z);
 	interact.add(story);
@@ -286,7 +289,7 @@ public class GUI extends JFrame implements ActionListener{
     }
 
     ///// in school /////
-    public void inSchool(String x){
+    public String inSchool(String x){
 	reset();
 	autoUpdate();
 	activity += 1;
@@ -298,7 +301,9 @@ public class GUI extends JFrame implements ActionListener{
 	    story.setText("<html>" + z + "</html>");
 	}
 	interact.add(story);
+
 	int chance = player.calculateChanceNeg();
+
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
@@ -322,6 +327,7 @@ public class GUI extends JFrame implements ActionListener{
 	    interact.add(n);
 	    classTimeResponse();
 	}
+	return x;
     }
     
     public void popQuizResponse(){
@@ -394,45 +400,89 @@ public class GUI extends JFrame implements ActionListener{
 	b.setFont(buttonFont);
     }
 
-    /*
+    
     ///// after school /////
     public void afterSchool(){
 	reset();
 	autoUpdate();
-	activity = 0;
-	dayi += 1;
+	activity += 1;
+	String z = "<html>School's out for the day! Now you have some time to do whatever you want.</html>";
+	story.setText(z);
+	interact.add(story);
+
 	int chance = player.calculateChanceNeg();
-	String activity = afterSchoolResponse();
-	setHomework(false);
+
+	Student.setHomework(false);
+
 	if (r.nextInt(100) < chance) {
-	    helpAFriend(helpAFriendResponse());
+	    JLabel l = new JLabel("<html>Your friend asks you to help them rehearse for SING!. Of course, this will reduce your precious free time. What do you do?</html>");
+	    l.setFont(eventFont);
+	    interact.add(l);
+	    helpAFriendResponse();
 	} else {
-	    if (activity == "study") {
-		study(1);
-	    } else if (activity == "homework") {
-		doHomework();
-	    } else if (activity == "facebook"){
-		socialize(1);
-	    } else if (activity == "text"){
-		socialize(1);
-	    } else {
-		time = 7;
-		if (time >= 6) {
-		    sleep(24-time);
-		} else {
-		    sleep(6-time);
-		}
-	    } 
+	    JLabel n = new JLabel("<html>Home at last! What do you want to do now?</html>");
+	    n.setFont(eventFont);
+	    interact.add(n);
+	    afterSchoolResponse();
+
 	}
     }
 
-    public String afterSchoolResponse(){
-	
+    public void afterSchoolResponse(){
+	JRadioButton study = new JRadioButton("study");
+	study.setActionCommand("study");
+	study.addActionListener(this);
+	JRadioButton homework  = new JRadioButton("do your homework");
+	study.setActionCommand("homework");
+	study.addActionListener(this);
+	JRadioButton facebook = new JRadioButton("go on Facebook");
+	study.setActionCommand("facebook");
+	study.addActionListener(this);
+	JRadioButton sleep = new JRadioButton("go to sleep");
+	study.setActionCommand("goToSleep");
+	study.addActionListener(this);
+	ButtonGroup afterSchoolGroup = new ButtonGroup();
+	afterSchoolGroup.add(study);
+	afterSchoolGroup.add(homework);
+	afterSchoolGroup.add(facebook);
+	afterSchoolGroup.add(sleep);
+	interact.add(study);
+	interact.add(homework);
+	interact.add(facebook);
+	interact.add(sleep);
+	JButton b = new JButton("Submit");
+	b.setActionCommand("afterSchoolResponse");
+	b.addActionListener(this);
+	interact.add(b);
+
+	study.setFont(eventFont);
+	homework.setFont(eventFont);
+	facebook.setFont(eventFont);
+	sleep.setFont(eventFont);
+	b.setFont(buttonFont);
     }
-    public String helpAFriendResponse(){
-	
+
+    public void helpAFriendResponse(){
+	JRadioButton yes = new JRadioButton("help your friend");
+	yes.setActionCommand("yes");
+	yes.addActionListener(this);
+	JRadioButton no = new JRadioButton("let your friend rehearse alone");
+	no.setActionCommand("no");
+	no.addActionListener(this);
+	ButtonGroup helpFriendGroup = new ButtonGroup();
+	helpFriendGroup.add(yes);
+	helpFriendGroup.add(no);
+	interact.add(yes);
+	interact.add(no);
+	JButton b = new JButton("Submit");
+	b.setActionCommand("helpAFriendResponse");
+	b.addActionListener(this);
+	interact.add(b);
+
+	yes.setFont(eventFont);
+	no.setFont(eventFont);
+	b.setFont(buttonFont);
     }
-    */
     
     /////////////////////////
     public void displayResponse(){
@@ -450,12 +500,13 @@ public class GUI extends JFrame implements ActionListener{
     /////////////////////////
     public void paint(Graphics g){
 	super.paint(g);
-	g.drawRect(130,97,100,10);
-	g.drawRect(130,75,100,10);
-	g.drawRect(130,52,100,10);
-	g.fillRect(130,97,Student.getEnergy(),10);
-	g.fillRect(130,75,Student.getKnow(),10);
-	g.fillRect(130,52,Student.getStress(),10);
+	g.drawRect(130,45,100,10);
+	g.drawRect(130,65,100,10);
+	g.drawRect(130,85,100,10);
+	g.fillRect(130,45,Student.getStress(),10);
+	g.fillRect(130,65,Student.getKnow(),10);
+	g.fillRect(130,85,Student.getEnergy(),10);
+
     }
 
     /////////////////////////
@@ -483,7 +534,7 @@ public class GUI extends JFrame implements ActionListener{
 	if (action.equals("begin")){
 	    reset();
 	    updateDay(days[dayi]);
-	    inSchool("first");
+	    y = inSchool("first");
 	    //at the end of the day we will increment day by 1, have another button with this action command so a new day begins
 	    //we should start in the morning of monday not in school...
 	}
@@ -556,8 +607,36 @@ public class GUI extends JFrame implements ActionListener{
 	    displayResponse();
 	}
 	/////////////////////////
-	if (action.equals("cont")){
-	    inSchool("last");
+	if (action.equals("study")){
+	    afSchool = 0;
+	} else if (action.equals("homework")){
+	    afSchool = 1;
+	} else if (action.equals("facebook")){
+	    afSchool = 2;
+	} else if (action.equals("goToSleep")){
+	    afSchool = 3;
+	}
+	if (action.equals("afterSchoolResponse")){
+	    if (afSchool == 0){
+		s = "study";
+	    } else if (afSchool == 1){
+		s = "homework";
+	    } else if (afSchool == 2){
+		s = "facebook";
+	    } else {
+		s = "";
+	    }
+	    q.setText(player.afterSchoolTime(s));
+	    reset();
+	    displayResponse();
+	}
+	/////////////////////////
+	if (action.equals("cont") && y.equals("first")){
+	    y = inSchool("second");
+	} else if (action.equals("cont") && y.equals("second")){
+	    y = inSchool("last");
+	} else if (action.equals("cont")){
+	    afterSchool();
 	}
     }
     
