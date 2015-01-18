@@ -4,11 +4,13 @@ import java.awt.event.*;
 import java.util.*;
 import java.awt.geom.*;
 public class GUI extends JFrame implements ActionListener{
+
+    /////////////////////////
     Random r = new Random();
     String[] days = new String[4];
     int dayi = 0;
-    String[] activities = new String[4];
-    int activity = 1;
+    int activity = 0;
+
     private Student player;
     private Container window;
     private JSplitPane pane;
@@ -19,31 +21,26 @@ public class GUI extends JFrame implements ActionListener{
     private boolean bclimb = true;
     private boolean bstayHome = false;
     private int inClass = 2;
-    private String s;
-
-    Font font = new Font("Optima", Font.PLAIN, 30);
-    Font eventFont = new Font("Optima", Font.PLAIN, 24);
-    Font statsFont = new Font("Optima", Font.PLAIN, 18);
-    Font buttonFont = new Font("Optima", Font.BOLD, 18);
-
+    private String s = "";
+    
+    Font font = new Font("Optima", Font.PLAIN, 16);
+    Font eventFont = new Font("Optima", Font.PLAIN, 16);
+    Font statsFont = new Font("Optima", Font.PLAIN, 14);
+    Font buttonFont = new Font("Optima", Font.BOLD, 14);
+    /////////////////////////
     public GUI(){
 	player = new Freshman();
 	story = new JLabel();
 	q = new JLabel();
+	story.setFont(font);
+	q.setFont(font);
 	days[0] = "Monday";
 	days[1] = "Tuesday";
 	days[2] = "Wednesday";
 	days[3] = "Thursday";
-	activities[0] = "morning";
-	activities[1] = "inSchool1";
-	activities[2] = "inSchool2";
-	activities[3] = "afterSchool";
 	
-	story.setFont(font);
-	q.setFont(font);
-
 	this.setTitle("Stuyvesant Finals Week Simulator");
-	this.setSize(700, 400);
+	this.setSize(800, 400);
 	this.setLocation(100, 100);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	window = this.getContentPane();
@@ -51,7 +48,7 @@ public class GUI extends JFrame implements ActionListener{
 	setupStatsPanel();
 	setupInteractPanel();
 	
-	Dimension minSize = new Dimension(100,100);
+	Dimension minSize = new Dimension(300,300);
 	stats.setMinimumSize(minSize);
 	interact.setMinimumSize(minSize);
 
@@ -64,48 +61,16 @@ public class GUI extends JFrame implements ActionListener{
 	window.add(pane, BorderLayout.CENTER);
     }
 
-    public void updateStress(int s){
-	stress.setText("stress: " + s);
-    }
-    public void updateKnowledge(int k){
-	knowledge.setText("knowledge: " + k); 
-    }
-    public void updateEnergy(int e){
-	energy.setText("energy: " + e);
-    }
-    public void updateTime(int t){
-	if (t < 12){
-	    time.setText("time: " + t + " a.m.");
-	} else if (t == 12) {
-	    time.setText("time: " + t + " p.m.");
-	} else {
-	    time.setText("time: " + (t-12) + " p.m.");
-	}
-    }
-    public void updateDay(String d){
-	day.setText("Today is " + d + ".");
-    }
-    public void autoUpdate(){
-	updateStress(player.getStress());
-	updateKnowledge(player.getKnow());
-	updateEnergy(player.getEnergy());
-	updateTime(player.time);
-	window.repaint();
-    }
-    
-    public void reset(){
-	interact.removeAll();
-	interact.revalidate();
-	window.repaint();
-    }
-
+    /////////////////////////
+    ///       setup       ///
+    /////////////////////////
     public void setupStatsPanel(){
 	stats = new JPanel();
 	BoxLayout b = new BoxLayout(stats, BoxLayout.Y_AXIS);
 	stats.setLayout(b);
 	stats.setBorder(BorderFactory.createCompoundBorder(
-	  BorderFactory.createTitledBorder("Stats"),
-	  BorderFactory.createRaisedBevelBorder()));
+           BorderFactory.createTitledBorder("Stats"),
+           BorderFactory.createRaisedBevelBorder()));
 	stats.setMinimumSize(new Dimension(100,100));
 	stress = new JLabel("stress: ");
 	stress.setBorder(BorderFactory.createEmptyBorder());
@@ -122,6 +87,7 @@ public class GUI extends JFrame implements ActionListener{
 	day = new JLabel("Today is ");
 	day.setBorder(BorderFactory.createEmptyBorder());
 	stats.add(day);
+
 	stress.setFont(statsFont);
 	energy.setFont(statsFont);
 	day.setFont(statsFont);
@@ -133,9 +99,8 @@ public class GUI extends JFrame implements ActionListener{
 	BoxLayout b = new BoxLayout(interact, BoxLayout.Y_AXIS);
 	interact.setLayout(b);
 	interact.setBorder(BorderFactory.createCompoundBorder(
-	  BorderFactory.createTitledBorder("Story"),
-	  BorderFactory.createRaisedBevelBorder()));
-
+           BorderFactory.createTitledBorder("Story"),
+           BorderFactory.createRaisedBevelBorder()));
 	JLabel intro = new JLabel("<html>Welcome to the Stuyvesant Finals Week Simulator!<br>Please enter your name and choose a difficulty:</html>");
 	llamo = new JTextField("Harry Potter");
 	llamo.setSize(5, 10);
@@ -143,6 +108,7 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(llamo);
 	llamo.setFont(font);
 	addDifficultyOptions();
+
 	JButton next = new JButton("Next");
 	next.setActionCommand("next");
 	next.addActionListener(this);
@@ -184,6 +150,46 @@ public class GUI extends JFrame implements ActionListener{
 	sr.setFont(buttonFont);
     }
 
+    /////////////////////////
+    ///  updating stats   ///
+    /////////////////////////
+    public void updateStress(int s){
+	stress.setText("stress: " + s);
+    }
+    public void updateKnowledge(int k){
+	knowledge.setText("knowledge: " + k); 
+    }
+    public void updateEnergy(int e){
+	energy.setText("energy: " + e);
+    }
+    public void updateTime(int t){
+	if (t < 12){
+	    time.setText("time: " + t + " a.m.");
+	} else if (t == 12) {
+	    time.setText("time: " + t + " p.m.");
+	} else {
+	    time.setText("time: " + (t-12) + " p.m.");
+	}
+    }
+    public void updateDay(String d){
+	day.setText("Today is " + d + ".");
+    }
+    public void autoUpdate(){
+	updateStress(player.getStress());
+	updateKnowledge(player.getKnow());
+	updateEnergy(player.getEnergy());
+	updateTime(player.time);
+	window.repaint();
+    }
+    public void reset(){
+	interact.removeAll();
+	interact.revalidate();
+	window.repaint();
+    }
+    
+    /////////////////////////
+    ///       intro       ///
+    /////////////////////////
     public void initializePlayerAndStats(String name){
 	player.setName(name);
         updateStress(player.getStress());
@@ -203,26 +209,87 @@ public class GUI extends JFrame implements ActionListener{
 	story.setHorizontalAlignment(JLabel.CENTER);
 	b.setFont(buttonFont);
     }
+
+    /////////////////////////
+    /// user interaction  ///
+    /////////////////////////
     /*
-    public void nextAct(String d){
-	updateDay(d);
-	if (activity == 0){
-	    morning();
-	}else if (activity == 1){
-	    inSchool("first");
-	}else if (activity == 2){
-	    inSchool("last");
-	}else{
-	    afterSchool();
-	}
-    }
+      public void nextAct(String d){
+      updateDay(d);
+      if (activity == 0){
+      morning();
+      }else if (activity == 1){
+      inSchool("first");
+      }else if (activity == 2){
+      inSchool("last");
+      }else{
+      afterSchool();
+      }
+      }
     */
 
+    ///// morning /////
+    public void morning(){
+	reset();
+	Student.time = 7;
+	autoUpdate();
+	activity += 1;
+	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...</html>";
+	story.setText(z);
+	interact.add(story);
+
+	int chance = player.calculateChanceNeg();
+	if (r.nextInt(100) < chance){
+	    int x = r.nextInt(4);
+	    switch (x) {
+	    case 0: q.setText(player.eatenHomework());
+		displayResponse();
+		break;
+	    case 1: q.setText(player.subwayDelay());
+		displayResponse();
+		break;
+	    case 2: q.setText(player.coffeeSpill());
+		displayResponse();
+		break;
+	    case 3: JLabel l = new JLabel("<html>You couldn't escape the flu forever... Should you stay or should you go (to school)?</html>");
+		l.setFont(eventFont);
+		interact.add(l);
+		sickDayResponse();
+		break;
+	    }
+	}else{
+	    q.setText("<html>Thankfully, the morning is uneventful and you get to school in one piece.</html>");
+	    displayResponse();  
+	}
+    }
+
+    public void sickDayResponse(){
+	JRadioButton stay = new JRadioButton("'What!? I can't go to school like this!'");
+	stay.setActionCommand("stayHome");
+	stay.addActionListener(this);
+	JRadioButton go = new JRadioButton("'I'm a survivor, I can do it'");
+	go.setActionCommand("goToSchool");
+	go.addActionListener(this);
+	ButtonGroup sickDay = new ButtonGroup();
+	sickDay.add(stay);
+	sickDay.add(go);
+	interact.add(stay);
+	interact.add(go);
+	
+	JButton b = new JButton("Submit");
+	b.setActionCommand("sickDayResponse");
+	b.addActionListener(this);
+	interact.add(b);
+	
+	go.setFont(eventFont);	
+	stay.setFont(eventFont);
+    }
+
+    ///// in school /////
     public void inSchool(String x){
 	reset();
 	autoUpdate();
 	activity += 1;
-
 	
 	String z = "You are in your " + x + " class of the day.";
 	if (x.equals("last")){
@@ -255,7 +322,6 @@ public class GUI extends JFrame implements ActionListener{
 	    interact.add(n);
 	    classTimeResponse();
 	}
-	
     }
     
     public void popQuizResponse(){
@@ -328,62 +394,13 @@ public class GUI extends JFrame implements ActionListener{
 	b.setFont(buttonFont);
     }
 
-    public void morning(){
-	reset();
-	Student.time = 7;
-	autoUpdate();
-	activity += 1;
-	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...</html>";
-	story.setText(z);
-	interact.add(story);
-	int chance = player.calculateChanceNeg();
-	if (r.nextInt(100) < chance){
-	    int x = r.nextInt(4);
-	    switch (x) {
-	    case 0: q.setText(player.eatenHomework());
-		displayResponse();
-		break;
-	    case 1: q.setText(player.subwayDelay());
-		displayResponse();
-		break;
-	    case 2: q.setText(player.coffeeSpill());
-		displayResponse();
-		break;
-	    case 3: JLabel l = new JLabel("You couldn't escape the flu forever... Should you stay or should you go (to school)?");
-		l.setFont(eventFont);
-		interact.add(l);
-		sickDayResponse();
-		break;
-	    }
-	}else{
-	    
-	}
-    }
-
-    public void sickDayResponse(){
-	JRadioButton stay = new JRadioButton("'What!? I can't go to school like this!'");
-	stay.setActionCommand("stayHome");
-	stay.addActionListener(this);
-	JRadioButton go = new JRadioButton("'I'm a survivor, I can do it'");
-	go.setActionCommand("goToSchool");
-	go.addActionListener(this);
-	ButtonGroup sickDay = new ButtonGroup();
-	sickDay.add(stay);
-	sickDay.add(go);
-	interact.add(stay);
-	interact.add(go);
-	/*	JButton b = new JButton("Submit");
-	b.setActionCommand("sickDayResponse");
-	b.addActionListener(this);
-	interact.add(b);*/
-
-	go.setFont(eventFont);	
-	stay.setFont(eventFont);
-    }
-
     /*
+    ///// after school /////
     public void afterSchool(){
+	reset();
+	autoUpdate();
 	activity = 0;
+	dayi += 1;
 	int chance = player.calculateChanceNeg();
 	String activity = afterSchoolResponse();
 	setHomework(false);
@@ -416,9 +433,9 @@ public class GUI extends JFrame implements ActionListener{
 	
     }
     */
-
+    
+    /////////////////////////
     public void displayResponse(){
-	reset();
 	player.checkStats();
 	player.checkTime();
 	autoUpdate();
@@ -430,10 +447,24 @@ public class GUI extends JFrame implements ActionListener{
 	
 	next.setFont(buttonFont);
     }
+    /////////////////////////
+    public void paint(Graphics g){
+	super.paint(g);
+	g.drawRect(130,97,100,10);
+	g.drawRect(130,75,100,10);
+	g.drawRect(130,52,100,10);
+	g.fillRect(130,97,Student.getEnergy(),10);
+	g.fillRect(130,75,Student.getKnow(),10);
+	g.fillRect(130,52,Student.getStress(),10);
+    }
 
+    /////////////////////////
+    ///  action listener  ///
+    /////////////////////////
     public void actionPerformed(ActionEvent e){
 	repaint();
 	String action = e.getActionCommand();
+	/////////////////////////
 	if (action.equals("Freshman")){
 	    player = new Freshman();
 	}else if (action.equals("Sophomore")){
@@ -443,10 +474,12 @@ public class GUI extends JFrame implements ActionListener{
 	}else if (action.equals("Senior")){
 	    player = new Senior();
 	}
+	/////////////////////////
 	if (action.equals("next")){
 	    initializePlayerAndStats(llamo.getText());
 	    startGame();	    
 	}
+	/////////////////////////
 	if (action.equals("begin")){
 	    reset();
 	    updateDay(days[dayi]);
@@ -454,11 +487,23 @@ public class GUI extends JFrame implements ActionListener{
 	    //at the end of the day we will increment day by 1, have another button with this action command so a new day begins
 	    //we should start in the morning of monday not in school...
 	}
+	/////////////////////////
 	if (action.equals("stayHome")){
 	    bstayHome = true;
 	}else if (action.equals("goToSchool")){
 	    bstayHome = false;
 	}
+	if (action.equals("sickDayResponse")){
+	    if (bstayHome){
+		s = "stay home";
+	    }else{
+		s = "";
+	    }
+	    q.setText(player.sickDay(s));
+	    reset();
+	    displayResponse();
+	}
+	/////////////////////////
 	if (action.equals("cheat")){
 	    bcheat = true;
 	}else if (action.equals("takeQuiz")){
@@ -471,8 +516,10 @@ public class GUI extends JFrame implements ActionListener{
 		s = "";
 	    }
 	    q.setText(player.popQuiz(s));
+	    reset();
 	    displayResponse();
 	}
+	/////////////////////////
 	if (action.equals("climb")){
 	    bclimb = true;
 	}else if(action.equals("noClimb")){
@@ -485,8 +532,10 @@ public class GUI extends JFrame implements ActionListener{
 		s = "";
 	    }
 	    q.setText(player.brokenEscalator(s));
+	    reset();
 	    displayResponse();
 	}
+	/////////////////////////
 	if (action.equals("nap")){
 	    inClass = 0;
 	}else if (action.equals("passNotes")){
@@ -503,24 +552,13 @@ public class GUI extends JFrame implements ActionListener{
 	        s ="";
 	    }
 	    q.setText(player.goToClass(s));
+	    reset();
 	    displayResponse();
 	}
+	/////////////////////////
 	if (action.equals("cont")){
-	    reset();
 	    inSchool("last");
 	}
     }
-
- 
-   public void paint(Graphics g)
-   {
-      super.paint(g);
-      g.drawRect(130,97,100,10);
-      g.drawRect(130,75,100,10);
-      g.drawRect(130,52,100,10);
-      g.fillRect(130,97,Student.getEnergy(),10);
-      g.fillRect(130,75,Student.getKnow(),10);
-      g.fillRect(130,52,Student.getStress(),10);
-   }
     
 }

@@ -92,5 +92,27 @@ created Student class and subclasses
 1/15/15
 </h4>
 * inSchool function working
-* make each activity (commute, one class, after school) increment activity by 1, when u click continue it goes to the next activity in the array
-* do morning and after school response functions first so that it will be all ready, then you put them together
+
+<h4>
+1/16/15
+</h4>
+* finished morning
+* btw the popQuiz function calculates the score weirdly- never above 50- fix that
+
+<h3>
+To do list
+</h3>
+<h4>
+Most important
+</h4>
+* finish after school function
+* make each activity (commute, one class, after school) increment activity by 1, when u click continue it goes to the next activity in the array (obviosuly last thing will also increment dayi by 1 so that it becomes a new day next morning when u call udpateday(days[dayi]))
+* friday aka finals day function (will be called when activity = 0 on dayi = 3)
+<h4>
+Cooler stuff
+</h4>
+* array with teacher names, can choose a random one to incorporate
+* array with classes, can choose a random one to incorporate
+* can have different text for same events, randomly chosen
+* add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different leves mor different in general
+
