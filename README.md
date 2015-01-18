@@ -97,7 +97,7 @@ created Student class and subclasses
 1/16/15
 </h4>
 * finished morning
-* btw the popQuiz function calculates the score weirdly- never above 50- fix that
+* btw the popQuiz function calculates the score weirdly- never above 50- fix that // FIXED 1/18/15
 
 <h4>
 1/17/15
@@ -111,6 +111,11 @@ created Student class and subclasses
 </h4>
 * finished after school
 * made three class periods instead of two and fixed going from one period to another (was infinitely going to "last class of the day")
+* changed so the next function (after school, in school, morning, etc.) is based on a string returned by previous function
+* added homework (for some reason it got deleted or never saved before)
+* fixed pop quiz scoring (just added 25 pts to score)
+* FIX: after school: study, homework, facebook don't change the time (each should add 2 hrs)
+* FIX: after school: after time is 7am (when you sleep or when you get to that time by doing things), does one more cycle of after school --> maybe it isn't returning "morn" until time has already been 7? maybe time isn't updating?
 
 
 <h3>
