@@ -20,6 +20,7 @@ public class GUI extends JFrame implements ActionListener{
     private boolean bcheat = false;
     private boolean bclimb = true;
     private boolean bstayHome = false;
+    private boolean bhelp = false;
     private int inClass = 2;
     private int afSchool = 3;
     private String s = "";
@@ -402,7 +403,7 @@ public class GUI extends JFrame implements ActionListener{
 
     
     ///// after school /////
-    public void afterSchool(){
+    public String afterSchool(){
 	reset();
 	autoUpdate();
 	activity += 1;
@@ -426,21 +427,26 @@ public class GUI extends JFrame implements ActionListener{
 	    afterSchoolResponse();
 
 	}
+	if (player.time != 7) {
+	    return "aS";
+	} else {
+	    return "morn";
+	}
     }
 
     public void afterSchoolResponse(){
 	JRadioButton study = new JRadioButton("study");
-	study.setActionCommand("study");
+	study.setActionCommand("studyNotes");
 	study.addActionListener(this);
 	JRadioButton homework  = new JRadioButton("do your homework");
-	study.setActionCommand("homework");
-	study.addActionListener(this);
+	homework.setActionCommand("doHomework");
+	homework.addActionListener(this);
 	JRadioButton facebook = new JRadioButton("go on Facebook");
-	study.setActionCommand("facebook");
-	study.addActionListener(this);
+	facebook.setActionCommand("onFacebook");
+	facebook.addActionListener(this);
 	JRadioButton sleep = new JRadioButton("go to sleep");
-	study.setActionCommand("goToSleep");
-	study.addActionListener(this);
+	sleep.setActionCommand("goToSleep");
+	sleep.addActionListener(this);
 	ButtonGroup afterSchoolGroup = new ButtonGroup();
 	afterSchoolGroup.add(study);
 	afterSchoolGroup.add(homework);
@@ -464,10 +470,10 @@ public class GUI extends JFrame implements ActionListener{
 
     public void helpAFriendResponse(){
 	JRadioButton yes = new JRadioButton("help your friend");
-	yes.setActionCommand("yes");
+	yes.setActionCommand("helpFriend");
 	yes.addActionListener(this);
 	JRadioButton no = new JRadioButton("let your friend rehearse alone");
-	no.setActionCommand("no");
+	no.setActionCommand("dontHelp");
 	no.addActionListener(this);
 	ButtonGroup helpFriendGroup = new ButtonGroup();
 	helpFriendGroup.add(yes);
@@ -607,11 +613,11 @@ public class GUI extends JFrame implements ActionListener{
 	    displayResponse();
 	}
 	/////////////////////////
-	if (action.equals("study")){
+	if (action.equals("studyNotes")){
 	    afSchool = 0;
-	} else if (action.equals("homework")){
+	} else if (action.equals("doHomework")){
 	    afSchool = 1;
-	} else if (action.equals("facebook")){
+	} else if (action.equals("onFacebook")){
 	    afSchool = 2;
 	} else if (action.equals("goToSleep")){
 	    afSchool = 3;
@@ -631,12 +637,30 @@ public class GUI extends JFrame implements ActionListener{
 	    displayResponse();
 	}
 	/////////////////////////
+	if (action.equals("helpFriend")){
+	    bhelp = true;
+	} else if (action.equals("dontHelp")){
+	    bhelp = false;
+	}
+	if (action.equals("helpAFriendResponse")){
+	    if (bhelp) {
+		s = "yes";
+	    } else {
+		s = "";
+	    }
+	    q.setText(player.helpAFriend(s));
+	    reset();
+	    displayResponse();
+	}
+	////////////////////////
 	if (action.equals("cont") && y.equals("first")){
 	    y = inSchool("second");
 	} else if (action.equals("cont") && y.equals("second")){
 	    y = inSchool("last");
-	} else if (action.equals("cont")){
-	    afterSchool();
+	} else if (action.equals("cont") && (y.equals("last") || y.equals("aS"))){
+	    y = afterSchool();
+	} else if (action.equals("cont") && y.equals("morn")){
+	    morning();
 	}
     }
     
