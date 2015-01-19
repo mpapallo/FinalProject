@@ -395,7 +395,7 @@ public class GUI extends JFrame implements ActionListener{
 	if (player.time == 15){
 	    story.setText("<html>School's out for the day! Now you have some time to do whatever you want<br></html>");
 	}else{
-	    story.setText("<html>It sure is nice to be home<br></html>");
+	    story.setText("<html>It sure is nice to be home.<br></html>");
 	}
 	interact.add(story);
 
@@ -471,6 +471,55 @@ public class GUI extends JFrame implements ActionListener{
 	b.setFont(buttonFont);
     }
     
+    ///// Friday, a.k.a. Finals Day /////
+    public void finalsDay(){
+	reset();
+	autoUpdate();
+
+	String finalNum = "";
+	if (player.time == 9) {
+	    finalNum == "first";
+	} else if (player.time == 11) {
+	    finalNum == "second";
+	} else {
+	    finalNum == "last";
+	}
+
+	if (player.time == 7) {
+	    story.setText("<html>The dreaded day has finally arrived: Finals day.<br><br> You have three finals to take today, which will count for 25% of your overall grade. No pressure.</html>");
+	} else {
+	    JLabel l = new JLabel("<html>It's time for your " + finalNum + " final. All of your hard work (or not so hard work) comes down to this. What do you want to do?");
+	    l.setFont(eventFont);
+	    interact.add(l);
+	    finalsDayResponse();
+	}
+    }
+
+    public void finalsDayResponse() {
+	JRadioButton skip = new JRadioButton("skip the final exam");
+	skip.setActionCommand("skip");
+	skip.addActionListener(this);
+	JRadioButton cheat = new JRadioButton("cheat off of the kid next to you");
+	cheat.setActionCommand("cheat");
+	cheat.addActionListener(this);
+       	JRadioButton sleep = new JRadioButton("sleep through the exam");
+	sleep.setActionCommand("sleep");
+	sleep.addActionListener(this);
+	JRadioButton take = new JRadioButton("actually take the final exam");
+	take.setActionCommand("takeIt");
+	take.addActionListener(this);
+	JButton b = new JButton("Submit");
+	b.setActionCommand("finalsDayResponse");
+	b.addActionListener(this);
+	interact.add(b);
+	
+	skip.setFont(eventFont);
+	cheat.setFont(eventFont);
+	sleep.setFont(eventFont);
+	take.setFont(eventFont);
+	b.setFont(buttonFont);
+    }
+
     /////////////////////////
     public void displayResponse(){
 	player.checkStats();
@@ -632,7 +681,8 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	if (action.equals("cont")){
+
+	if (action.equals("cont") && dayi != 4){
 	    if (player.time == 7){
 		morning();
 	    }else if (player.time >= 9 && player.time <= 13){
@@ -640,6 +690,10 @@ public class GUI extends JFrame implements ActionListener{
 	    }else if (player.time >= 15 || player.time <= 7){
 		afterSchool();
 	    }
+	}
+
+	if (action.equals("cont") && dayi == 4 && player.time < 3){
+	    finalsDay();
 	}
     }
     
