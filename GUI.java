@@ -9,7 +9,7 @@ public class GUI extends JFrame implements ActionListener{
     Random r = new Random();
     String[] days = new String[4];
     int dayi = 0;
-    int activity = 0;
+    // int activity = 0;
 
     private Student player;
     private Container window;
@@ -236,10 +236,11 @@ public class GUI extends JFrame implements ActionListener{
     public void morning(){
 	reset();
 	Student.time = 7;
-	autoUpdate();
-	activity = 0;
 	dayi += 1;
-	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...</html>";
+	updateDay(days[dayi]);
+	autoUpdate();
+	//activity = 0;
+	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
 	story.setText(z);
 	interact.add(story);
 
@@ -256,13 +257,14 @@ public class GUI extends JFrame implements ActionListener{
 	    case 2: q.setText(player.coffeeSpill());
 		displayResponse();
 		break;
-	    case 3: JLabel l = new JLabel("<html>You couldn't escape the flu forever... Should you stay or should you go (to school)?</html>");
+	    case 3: JLabel l = new JLabel("<html>Wait, wha... wh... AH-CHOO! <br>Guess you couldn't escape the flu forever... Should you stay or should you go (to school)?<br></html>");
 		l.setFont(eventFont);
 		interact.add(l);
 		sickDayResponse();
 		break;
 	    }
 	}else{
+	    player.time += 2;
 	    q.setText("<html>Thankfully, the morning is uneventful and you get to school in one piece.</html>");
 	    displayResponse();  
 	}
@@ -291,17 +293,26 @@ public class GUI extends JFrame implements ActionListener{
     }
 
     ///// in school /////
-    public String inSchool(String x){
+    public void inSchool(){
 	reset();
 	autoUpdate();
-	activity += 1;
+	//activity += 1;
 	
+	if (player.time == 9){
+	    story.setText("<html>You are in your first class of the day.</html>");
+	}else if (player.time == 11){
+	    story.setText("<html>Another period of learning. At least it means lunch is closer.</html>");
+	}else{
+	    story.setText("One eternity later, you are finally in your last class of the day!");
+	}
+	/*
 	String z = "You are in your " + x + " class of the day.";
 	if (x.equals("last")){
 	    story.setText("<html>One eternity later...<br>" + z + "</html>");
 	}else{
 	    story.setText("<html>" + z + "</html>");
 	}
+	*/
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
@@ -309,7 +320,7 @@ public class GUI extends JFrame implements ActionListener{
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(2);
 	    switch (e) {
-	    case 0: JLabel l = new JLabel("<html>Your teacher decides to spring a pop quiz on your class!</html>");
+	    case 0: JLabel l = new JLabel("<html>Your teacher decides to spring a pop quiz on your class!<br></html>");
 		l.setFont(eventFont);
 		interact.add(l);
 		popQuizResponse();
@@ -317,19 +328,19 @@ public class GUI extends JFrame implements ActionListener{
 	    case 1: q.setText(player.fireDrill());
 		displayResponse();
 		break;
-	    case 2: JLabel m = new JLabel("<html>What a surprise, the escalators leading up to your class are broken!</html>");
+	    case 2: JLabel m = new JLabel("<html>What a surprise, the escalators leading up to your class are broken!<br></html>");
 		m.setFont(eventFont);
 		interact.add(m);
 		brokenEscalatorResponse();
 		break;
 	    }
 	} else {
-	    JLabel n = new JLabel("<html>Nothing special is happening. What should you do?</html>");
+	    JLabel n = new JLabel("<html>Nothing special is happening. What should you do?<br></html>");
 	    n.setFont(eventFont);
 	    interact.add(n);
 	    classTimeResponse();
 	}
-	return x;
+	//return x;
     }
     
     public void popQuizResponse(){
@@ -404,12 +415,15 @@ public class GUI extends JFrame implements ActionListener{
 
     
     ///// after school /////
-    public String afterSchool(){
+    public void afterSchool(){
 	reset();
 	autoUpdate();
-	activity += 1;
-	String z = "<html>School's out for the day! Now you have some time to do whatever you want.</html>";
-	story.setText(z);
+	//activity += 1;
+	if (player.time == 15){
+	    story.setText("<html>School's out for the day! Now you have some time to do whatever you want<br></html>");
+	}else{
+	    story.setText("<html>It sure is nice to be home<br></html>");
+	}
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
@@ -417,24 +431,23 @@ public class GUI extends JFrame implements ActionListener{
 	Student.setHomework(false);
 
 	if (r.nextInt(100) < chance) {
-	    JLabel l = new JLabel("<html>Your friend asks you to help them rehearse for SING!. Of course, this will reduce your precious free time. What do you do?</html>");
+	    JLabel l = new JLabel("<html>Your friend asks you to help them rehearse for SING!. Of course, this will reduce your precious free time. What do you do?<br></html>");
 	    l.setFont(eventFont);
 	    interact.add(l);
 	    helpAFriendResponse();
 	} else {
-	    JLabel n = new JLabel("<html>Home at last! What do you want to do now?</html>");
+	    JLabel n = new JLabel("<html>Home at last! What do you want to do now?<br></html>");
 	    n.setFont(eventFont);
 	    interact.add(n);
 	    afterSchoolResponse();
-
 	}
-
+	/*
 	if (Student.time < 7 || Student.time > 14) {
 	    return "aS";
 	} else {
 	    return "morn";
 	}
-
+	*/
     }
 
     public void afterSchoolResponse(){
@@ -543,9 +556,8 @@ public class GUI extends JFrame implements ActionListener{
 	if (action.equals("begin")){
 	    reset();
 	    updateDay(days[dayi]);
-	    y = inSchool("first");
-	    //at the end of the day we will increment day by 1, have another button with this action command so a new day begins
-	    //we should start in the morning of monday not in school...
+	    //y = inSchool("first");
+	    inSchool();
 	}
 	/////////////////////////
 	if (action.equals("stayHome")){
@@ -656,6 +668,7 @@ public class GUI extends JFrame implements ActionListener{
 	    displayResponse();
 	}
 	////////////////////////
+	/*
 	if (action.equals("cont") && y.equals("first")){
 	    y = inSchool("second");
 	} else if (action.equals("cont") && y.equals("second")){
@@ -664,6 +677,16 @@ public class GUI extends JFrame implements ActionListener{
 	    y = afterSchool();
 	} else if (action.equals("cont") && y.equals("morn")){
 	    morning();
+	}
+	*/
+	if (action.equals("cont")){
+	    if (player.time == 7){
+		morning();
+	    }else if (player.time >= 9 && player.time <= 13){
+		inSchool();
+	    }else if (player.time >= 15 || player.time <= 7){
+		afterSchool();
+	    }
 	}
     }
     
