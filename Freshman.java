@@ -9,4 +9,8 @@ public class Freshman extends Student {
     public String getLevel(){
 	return "Freshman";
     }
+    public String sing(){
+	return "SophFrosh";
+    }
+
 }

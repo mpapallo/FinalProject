@@ -114,9 +114,9 @@ created Student class and subclasses
 * changed so the next function (after school, in school, morning, etc.) is based on a string returned by previous function
 * added homework (for some reason it got deleted or never saved before)
 * fixed pop quiz scoring (just added 25 pts to score)
-* FIX: after school: study, homework, facebook don't change the time (each should add 2 hrs)
-* FIX: after school: after time is 7am (when you sleep or when you get to that time by doing things), does one more cycle of after school --> maybe it isn't returning "morn" until time has already been 7? maybe time isn't updating?
-
+* FIX: after school: study, homework, facebook don't change the time (each should add 2 hrs) //fixed!
+* FIX: after school: after time is 7am (when you sleep or when you get to that time by doing things), does one more cycle of after school --> maybe it isn't returning "morn" until time has already been 7? maybe time isn't updating? //fixed!
+* fixed the above two problems by cycling through the days based on the time, not a returned string
 
 <h3>
 To do list
@@ -125,13 +125,10 @@ To do list
 <h4>
 Most important
 </h4>
-* fix after school function
-* have activities return strings to start next activity (ex. in school last class returns "last" which starts after school)
-* fix morning function for tuesday-thursday
-* friday aka finals day function (will be called on dayi = 3 after morning)
+* friday aka finals day function (will be called when dayi = 4 after morning)
 
 <h4>
-Cooler stuff
+Extra stuff
 </h4>
 * array with teacher names, can choose a random one to incorporate
 * array with classes, can choose a random one to incorporate

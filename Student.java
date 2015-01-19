@@ -9,7 +9,8 @@ abstract class Student{
     private static int energy, stress, knowledge;
     private int grade;
     public static int time;
-    private static boolean homework;
+    public static boolean homework = false;
+    public static boolean helpedFriend = false;
     Random r = new Random();
     /////////////////////////
     public Student(String n, int e, int s, int k){
@@ -59,14 +60,10 @@ abstract class Student{
     public int getGrade(){
 	return grade;
     }
-    public static void setHomework(boolean h){
-	homework = h;
-    }
-    public static boolean getHomework(){
-	return homework;
-    }
 
     abstract String getLevel();
+
+    abstract String sing();
 
     public String toString(){
 	return this.getName();
@@ -75,6 +72,7 @@ abstract class Student{
     /////////////////////////
     public void sleep(int hrs){
         setEnergy(getEnergy() + hrs * 10);
+	time = 7;
     }
 
     public void study(int hrs){
@@ -113,7 +111,7 @@ abstract class Student{
 
     public void checkTime(){
 	if (time > 24){
-	    time = 1;
+	    time -= 24;
 	}
     }
 
@@ -132,13 +130,20 @@ abstract class Student{
     /////////////////////////
     public String sickDay(String ans){
 	if (ans == "stay home"){
-	    time+=24;
+	    time = 7;
 	    setGrade(getGrade() - 20);
 	    setEnergy(100);
 	    setStress(getStress() - 10);
-	    return "<html>Instead of going to school, you lay in bed and marathoned all 6 Lord of the Rings movies. <br>24 hours well spent.</html>";
+	    String q = "";
+	    if (r.nextInt(2) == 0){
+	        q = "7 Harry Potter";
+	    }else{
+	        q = "6 Hobbit/Lord of the Rings";
+	    }
+	    return "<html>Instead of going to school, you lay in bed and marathoned all " + q + " movies. <br>In other words, 24 hours well spent.</html>";
 	}else{
 	    //there should still be a chance that you're too sick to go to school
+	    time += 2;
 	    return "<html>The sacrifices you make for your education are truly heroic. <br>On the other hand, none of your classmates will sit within 10 feet of you.</html>";
 	}
     }
@@ -227,56 +232,52 @@ abstract class Student{
 	    setEnergy(getEnergy() - 10);
 	    setKnow(getKnow() + 15);
 	    setStress(getStress() + 5);
-	    return "<html>You sat through class and learned like a good little student. <br>Hooray!</html> ";
-	}
-    }
-
-    public String afterSchoolTime(String response){
-	if (response == "study"){
-	    study(2);
-	    return "<html>You studied your class materials, ignoring the temptation of your Wii and iPhone. Impressive.</html>";
-	} else if (response == "homework"){
-	    doHomework();
-	    return "<html>You completed your homework. Even though your teacher won't check it, you're glad you did it. It feels nice to be a good student once in a while.</html>"; 
-	} else if (response == "facebook"){
-	    socialize(2);
-	    return "<html>You surfed Facebook for a while, Facebook-stalking random aquaintances. Dang it! You accidentally liked a post from three years ago! Unlike, unlike, unlike!</html>";
-	} else {
-	    time = 7;
-	    if (time >= 6) {
-		sleep(24-time);
-	    } else {
-		sleep(6-time);
-	    }
-	    return "<html>You decided to turn in for the night and hit the hay. Good for you!</html>";
+	    return "<html>You sat through class and learned like a studious little student. <br>Hooray!</html> ";
 	}
     }
 
     /////////////////////////
     ///after school stuff ///
     /////////////////////////
-    public String sing(){
-	if (getLevel().equals("Freshman") || getLevel().equals("Sophomore")){
-	    return "SophFrosh";
+    public String afterSchoolTime(String response){
+	if (response == "study"){
+	    study(2);
+	    return "<html>You studied your class materials, ignoring the temptation of your Wii and iPhone. Impressive.</html>";
+	} else if (response == "homework"){
+	    if (homework){
+		return "Doing it twice wouldn't help you.. Maybe try going to sleep.";
+	    }else{
+		doHomework();
+		return "<html>You completed your homework. Even though your teacher won't check it, you're glad you did it. It feels nice to be a good student once in a while.</html>"; 
+	    }
+	} else if (response == "facebook"){
+	    socialize(2);
+	    return "<html>You surfed Facebook for a while, Facebook-stalking random aquaintances. <br>Dang it! You accidentally liked a post from three years ago! Unlike, unlike, unlike!</html>";
 	} else {
-	    return getLevel();
+	    if (time >= 7) {
+		sleep(24-time);
+	    } else {
+		sleep(7-time);
+	    }
+	    return "<html>You decided to turn in for the night and hit the hay. Good for you!</html>";
 	}
     }
 
     public String helpAFriend(String ans){
+	time += 2;
+	helpedFriend = true;
 	if (ans == "yes"){
 	    setStress(getStress() - 20);
 	    setEnergy(getEnergy() - 10);
-	    time += 2;
-	    return "You decided to act like a good friend and help. Go " + sing() + " SING!";
+	    return "<html>You decided to act like a good friend and help. Go " + sing() + " SING!</html>";
 	} else {
-	    return "You ditched your friend and went home. Some friend you are...";
+	    return "<html>You ditched your friend and went home. What happened to friendship and school spirit?</html>";
 	}
     }
 
     public void doHomework(){
-	setHomework(true);
-	time += 2;
+        homework = true;
+	time += 4;
     }
 
 }
