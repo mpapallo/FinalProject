@@ -9,7 +9,6 @@ public class GUI extends JFrame implements ActionListener{
     Random r = new Random();
     String[] days = new String[5];
     int dayi = 0;
-    // int activity = 0;
 
     private Student player;
     private Container window;
@@ -24,7 +23,6 @@ public class GUI extends JFrame implements ActionListener{
     private int inClass = 2;
     private int afSchool = 3;
     private String s = "";
-    //private String y = "";
     
     Font font = new Font("Optima", Font.PLAIN, 16);
     Font eventFont = new Font("Optima", Font.PLAIN, 16);
@@ -226,7 +224,7 @@ public class GUI extends JFrame implements ActionListener{
 	updateDay(days[dayi]);
 	autoUpdate();
 	player.homework = false;
-	//if (dayi == 5){ FINALS DAY FUNCTION } break;
+	//if (dayi == 4){ FINALS DAY FUNCTION } break;
 	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
 	story.setText(z);
 	interact.add(story);
