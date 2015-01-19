@@ -656,15 +656,52 @@ public class GUI extends JFrame implements ActionListener{
 	    displayResponse();
 	}
 	////////////////////////
-	if (action.equals("cont") && y.equals("first")){
-	    y = inSchool("second");
-	} else if (action.equals("cont") && y.equals("second")){
-	    y = inSchool("last");
-	} else if (action.equals("cont") && (y.equals("last") || y.equals("aS"))){
-	    y = afterSchool();
-	} else if (action.equals("cont") && y.equals("morn")){
-	    morning();
+	if (action.equals("cont")) {
+	    switch (Student.time) {
+	    case 11: y = inSchool("second");
+		break;
+	    case 13: y = inSchool("last");
+		break;
+	    case 15: y = afterSchool();
+		break;
+	    case 16: y = afterSchool();
+		break;
+	    case 17: y = afterSchool();
+		break;
+	    case 18: y = afterSchool();
+		break;
+	    case 19: y = afterSchool();
+		break;
+	    case 20: y = afterSchool();
+		break;
+	    case 21: y = afterSchool();
+		break;
+	    case 22: y = afterSchool();
+		break;
+	    case 23: y = afterSchool();
+		break;
+	    case 24: y = afterSchool();
+		break;
+	    case 1: y = afterSchool();
+		break;
+	    case 2: y = afterSchool();
+		break;
+	    case 3: y = afterSchool();
+		break;
+	    case 4: y = afterSchool();
+		break;
+	    case 5: y = afterSchool();
+		break;
+	    case 6: y = afterSchool();
+		break;
+	    case 7: morning();
+		break;
+	    case 9: y = inSchool("first");
+	    }
+
+	  
 	}
     }
     
 }
+
