@@ -632,18 +632,6 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	////////////////////////
-	/*
-	if (action.equals("cont") && y.equals("first")){
-	    y = inSchool("second");
-	} else if (action.equals("cont") && y.equals("second")){
-	    y = inSchool("last");
-	} else if (action.equals("cont") && (y.equals("last") || y.equals("aS"))){
-	    y = afterSchool();
-	} else if (action.equals("cont") && y.equals("morn")){
-	    morning();
-	}
-	*/
 	if (action.equals("cont")){
 	    if (player.time == 7){
 		morning();
@@ -656,3 +644,4 @@ public class GUI extends JFrame implements ActionListener{
     }
     
 }
+
