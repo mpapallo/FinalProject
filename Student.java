@@ -187,7 +187,7 @@ abstract class Student{
 	time += 2;
 	if (ans == "cheat"){
 	    setEnergy(getEnergy() - 10);
-	    return "<html>You decide to cheat...<br>" + cheat() + "</html>";
+	    return "<html>You decide to cheat...<br>" + cheat(false) + "</html>";
 	} else {
 	    int score = calculateChancePos();
 	    score += 25;
@@ -198,13 +198,20 @@ abstract class Student{
 	}
     }
     
-    public String cheat(){
+    public String cheat(boolean final){
 	int chance = calculateChanceNeg();
 	if (r.nextInt(100) < chance){
-	    setGrade(getGrade() + (100 - getKnow())/2);
-	    setStress(getStress() - 10);
-	    return "You got away with it, you lucky duck...";
-	} else {
+	    if (final) {
+		setGrade(getGrade() + (100 * (0.25 / 3) ))
+	    } else {
+		setGrade(getGrade() + (100 - getKnow())/2);
+		setStress(getStress() - 10);
+	    }
+	    return "You got away with it, you lucky duck...";	    
+	} else if (final) {
+	    setGrade(getGrade() * 0.75);
+	    return "Aw, shucks! You were caught. Your teacher gives you a zero on the final and you get a lecture about academic dishonesty. Again.";
+	}else {
 	    setGrade(getGrade() - 25);
 	    setStress(getStress() + 15);
 	    return "D'oh! You were caught! <br>Your teacher gave you a zero on the quiz and lowered your grade by 25 points.";
@@ -231,6 +238,9 @@ abstract class Student{
 	}
     }
 
+    /////////////////////////
+    ///after school stuff ///
+    /////////////////////////
     public String afterSchoolTime(String response){
 	if (response == "study"){
 	    study(2);
@@ -251,10 +261,7 @@ abstract class Student{
 	    return "<html>You decided to turn in for the night and hit the hay. Good for you!</html>";
 	}
     }
-
-    /////////////////////////
-    ///after school stuff ///
-    /////////////////////////
+   
     public String sing(){
 	if (getLevel().equals("Freshman") || getLevel().equals("Sophomore")){
 	    return "SophFrosh";
@@ -278,6 +285,30 @@ abstract class Student{
 	setHomework(true);
 	setStress(getStress() + 7);
 	time += 2;
+    }
+
+    ////////////////////////
+    /// finals day stuff ///
+    ////////////////////////
+    public String doFinal(String response){
+	time += 2;
+	if (time == 9){
+	    setGrade(getGrade() * 0.75);
+	}
+	if (response == "skip") {
+	    return "<html>You skipped the final exam. All of that studying, wasted!</html>"
+	} else if (response == "cheat") {
+	    return cheat();
+	} else if (response == "sleep") {
+	    setEnergy(getEnergy() + 20);
+	    return "<html>You slept through the final exam. At least you got some z's before you get your f. </html>";
+	} else {
+	    int g = calculateChancePos() + r.nextInt(15); //extra (up to) 15 pts b/c scoring can be a bit low...
+	    g = g * (0.25 / 3);
+	    setGrade(getGrade() + g);
+	    String ans = "<html>You took your final exam. Three #2 pencils and two hours later, you score a " + calculateChancePos() + ".</html>";
+	    return ans;
+	}
     }
 
 }
