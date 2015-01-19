@@ -11,4 +11,8 @@ public class Sophomore extends Student {
 	return "Sophomore";
     }
 
+    public String sing(){
+	return "SophFrosh";
+    }
+
 }

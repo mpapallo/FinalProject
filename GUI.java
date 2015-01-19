@@ -7,7 +7,7 @@ public class GUI extends JFrame implements ActionListener{
 
     /////////////////////////
     Random r = new Random();
-    String[] days = new String[4];
+    String[] days = new String[5];
     int dayi = 0;
     // int activity = 0;
 
@@ -24,7 +24,7 @@ public class GUI extends JFrame implements ActionListener{
     private int inClass = 2;
     private int afSchool = 3;
     private String s = "";
-    private String y = "";
+    //private String y = "";
     
     Font font = new Font("Optima", Font.PLAIN, 16);
     Font eventFont = new Font("Optima", Font.PLAIN, 16);
@@ -41,6 +41,7 @@ public class GUI extends JFrame implements ActionListener{
 	days[1] = "Tuesday";
 	days[2] = "Wednesday";
 	days[3] = "Thursday";
+	days[4] = "Friday";
 
 	this.setTitle("Stuyvesant Finals Week Simulator");
 	this.setSize(800, 400);
@@ -217,29 +218,15 @@ public class GUI extends JFrame implements ActionListener{
     /////////////////////////
     /// user interaction  ///
     /////////////////////////
-    /*
-      public void nextAct(String d){
-      updateDay(d);
-      if (activity == 0){
-      morning();
-      }else if (activity == 1){
-      inSchool("first");
-      }else if (activity == 2){
-      inSchool("last");
-      }else{
-      afterSchool();
-      }
-      }
-    */
 
     ///// morning /////
     public void morning(){
 	reset();
-	Student.time = 7;
 	dayi += 1;
 	updateDay(days[dayi]);
 	autoUpdate();
-	//activity = 0;
+	player.homework = false;
+	//if (dayi == 5){ FINALS DAY FUNCTION } break;
 	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
 	story.setText(z);
 	interact.add(story);
@@ -296,8 +283,6 @@ public class GUI extends JFrame implements ActionListener{
     public void inSchool(){
 	reset();
 	autoUpdate();
-	//activity += 1;
-	
 	if (player.time == 9){
 	    story.setText("<html>You are in your first class of the day.</html>");
 	}else if (player.time == 11){
@@ -305,14 +290,6 @@ public class GUI extends JFrame implements ActionListener{
 	}else{
 	    story.setText("One eternity later, you are finally in your last class of the day!");
 	}
-	/*
-	String z = "You are in your " + x + " class of the day.";
-	if (x.equals("last")){
-	    story.setText("<html>One eternity later...<br>" + z + "</html>");
-	}else{
-	    story.setText("<html>" + z + "</html>");
-	}
-	*/
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
@@ -340,7 +317,6 @@ public class GUI extends JFrame implements ActionListener{
 	    interact.add(n);
 	    classTimeResponse();
 	}
-	//return x;
     }
     
     public void popQuizResponse(){
@@ -418,7 +394,6 @@ public class GUI extends JFrame implements ActionListener{
     public void afterSchool(){
 	reset();
 	autoUpdate();
-	//activity += 1;
 	if (player.time == 15){
 	    story.setText("<html>School's out for the day! Now you have some time to do whatever you want<br></html>");
 	}else{
@@ -428,26 +403,18 @@ public class GUI extends JFrame implements ActionListener{
 
 	int chance = player.calculateChanceNeg();
 	chance -= 20;
-	Student.setHomework(false);
 
-	if (r.nextInt(100) < chance) {
+	if ((r.nextInt(100) < chance) && (player.helpedFriend == false)) {
 	    JLabel l = new JLabel("<html>Your friend asks you to help them rehearse for SING!. Of course, this will reduce your precious free time. What do you do?<br></html>");
 	    l.setFont(eventFont);
 	    interact.add(l);
 	    helpAFriendResponse();
 	} else {
-	    JLabel n = new JLabel("<html>Home at last! What do you want to do now?<br></html>");
+	    JLabel n = new JLabel("<html>Home sweet home! What do you want to do now?<br></html>");
 	    n.setFont(eventFont);
 	    interact.add(n);
 	    afterSchoolResponse();
 	}
-	/*
-	if (Student.time < 7 || Student.time > 14) {
-	    return "aS";
-	} else {
-	    return "morn";
-	}
-	*/
     }
 
     public void afterSchoolResponse(){
