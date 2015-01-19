@@ -11,4 +11,8 @@ public class Senior extends Student {
 	return "Senior";
     }
 
+    public String sing(){
+	return getLevel();
+    }
+
 }
