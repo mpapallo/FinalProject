@@ -7,7 +7,7 @@ abstract class Student{
     /////////////////////////
     private String name;
     private static int energy, stress, knowledge;
-    private int grade;
+    private double grade;
     public static int time;
     private static boolean homework;
     Random r = new Random();
@@ -53,10 +53,10 @@ abstract class Student{
     public static int getKnow(){
 	return knowledge;
     }
-    public void setGrade(int g){
+    public void setGrade(double g){
 	grade = g;
     }
-    public int getGrade(){
+    public double getGrade(){
 	return grade;
     }
     public static void setHomework(boolean h){
@@ -198,17 +198,17 @@ abstract class Student{
 	}
     }
     
-    public String cheat(boolean final){
+    public String cheat(boolean f){
 	int chance = calculateChanceNeg();
 	if (r.nextInt(100) < chance){
-	    if (final) {
-		setGrade(getGrade() + (100 * (0.25 / 3) ))
+	    if (f) {
+		setGrade(getGrade() + (100 * (0.25 / 3) ));
 	    } else {
 		setGrade(getGrade() + (100 - getKnow())/2);
 		setStress(getStress() - 10);
 	    }
 	    return "You got away with it, you lucky duck...";	    
-	} else if (final) {
+	} else if (f) {
 	    setGrade(getGrade() * 0.75);
 	    return "Aw, shucks! You were caught. Your teacher gives you a zero on the final and you get a lecture about academic dishonesty. Again.";
 	}else {
@@ -296,15 +296,15 @@ abstract class Student{
 	    setGrade(getGrade() * 0.75);
 	}
 	if (response == "skip") {
-	    return "<html>You skipped the final exam. All of that studying, wasted!</html>"
+	    return "<html>You skipped the final exam. All of that studying, wasted!</html>";
 	} else if (response == "cheat") {
-	    return cheat();
+	    return cheat(true);
 	} else if (response == "sleep") {
 	    setEnergy(getEnergy() + 20);
 	    return "<html>You slept through the final exam. At least you got some z's before you get your f. </html>";
 	} else {
-	    int g = calculateChancePos() + r.nextInt(15); //extra (up to) 15 pts b/c scoring can be a bit low...
-	    g = g * (0.25 / 3);
+	    double g = calculateChancePos() + r.nextInt(15); //extra (up to) 15 pts b/c scoring can be a bit low...
+	    g = g * (0.25 / 3.0);
 	    setGrade(getGrade() + g);
 	    String ans = "<html>You took your final exam. Three #2 pencils and two hours later, you score a " + calculateChancePos() + ".</html>";
 	    return ans;

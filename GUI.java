@@ -22,6 +22,7 @@ public class GUI extends JFrame implements ActionListener{
     private boolean bhelp = false;
     private int inClass = 2;
     private int afSchool = 3;
+    private int inFinal = 3;
     private String s = "";
     
     Font font = new Font("Optima", Font.PLAIN, 16);
@@ -223,7 +224,7 @@ public class GUI extends JFrame implements ActionListener{
 	dayi += 1;
 	updateDay(days[dayi]);
 	autoUpdate();
-	player.homework = false;
+	player.setHomework(false);
 	//if (dayi == 4){ FINALS DAY FUNCTION } break;
 	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
 	story.setText(z);
@@ -402,7 +403,7 @@ public class GUI extends JFrame implements ActionListener{
 	int chance = player.calculateChanceNeg();
 	chance -= 20;
 
-	if ((r.nextInt(100) < chance) && (player.helpedFriend == false)) {
+	if ((r.nextInt(100) < chance) && (player.time == 3)) {
 	    JLabel l = new JLabel("<html>Your friend asks you to help them rehearse for SING!. Of course, this will reduce your precious free time. What do you do?<br></html>");
 	    l.setFont(eventFont);
 	    interact.add(l);
@@ -478,11 +479,11 @@ public class GUI extends JFrame implements ActionListener{
 
 	String finalNum = "";
 	if (player.time == 9) {
-	    finalNum == "first";
+	    finalNum = "first";
 	} else if (player.time == 11) {
-	    finalNum == "second";
+	    finalNum = "second";
 	} else {
-	    finalNum == "last";
+	    finalNum = "last";
 	}
 
 	if (player.time == 7) {
@@ -503,7 +504,7 @@ public class GUI extends JFrame implements ActionListener{
 	cheat.setActionCommand("cheat");
 	cheat.addActionListener(this);
        	JRadioButton sleep = new JRadioButton("sleep through the exam");
-	sleep.setActionCommand("sleep");
+	sleep.setActionCommand("sleepThrough");
 	sleep.addActionListener(this);
 	JRadioButton take = new JRadioButton("actually take the final exam");
 	take.setActionCommand("takeIt");
@@ -551,7 +552,7 @@ public class GUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	repaint();
 	String action = e.getActionCommand();
-	/////////////////////////
+	////choose difficulty////
 	if (action.equals("Freshman")){
 	    player = new Freshman();
 	}else if (action.equals("Sophomore")){
@@ -561,19 +562,18 @@ public class GUI extends JFrame implements ActionListener{
 	}else if (action.equals("Senior")){
 	    player = new Senior();
 	}
-	/////////////////////////
 	if (action.equals("next")){
 	    initializePlayerAndStats(llamo.getText());
 	    startGame();	    
 	}
-	/////////////////////////
+	///////start game////////
 	if (action.equals("begin")){
 	    reset();
 	    updateDay(days[dayi]);
 	    //y = inSchool("first");
 	    inSchool();
 	}
-	/////////////////////////
+	////////sick day/////////
 	if (action.equals("stayHome")){
 	    bstayHome = true;
 	}else if (action.equals("goToSchool")){
@@ -589,7 +589,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	/////////pop quiz////////
 	if (action.equals("cheat")){
 	    bcheat = true;
 	}else if (action.equals("takeQuiz")){
@@ -605,7 +605,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	////broken escalator/////
 	if (action.equals("climb")){
 	    bclimb = true;
 	}else if(action.equals("noClimb")){
@@ -621,7 +621,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	//////regular class//////
 	if (action.equals("nap")){
 	    inClass = 0;
 	}else if (action.equals("passNotes")){
@@ -641,7 +641,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	///normal after school///
 	if (action.equals("studyNotes")){
 	    afSchool = 0;
 	} else if (action.equals("doHomework")){
@@ -665,7 +665,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	//////help a friend//////
 	if (action.equals("helpFriend")){
 	    bhelp = true;
 	} else if (action.equals("dontHelp")){
@@ -681,7 +681,31 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-
+	///////finals day///////
+	if (action.equals("skip")){
+	    inFinal = 0;
+	} else if (action.equals("cheat")){
+	    inFinal = 1;
+	} else if (action.equals("sleepThrough")) {
+	    inFinal = 2;
+	} else if (action.equals("takeIt")){
+	    inFinal = 3;
+	}
+	if (action.equals("finalsDayResponse")){
+	    if (inFinal == 0){
+		s = "skip";
+	    } else if (inFinal == 1){
+		s = "cheat";
+	    } else if (inFinal == 2){
+		s = "sleep";
+	    } else {
+		s = "";
+	    }
+	    q.setText(player.doFinal(s));
+	    reset();
+	    displayResponse();
+	}
+	////////continue////////
 	if (action.equals("cont") && dayi != 4){
 	    if (player.time == 7){
 		morning();
@@ -691,7 +715,7 @@ public class GUI extends JFrame implements ActionListener{
 		afterSchool();
 	    }
 	}
-
+	///continue to finals///
 	if (action.equals("cont") && dayi == 4 && player.time < 3){
 	    finalsDay();
 	}
