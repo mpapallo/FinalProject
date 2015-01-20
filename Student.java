@@ -7,10 +7,9 @@ abstract class Student{
     /////////////////////////
     private String name;
     private static int energy, stress, knowledge;
-    private int grade;
+    private double grade;
     public static int time;
-    public static boolean homework = false;
-    public static boolean helpedFriend = false;
+    private static boolean homework;
     Random r = new Random();
     /////////////////////////
     public Student(String n, int e, int s, int k){
@@ -18,6 +17,7 @@ abstract class Student{
 	setEnergy(e);
 	setStress(s);
 	setKnow(k);
+	setGrade(80);
 	time = 9;
     }
     public Student(String n){
@@ -54,16 +54,20 @@ abstract class Student{
     public static int getKnow(){
 	return knowledge;
     }
-    public void setGrade(int g){
+    public void setGrade(double g){
 	grade = g;
     }
-    public int getGrade(){
+    public double getGrade(){
 	return grade;
+    }
+    public static void setHomework(boolean h){
+	homework = h;
+    }
+    public static boolean getHomework(){
+	return homework;
     }
 
     abstract String getLevel();
-
-    abstract String sing();
 
     public String toString(){
 	return this.getName();
@@ -72,7 +76,6 @@ abstract class Student{
     /////////////////////////
     public void sleep(int hrs){
         setEnergy(getEnergy() + hrs * 10);
-	time = 7;
     }
 
     public void study(int hrs){
@@ -111,7 +114,7 @@ abstract class Student{
 
     public void checkTime(){
 	if (time > 24){
-	    time -= 24;
+	    time = 1;
 	}
     }
 
@@ -130,23 +133,17 @@ abstract class Student{
     /////////////////////////
     public String sickDay(String ans){
 	if (ans == "stay home"){
-	    time = 7;
+	    time+=24;
 	    setGrade(getGrade() - 20);
 	    setEnergy(100);
 	    setStress(getStress() - 10);
-	    String q = "";
-	    if (r.nextInt(2) == 0){
-	        q = "7 Harry Potter";
-	    }else{
-	        q = "6 Hobbit/Lord of the Rings";
-	    }
-	    return "<html>Instead of going to school, you lay in bed and marathoned all " + q + " movies. <br>In other words, 24 hours well spent.</html>";
+	    return "<html>Instead of going to school, you lay in bed and marathoned all 6 Lord of the Rings movies. <br>24 hours well spent.</html>";
 	}else{
 	    //there should still be a chance that you're too sick to go to school
-	    time += 2;
 	    return "<html>The sacrifices you make for your education are truly heroic. <br>On the other hand, none of your classmates will sit within 10 feet of you.</html>";
 	}
     }
+
     public String coffeeSpill(){
 	setKnow(getKnow() - 20);
 	time += 2;
@@ -156,7 +153,7 @@ abstract class Student{
     public String eatenHomework(){
 	setGrade(getGrade() - 5);
 	time += 2;
-	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that pirahna.</html>";
+	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that piranha.</html>";
     }
     
      
@@ -192,10 +189,10 @@ abstract class Student{
 	time += 2;
 	if (ans == "cheat"){
 	    setEnergy(getEnergy() - 10);
-	    return "<html>You decide to cheat...<br>" + cheat() + "</html>";
+	    return "<html>You decide to cheat...<br>" + cheat(false) + "</html>";
 	} else {
 	    int score = calculateChancePos();
-	    score += 25;
+	    score += r.nextInt(25);
 	    setGrade(getGrade() + score / 10);
 	    setStress(getStress() + 5);
 	    setEnergy(getEnergy() - 5);
@@ -203,13 +200,20 @@ abstract class Student{
 	}
     }
     
-    public String cheat(){
+    public String cheat(boolean f){
 	int chance = calculateChanceNeg();
 	if (r.nextInt(100) < chance){
-	    setGrade(getGrade() + (100 - getKnow())/2);
-	    setStress(getStress() - 10);
-	    return "You got away with it, you lucky duck...";
-	} else {
+	    if (f) {
+		setGrade(getGrade() + (100 * (0.25 / 3) ));
+	    } else {
+		setGrade(getGrade() + (100 - getKnow())/2);
+		setStress(getStress() - 10);
+	    }
+	    return "You got away with it, you lucky duck...";	    
+	} else if (f) {
+	    setGrade(getGrade() * 0.75);
+	    return "Aw, shucks! You were caught. Your teacher gives you a zero on the final and you get a lecture about academic dishonesty. Again.";
+	}else {
 	    setGrade(getGrade() - 25);
 	    setStress(getStress() + 15);
 	    return "D'oh! You were caught! <br>Your teacher gave you a zero on the quiz and lowered your grade by 25 points.";
@@ -232,7 +236,7 @@ abstract class Student{
 	    setEnergy(getEnergy() - 10);
 	    setKnow(getKnow() + 15);
 	    setStress(getStress() + 5);
-	    return "<html>You sat through class and learned like a studious little student. <br>Hooray!</html> ";
+	    return "<html>You sat through class and learned like a good little student. <br>Hooray!</html> ";
 	}
     }
 
@@ -244,17 +248,14 @@ abstract class Student{
 	    study(2);
 	    return "<html>You studied your class materials, ignoring the temptation of your Wii and iPhone. Impressive.</html>";
 	} else if (response == "homework"){
-	    if (homework){
-		return "Doing it twice wouldn't help you.. Maybe try going to sleep.";
-	    }else{
-		doHomework();
-		return "<html>You completed your homework. Even though your teacher won't check it, you're glad you did it. It feels nice to be a good student once in a while.</html>"; 
-	    }
+	    doHomework();
+	    return "<html>You completed your homework. Even though your teacher won't check it, you're glad you did it. It feels nice to be a good student once in a while.</html>"; 
 	} else if (response == "facebook"){
 	    socialize(2);
-	    return "<html>You surfed Facebook for a while, Facebook-stalking random aquaintances. <br>Dang it! You accidentally liked a post from three years ago! Unlike, unlike, unlike!</html>";
+	    return "<html>You surfed Facebook for a while, Facebook-stalking random aquaintances. Dang it! You accidentally liked a post from three years ago! Unlike, unlike, unlike!</html>";
 	} else {
-	    if (time >= 7) {
+	    time = 7;
+	    if (time > 6) {
 		sleep(24-time);
 	    } else {
 		sleep(7-time);
@@ -262,22 +263,54 @@ abstract class Student{
 	    return "<html>You decided to turn in for the night and hit the hay. Good for you!</html>";
 	}
     }
+   
+    public String sing(){
+	if (getLevel().equals("Freshman") || getLevel().equals("Sophomore")){
+	    return "SophFrosh";
+	} else {
+	    return getLevel();
+	}
+    }
 
     public String helpAFriend(String ans){
-	time += 2;
-	helpedFriend = true;
 	if (ans == "yes"){
-	    setStress(getStress() - 20);
+	    setStress(getStress() - 15);
 	    setEnergy(getEnergy() - 10);
-	    return "<html>You decided to act like a good friend and help. Go " + sing() + " SING!</html>";
+	    time += 2;
+	    return "You decided to act like a good friend and help. Go " + sing() + " SING!";
 	} else {
-	    return "<html>You ditched your friend and went home. What happened to friendship and school spirit?</html>";
+	    return "You ditched your friend and went home. Some friend you are...";
 	}
     }
 
     public void doHomework(){
-        homework = true;
-	time += 4;
+	setHomework(true);
+	setStress(getStress() + 7);
+	time += 2;
+    }
+
+    ////////////////////////
+    /// finals day stuff ///
+    ////////////////////////
+    public String doFinal(String response){
+	time += 2;
+	if (time == 9){
+	    setGrade(getGrade() * 0.75);
+	}
+	if (response == "skip") {
+	    return "<html>You skipped the final exam. All of that studying, wasted!</html>";
+	} else if (response == "cheat") {
+	    return cheat(true);
+	} else if (response == "sleep") {
+	    setEnergy(getEnergy() + 20);
+	    return "<html>You slept through the final exam. At least you got some z's before you get your f. </html>";
+	} else {
+	    double g = calculateChancePos() + r.nextInt(25); //extra (up to) 25 pts b/c scoring can be a bit low...
+	    String ans = "<html>You took your final exam. Three #2 pencils and two hours later, you score a " + g + ".</html>";
+	    double gr = g * (0.25 / 3.0);
+	    setGrade(getGrade() + gr);
+	    return ans;
+	}
     }
 
 }

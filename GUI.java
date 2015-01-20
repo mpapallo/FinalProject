@@ -22,12 +22,14 @@ public class GUI extends JFrame implements ActionListener{
     private boolean bhelp = false;
     private int inClass = 2;
     private int afSchool = 3;
+    private int inFinal = 3;
     private String s = "";
     
     Font font = new Font("Optima", Font.PLAIN, 16);
     Font eventFont = new Font("Optima", Font.PLAIN, 16);
     Font statsFont = new Font("Optima", Font.PLAIN, 14);
     Font buttonFont = new Font("Optima", Font.BOLD, 14);
+    Font resultFont = new Font("Optima", Font.BOLD, 36);
     /////////////////////////
     public GUI(){
 	player = new Freshman();
@@ -223,14 +225,18 @@ public class GUI extends JFrame implements ActionListener{
 	dayi += 1;
 	updateDay(days[dayi]);
 	autoUpdate();
-	player.homework = false;
-	//if (dayi == 4){ FINALS DAY FUNCTION } break;
-	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
+	player.setHomework(false);
+	String z = "";
+	if (dayi == 4){
+	    z = "<html>The dreaded day has finally arrived: Finals day.<br><br> You have three finals to take today, which will count for 25% of your overall grade. No pressure.<br><br></html>";
+	} else {
+	    z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
+	}
 	story.setText(z);
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
-	if (r.nextInt(100) < chance){
+	if (r.nextInt(100) < chance && dayi != 4){
 	    int x = r.nextInt(4);
 	    switch (x) {
 	    case 0: q.setText(player.eatenHomework());
@@ -250,7 +256,11 @@ public class GUI extends JFrame implements ActionListener{
 	    }
 	}else{
 	    player.time += 2;
-	    q.setText("<html>Thankfully, the morning is uneventful and you get to school in one piece.</html>");
+	    if (dayi != 4){
+		q.setText("<html>Thankfully, the morning is uneventful and you get to school in one piece.</html>");
+	    } else {
+		q.setText("<html>You arrive at school on time and in one piece (although a part of you wishes you had 'accidentally' forgotten to set your alarm).</html>");
+	    }
 	    displayResponse();  
 	}
     }
@@ -395,14 +405,14 @@ public class GUI extends JFrame implements ActionListener{
 	if (player.time == 15){
 	    story.setText("<html>School's out for the day! Now you have some time to do whatever you want<br></html>");
 	}else{
-	    story.setText("<html>It sure is nice to be home<br></html>");
+	    story.setText("<html>It sure is nice to be home.<br></html>");
 	}
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
 	chance -= 20;
 
-	if ((r.nextInt(100) < chance) && (player.helpedFriend == false)) {
+	if ((r.nextInt(100) < chance) && (player.time == 3)) {
 	    JLabel l = new JLabel("<html>Your friend asks you to help them rehearse for SING!. Of course, this will reduce your precious free time. What do you do?<br></html>");
 	    l.setFont(eventFont);
 	    interact.add(l);
@@ -471,6 +481,152 @@ public class GUI extends JFrame implements ActionListener{
 	b.setFont(buttonFont);
     }
     
+    ///// Friday, a.k.a. Finals Day /////
+    public void finalsDay(){
+	reset();
+	autoUpdate();
+
+	String finalNum = "";
+	if (player.time == 9) {
+	    finalNum = "first";
+	} else if (player.time == 11) {
+	    finalNum = "second";
+	} else {
+	    finalNum = "last";
+	}
+
+	JLabel l = new JLabel("<html>It's time for your " + finalNum + " final. All of your hard work (or not so hard work) comes down to this. What do you want to do?");
+	l.setFont(eventFont);
+	interact.add(l);
+	finalsDayResponse();
+       
+    }
+
+    public void finalsDayResponse() {
+	JRadioButton skip = new JRadioButton("skip the final exam");
+	skip.setActionCommand("skip");
+	skip.addActionListener(this);
+	JRadioButton cheat = new JRadioButton("cheat off of the kid next to you");
+	cheat.setActionCommand("cheat");
+	cheat.addActionListener(this);
+       	JRadioButton sleep = new JRadioButton("sleep through the exam");
+	sleep.setActionCommand("sleepThrough");
+	sleep.addActionListener(this);
+	JRadioButton take = new JRadioButton("actually take the final exam");
+	take.setActionCommand("takeIt");
+	take.addActionListener(this);
+	ButtonGroup finalsDayButtons = new ButtonGroup();
+	finalsDayButtons.add(skip);
+	finalsDayButtons.add(cheat);
+	finalsDayButtons.add(sleep);
+	finalsDayButtons.add(take);
+	interact.add(skip);
+	interact.add(cheat);
+	interact.add(sleep);
+	interact.add(take);
+	JButton b = new JButton("Submit");
+	b.setActionCommand("finalsDayResponse");
+	b.addActionListener(this);
+	interact.add(b);
+	
+	skip.setFont(eventFont);
+	cheat.setFont(eventFont);
+	sleep.setFont(eventFont);
+	take.setFont(eventFont);
+	b.setFont(buttonFont);
+    }
+
+    /////////////////////////
+    ////// conclusion ///////
+    /////////////////////////
+    public void preConclusion(){
+	reset();
+	autoUpdate();
+      
+	story.setText("<html>You've survived finals week! It's been a tough few days, but (hopefully) it'll all pay off when you see your final grades.</html>");
+	interact.add(story);
+	
+	JButton result = new JButton("See your results");
+	result.setActionCommand("result");
+	result.addActionListener(this);
+	interact.add(result);
+
+	result.setFont(buttonFont);
+	result.setHorizontalAlignment(JLabel.CENTER);
+    }
+
+    public void conclusion() {
+	reset();
+	autoUpdate();
+	JLabel l = new JLabel();
+	JLabel z = new JLabel();
+	JLabel e = new JLabel();
+
+	if (player.getHomework() == true){
+	    player.setGrade(player.getGrade() + r.nextInt(10));
+	}
+	double g = player.getGrade();
+
+	if (g >= 100) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
+	    l = new JLabel("<html>A+</html>");
+	    e = new JLabel("<html>Congratulations! You truly are a star student! With these grades, you're a shoo-in for Harvard!</html>");
+	} else if (g >= 95) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
+	    l = new JLabel("<html>A</html>");
+	    e = new JLabel("<html>Congratulations! You truly are a star student! All that studying paid off!</html>");
+	} else if (g >= 92) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
+	    l = new JLabel("<html>A-</html>");
+	    e = new JLabel("<html>Congratulations! You're a great student! All that studying paid off!</html>");
+	} else if (g >= 88) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
+	    l = new JLabel("<html>B+</html>");
+	    e = new JLabel("<html>Nice job! While you may not be a 'top' student, you're still pretty darn good!</html>");
+	} else if (g >= 85) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
+	    l = new JLabel("<html>B</html>");
+	    e = new JLabel("<html>Congratulations! You're strictly average! You're in the middle of the pack: not the top or the bottom, and that's good enough for you!</html>");
+	} else if (g >= 82) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
+	    l = new JLabel("<html>B-</html>");
+	    e = new JLabel("<html>Nice job! You're strictly average! You're in the middle of the pack, and that's good enough for you!<br><br>As Joseph Heller once said, 'Some people are born mediocre, some people achieve mediocrity, and some people have mediocrity thrust upon them.' You are all of the above!</html>");
+	} else if (g >= 78) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
+	    l = new JLabel("<html>C+</html>");
+	    e = new JLabel("<html>Nice! You're about average, and while that may not please your parents, it's good enough for you!<br><br>As Joseph Heller once said, 'Some people are born mediocre, some people achieve mediocrity, and some people have mediocrity thrust upon them.' You are all of the above!</html>");
+	} else if (g >= 75) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
+	    l = new JLabel("<html>C</html>");
+	    e = new JLabel("<html>Congratulations! You're a slightly below average, and while that may not please your parents, it's good enough for you!</html>");
+	} else if (g >= 70) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
+	    l = new JLabel("<html>C-</html>");
+	    e = new JLabel("<html>Mediocrity isn't quite your thing, and not in a good way. Hey, at least you passed!</html>");
+	} else if (g >= 65) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
+	    l = new JLabel("<html>D</html>");
+	    e = new JLabel("<html>Hey, you may be well below average in your grades, but you're above average in...well...oh, who are we kidding? At least you didn't fail!</html>");
+	} else {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
+	    l = new JLabel("<html>F</html>");
+	    e = new JLabel("<html>Well...we're all bad at something.  Maybe you'll do better when you repeat these classes next year?</html>");
+	}
+	
+	z.setFont(eventFont);
+	l.setFont(resultFont);
+	e.setFont(eventFont);
+
+	z.setHorizontalAlignment(JLabel.CENTER);
+	l.setHorizontalAlignment(JLabel.CENTER);
+	l.setHorizontalAlignment(JLabel.CENTER);
+
+	interact.add(z);
+	interact.add(l);
+	interact.add(e);
+
+    }
+
     /////////////////////////
     public void displayResponse(){
 	player.checkStats();
@@ -502,7 +658,7 @@ public class GUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	repaint();
 	String action = e.getActionCommand();
-	/////////////////////////
+	////choose difficulty////
 	if (action.equals("Freshman")){
 	    player = new Freshman();
 	}else if (action.equals("Sophomore")){
@@ -512,19 +668,18 @@ public class GUI extends JFrame implements ActionListener{
 	}else if (action.equals("Senior")){
 	    player = new Senior();
 	}
-	/////////////////////////
 	if (action.equals("next")){
 	    initializePlayerAndStats(llamo.getText());
 	    startGame();	    
 	}
-	/////////////////////////
+	///////start game////////
 	if (action.equals("begin")){
 	    reset();
 	    updateDay(days[dayi]);
 	    //y = inSchool("first");
 	    inSchool();
 	}
-	/////////////////////////
+	////////sick day/////////
 	if (action.equals("stayHome")){
 	    bstayHome = true;
 	}else if (action.equals("goToSchool")){
@@ -540,7 +695,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	/////////pop quiz////////
 	if (action.equals("cheat")){
 	    bcheat = true;
 	}else if (action.equals("takeQuiz")){
@@ -556,7 +711,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	////broken escalator/////
 	if (action.equals("climb")){
 	    bclimb = true;
 	}else if(action.equals("noClimb")){
@@ -572,7 +727,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	//////regular class//////
 	if (action.equals("nap")){
 	    inClass = 0;
 	}else if (action.equals("passNotes")){
@@ -592,7 +747,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	///normal after school///
 	if (action.equals("studyNotes")){
 	    afSchool = 0;
 	} else if (action.equals("doHomework")){
@@ -616,7 +771,7 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	/////////////////////////
+	//////help a friend//////
 	if (action.equals("helpFriend")){
 	    bhelp = true;
 	} else if (action.equals("dontHelp")){
@@ -632,14 +787,50 @@ public class GUI extends JFrame implements ActionListener{
 	    reset();
 	    displayResponse();
 	}
-	if (action.equals("cont")){
-	    if (player.time == 7){
-		morning();
-	    }else if (player.time >= 9 && player.time <= 13){
-		inSchool();
-	    }else if (player.time >= 15 || player.time <= 7){
-		afterSchool();
+	///////finals day///////
+	if (action.equals("skip")){
+	    inFinal = 0;
+	} else if (action.equals("cheat")){
+	    inFinal = 1;
+	} else if (action.equals("sleepThrough")) {
+	    inFinal = 2;
+	} else if (action.equals("takeIt")){
+	    inFinal = 3;
+	}
+	if (action.equals("finalsDayResponse")){
+	    if (inFinal == 0){
+		s = "skip";
+	    } else if (inFinal == 1){
+		s = "cheat";
+	    } else if (inFinal == 2){
+		s = "sleep";
+	    } else {
+		s = "";
 	    }
+	    q.setText(player.doFinal(s));
+	    reset();
+	    displayResponse();
+	}
+	////////continue////////
+	if (action.equals("cont")){
+	    if (dayi != 4){
+		if (player.time == 7){
+		    morning();
+		}else if (player.time >= 9 && player.time <= 13){
+		    inSchool();
+		}else if (player.time >= 15 || player.time <= 7){
+		    afterSchool();
+		}
+	    } else if (dayi == 4 && player.time < 15) {
+		finalsDay();
+	    } else if (dayi == 4 && player.time >= 15) {
+		preConclusion();
+	    }
+	}
+
+	////////results/////////
+	if (action.equals("result")){
+	    conclusion();
 	}
     }
     
