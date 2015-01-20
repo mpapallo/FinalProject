@@ -144,6 +144,6 @@ Extra stuff
 * array with teacher names, can choose a random one to incorporate
 * array with classes, can choose a random one to incorporate
 * can have different text for same events, randomly chosen
-* add more text specific to difficulty level (ex. seniors, something about college recs) --> **make the different leves more different in general**
+* add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different levels more different in general
 * prettify more --> maybe add pictures, graphics, etc? make energy, etc. bars colored? add delay?
 
