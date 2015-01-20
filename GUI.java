@@ -538,17 +538,56 @@ public class GUI extends JFrame implements ActionListener{
     /////////////////////////
     ////// conclusion ///////
     /////////////////////////
-    public void conclusion(){
+    public void preConclusion(){
 	reset();
 	autoUpdate();
+      
+	story.setText("<html>You've survived finals week! It's been a tough few days, but (hopefully) it'll all pay off when you see your final grades.</html>");
+	interact.add(story);
 	
+	JButton result = new JButton("See your results");
+	result.setActionCommand("result");
+	result.addActionListener(this);
+
+	result.setFont(buttonFont);
+	result.setHorizontalAlignment(JLabel.CENTER);
+    }
+
+    public void conclusion() {
+	reset();
+	autoUpdate();
+	JLabel l;
+
 	if (player.getHomework() == true){
 	    player.setGrade(player.getGrade() + r.nextInt(10));
 	}
+	int g = player.getGrade();
+	story.setText("<html>After all your blood, sweat, and tears, you have earned...</html>";
 
-	
+	if (g >= 100) {
+	    l = new JLabel("<html>A+</html>");
+	} else if (g >= 95) {
+	    l = new JLabel("<html>A</html>");
+	} else if (g >= 92) {
+	    l = new JLabel("<html>A-</html>");
+	} else if (g >= 88) {
+	    l = new JLabel("<html>B+</html>");
+	} else if (g >= 85) {
+	    l = new JLabel("<html>B</html>");
+	} else if (g >= 82) {
+	    l = new JLabel("<html>B-</html>");
+	} else if (g >= 78) {
+	    l = new JLabel("<html>C+</html>");
+	} else if (g >= 75) {
+	    l = new JLabel("<html>C</html>");
+	} else if (g >= 70) {
+	    l = new JLabel("<html>C-</html>");
+	} else if (g >= 65) {
+	    l = new JLabel("<html>D</html>");
+	} else {
+	    l = new JLabel("<html>F</html>");
+	}
 
-	
     }
 
     /////////////////////////
@@ -747,7 +786,14 @@ public class GUI extends JFrame implements ActionListener{
 		}
 	    } else if (dayi == 4 && player.time < 15) {
 		finalsDay();
+	    } else if (dayi == 4 && player.time >= 15) {
+		preconclusion();
 	    }
+	}
+
+	////////results/////////
+	if (action.equals("result")){
+	    conclusion();
 	}
     }
     
