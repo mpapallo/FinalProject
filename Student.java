@@ -143,6 +143,7 @@ abstract class Student{
 	    return "<html>The sacrifices you make for your education are truly heroic. <br>On the other hand, none of your classmates will sit within 10 feet of you.</html>";
 	}
     }
+
     public String coffeeSpill(){
 	setKnow(getKnow() - 20);
 	time += 2;
