@@ -134,7 +134,7 @@ abstract class Student{
     public String sickDay(String ans){
 	if (ans == "stay home"){
 	    time+=24;
-	    setGrade(getGrade() - 20);
+	    setGrade(getGrade() - 10);
 	    setEnergy(100);
 	    setStress(getStress() - 10);
 	    return "<html>Instead of going to school, you lay in bed and marathoned all 6 Lord of the Rings movies. <br>24 hours well spent.</html>";
@@ -158,7 +158,7 @@ abstract class Student{
     
      
     public String subwayDelay(){
-	setGrade(getGrade() - 7);
+	setGrade(getGrade() - 5);
 	time += 4;
 	return "<html>A dead rat on the subway tracks caused a major delay and you end up missing your first class.<br> Thanks, MTA...</html>";	
     }
@@ -179,7 +179,7 @@ abstract class Student{
 	    setEnergy(getEnergy() - 15);
 	    return "<html>It's a physical struggle that makes you feel like one of those guys who just free-climbed El Capitan, but you bear the pain for the sake of learning.<br> How inspiring.</html>";
 	} else {
-	    setGrade(getGrade() - 15);
+	    setGrade(getGrade() - 8);
 	    setStress(getStress() - 10);
 	    return "<html>'Sweating' is not in your lexicon... <br>The stairs win this round, you're not even going to try getting to class.</html>";
 	}
@@ -214,21 +214,21 @@ abstract class Student{
 	    setGrade(getGrade() * 0.75);
 	    return "Aw, shucks! You were caught. Your teacher gives you a zero on the final and you get a lecture about academic dishonesty. Again.";
 	}else {
-	    setGrade(getGrade() - 25);
-	    setStress(getStress() + 15);
-	    return "D'oh! You were caught! <br>Your teacher gave you a zero on the quiz and lowered your grade by 25 points.";
+	    setGrade(getGrade() - 15);
+	    setStress(getStress() + 10);
+	    return "D'oh! You were caught! <br>Your teacher gave you a zero on the quiz and lowered your grade by 10 points.";
 	}
     }
 
     public String goToClass(String response){
 	time += 2;
 	if (response == "sleep"){
-	    setGrade(getGrade() - 15);
+	    setGrade(getGrade() - 8);
 	    setEnergy(getEnergy() + 20);
 	    setStress(getStress() - 5);
 	    return "<html>You slept like a baby for two hours and learned nothing.<br>Way to go, Sleeping Beauty.</html>";
 	} else if (response == "pass notes"){
-	    setGrade(getGrade() - 10);
+	    setGrade(getGrade() - 7);
 	    setStress(getStress() - 10);
 	    setEnergy(getEnergy() - 5);
 	    return "<html>You passed notes all period. You didn't learn anything useful, but at least you're up to date with the latest season of Keeping Up With the Kardashians.</html>";

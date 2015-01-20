@@ -44,7 +44,7 @@ public class GUI extends JFrame implements ActionListener{
 	days[4] = "Friday";
 
 	this.setTitle("Stuyvesant Finals Week Simulator");
-	this.setSize(800, 400);
+   	this.setSize(800, 400);
 	this.setLocation(100, 100);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	window = this.getContentPane();
@@ -303,7 +303,7 @@ public class GUI extends JFrame implements ActionListener{
 	int chance = player.calculateChanceNeg();
 
 	if (r.nextInt(100) < chance){
-	    int e = r.nextInt(2);
+	    int e = r.nextInt(3);
 	    switch (e) {
 	    case 0: JLabel l = new JLabel("<html>Your teacher decides to spring a pop quiz on your class!<br></html>");
 		l.setFont(eventFont);
@@ -432,6 +432,7 @@ public class GUI extends JFrame implements ActionListener{
 	JRadioButton homework  = new JRadioButton("do your homework");
 	homework.setActionCommand("doHomework");
 	homework.addActionListener(this);
+	
 	JRadioButton facebook = new JRadioButton("go on Facebook");
 	facebook.setActionCommand("onFacebook");
 	facebook.addActionListener(this);
@@ -444,7 +445,9 @@ public class GUI extends JFrame implements ActionListener{
 	afterSchoolGroup.add(facebook);
 	afterSchoolGroup.add(sleep);
 	interact.add(study);
-	interact.add(homework);
+	if (player.getHomework() == false){
+	    interact.add(homework);
+	}
 	interact.add(facebook);
 	interact.add(sleep);
 	JButton b = new JButton("Submit");
@@ -610,20 +613,34 @@ public class GUI extends JFrame implements ActionListener{
 	} else {
 	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
 	    l = new JLabel("<html>F</html>");
-	    e = new JLabel("<html>Well...we're all bad at something.  Maybe you'll do better when you repeat these classes next year?</html>");
+	    e = new JLabel("<html>Well...we're all bad at something. Maybe you'll do better when you repeat these classes next year?</html>");
 	}
+	
+	JButton again = new JButton("Try Again");
+	again.setActionCommand("playAgain");
+	again.addActionListener(this);
+
+	JButton quit = new JButton("Quit");
+	quit.setActionCommand("quit");
+	quit.addActionListener(this);
 	
 	z.setFont(eventFont);
 	l.setFont(resultFont);
 	e.setFont(eventFont);
+	again.setFont(buttonFont);
+	quit.setFont(buttonFont);
 
 	z.setHorizontalAlignment(JLabel.CENTER);
 	l.setHorizontalAlignment(JLabel.CENTER);
-	l.setHorizontalAlignment(JLabel.CENTER);
+	e.setHorizontalAlignment(JLabel.CENTER);
+	again.setHorizontalAlignment(JButton.CENTER);
+	quit.setHorizontalAlignment(JButton.CENTER);
 
 	interact.add(z);
 	interact.add(l);
 	interact.add(e);
+	interact.add(again);
+	interact.add(quit);
 
     }
 
@@ -831,6 +848,15 @@ public class GUI extends JFrame implements ActionListener{
 	////////results/////////
 	if (action.equals("result")){
 	    conclusion();
+	}
+
+	if (action.equals("playAgain")) {
+	    reset();
+	    setupInteractPanel();
+	}
+
+	if (action.equals("quit")) {
+	    System.exit(0);
 	}
     }
     
