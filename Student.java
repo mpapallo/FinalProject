@@ -17,6 +17,7 @@ abstract class Student{
 	setEnergy(e);
 	setStress(s);
 	setKnow(k);
+	setGrade(80);
 	time = 9;
     }
     public Student(String n){
@@ -151,7 +152,7 @@ abstract class Student{
     public String eatenHomework(){
 	setGrade(getGrade() - 5);
 	time += 2;
-	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that pirahna.</html>";
+	return "<html>Oh snap! <br>Just as you're about to run out the door, you realize that your piranha ate your homework last night! Your homework grade is going down the toilet... along with that piranha.</html>";
     }
     
      

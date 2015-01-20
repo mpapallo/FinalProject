@@ -29,6 +29,7 @@ public class GUI extends JFrame implements ActionListener{
     Font eventFont = new Font("Optima", Font.PLAIN, 16);
     Font statsFont = new Font("Optima", Font.PLAIN, 14);
     Font buttonFont = new Font("Optima", Font.BOLD, 14);
+    Font resultFont = new Font("Optima", Font.BOLD, 36);
     /////////////////////////
     public GUI(){
 	player = new Freshman();
@@ -548,6 +549,7 @@ public class GUI extends JFrame implements ActionListener{
 	JButton result = new JButton("See your results");
 	result.setActionCommand("result");
 	result.addActionListener(this);
+	interact.add(result);
 
 	result.setFont(buttonFont);
 	result.setHorizontalAlignment(JLabel.CENTER);
@@ -556,37 +558,72 @@ public class GUI extends JFrame implements ActionListener{
     public void conclusion() {
 	reset();
 	autoUpdate();
-	JLabel l;
+	JLabel l = new JLabel();
+	JLabel z = new JLabel();
+	JLabel e = new JLabel();
 
 	if (player.getHomework() == true){
 	    player.setGrade(player.getGrade() + r.nextInt(10));
 	}
-	int g = player.getGrade();
-	story.setText("<html>After all your blood, sweat, and tears, you have earned...</html>";
+	double g = player.getGrade();
 
 	if (g >= 100) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
 	    l = new JLabel("<html>A+</html>");
+	    e = new JLabel("<html>Congratulations! You truly are a star student! With these grades, you're a shoo-in for Harvard!</html>");
 	} else if (g >= 95) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
 	    l = new JLabel("<html>A</html>");
+	    e = new JLabel("<html>Congratulations! You truly are a star student! All that studying paid off!</html>");
 	} else if (g >= 92) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
 	    l = new JLabel("<html>A-</html>");
+	    e = new JLabel("<html>Congratulations! You're a great student! All that studying paid off!</html>");
 	} else if (g >= 88) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>B+</html>");
+	    e = new JLabel("<html>Nice job! While you may not be a 'top' student, you're still pretty darn good!</html>");
 	} else if (g >= 85) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>B</html>");
+	    e = new JLabel("<html>Congratulations! You're strictly average! You're in the middle of the pack: not the top or the bottom, and that's good enough for you!</html>");
 	} else if (g >= 82) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>B-</html>");
+	    e = new JLabel("<html>Nice job! You're strictly average! You're in the middle of the pack, and that's good enough for you!<br><br>As Joseph Heller once said, 'Some people are born mediocre, some people achieve mediocrity, and some people have mediocrity thrust upon them.' You are all of the above!</html>");
 	} else if (g >= 78) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>C+</html>");
+	    e = new JLabel("<html>Nice! You're about average, and while that may not please your parents, it's good enough for you!<br><br>As Joseph Heller once said, 'Some people are born mediocre, some people achieve mediocrity, and some people have mediocrity thrust upon them.' You are all of the above!</html>");
 	} else if (g >= 75) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>C</html>");
+	    e = new JLabel("<html>Congratulations! You're a slightly below average, and while that may not please your parents, it's good enough for you!</html>");
 	} else if (g >= 70) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>C-</html>");
+	    e = new JLabel("<html>Mediocrity isn't quite your thing, and not in a good way. Hey, at least you passed!</html>");
 	} else if (g >= 65) {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>D</html>");
+	    e = new JLabel("<html>Hey, you may be well below average in your grades, but you're above average in...well...oh, who are we kidding? At least you didn't fail!</html>");
 	} else {
+	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned an...</html>");
 	    l = new JLabel("<html>F</html>");
+	    e = new JLabel("<html>Well...we're all bad at something.  Maybe you'll do better when you repeat these classes next year?</html>");
 	}
+	
+	z.setFont(eventFont);
+	l.setFont(resultFont);
+	e.setFont(eventFont);
+
+	z.setHorizontalAlignment(JLabel.CENTER);
+	l.setHorizontalAlignment(JLabel.CENTER);
+	l.setHorizontalAlignment(JLabel.CENTER);
+
+	interact.add(z);
+	interact.add(l);
+	interact.add(e);
 
     }
 
@@ -787,7 +824,7 @@ public class GUI extends JFrame implements ActionListener{
 	    } else if (dayi == 4 && player.time < 15) {
 		finalsDay();
 	    } else if (dayi == 4 && player.time >= 15) {
-		preconclusion();
+		preConclusion();
 	    }
 	}
 
