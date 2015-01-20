@@ -107,7 +107,7 @@ created Student class and subclasses
 * made time am and pm
 
 <h4>
-1/18/19
+1/18/15
 </h4>
 * finished after school
 * made three class periods instead of two and fixed going from one period to another (was infinitely going to "last class of the day")
@@ -118,6 +118,17 @@ created Student class and subclasses
 * FIX: after school: after time is 7am (when you sleep or when you get to that time by doing things), does one more cycle of after school --> maybe it isn't returning "morn" until time has already been 7? maybe time isn't updating? //fixed!
 * fixed the above two problems by cycling through the days based on the time, not a returned string
 
+<h4>
+1/19/15
+</h4>
+* added finals day function
+* added conclusion
+* calculated final grade
+* added quit and try again buttons 
+* FIX: try again button doesn't work
+* fixed final grade scoring (was subtracting too much if you doze off, cut class, etc)
+* fixed other minor bugs
+
 <h3>
 To do list
 </h3>
@@ -125,7 +136,7 @@ To do list
 <h4>
 Most important
 </h4>
-* friday aka finals day function (will be called when dayi = 4 after morning)
+* fix try again button
 
 <h4>
 Extra stuff
@@ -133,6 +144,6 @@ Extra stuff
 * array with teacher names, can choose a random one to incorporate
 * array with classes, can choose a random one to incorporate
 * can have different text for same events, randomly chosen
-* add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different leves more different in general
+* add more text specific to difficulty level (ex. seniors, something about college recs) --> **make the different leves more different in general**
 * prettify more --> maybe add pictures, graphics, etc? make energy, etc. bars colored? add delay?
 
