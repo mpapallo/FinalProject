@@ -225,13 +225,17 @@ public class GUI extends JFrame implements ActionListener{
 	updateDay(days[dayi]);
 	autoUpdate();
 	player.setHomework(false);
-	//if (dayi == 4){ FINALS DAY FUNCTION } break;
-	String z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
+	String z = "";
+	if (dayi == 4){
+	    z = "<html>The dreaded day has finally arrived: Finals day.<br><br> You have three finals to take today, which will count for 25% of your overall grade. No pressure.<br><br></html>";
+	} else {
+	    z = "<html>It's a fresh, new day! <br>As usual, you wake up and instantly regret doing so. Time to get ready for school...<br></html>";
+	}
 	story.setText(z);
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
-	if (r.nextInt(100) < chance){
+	if (r.nextInt(100) < chance && dayi != 4){
 	    int x = r.nextInt(4);
 	    switch (x) {
 	    case 0: q.setText(player.eatenHomework());
@@ -251,7 +255,11 @@ public class GUI extends JFrame implements ActionListener{
 	    }
 	}else{
 	    player.time += 2;
-	    q.setText("<html>Thankfully, the morning is uneventful and you get to school in one piece.</html>");
+	    if (dayi != 4){
+		q.setText("<html>Thankfully, the morning is uneventful and you get to school in one piece.</html>");
+	    } else {
+		q.setText("<html>You arrive at school on time and in one piece (although a part of you wishes you had 'accidentally' forgotten to set your alarm).</html>");
+	    }
 	    displayResponse();  
 	}
     }
@@ -486,14 +494,11 @@ public class GUI extends JFrame implements ActionListener{
 	    finalNum = "last";
 	}
 
-	if (player.time == 7) {
-	    story.setText("<html>The dreaded day has finally arrived: Finals day.<br><br> You have three finals to take today, which will count for 25% of your overall grade. No pressure.</html>");
-	} else {
-	    JLabel l = new JLabel("<html>It's time for your " + finalNum + " final. All of your hard work (or not so hard work) comes down to this. What do you want to do?");
-	    l.setFont(eventFont);
-	    interact.add(l);
-	    finalsDayResponse();
-	}
+	JLabel l = new JLabel("<html>It's time for your " + finalNum + " final. All of your hard work (or not so hard work) comes down to this. What do you want to do?");
+	l.setFont(eventFont);
+	interact.add(l);
+	finalsDayResponse();
+       
     }
 
     public void finalsDayResponse() {
@@ -509,6 +514,15 @@ public class GUI extends JFrame implements ActionListener{
 	JRadioButton take = new JRadioButton("actually take the final exam");
 	take.setActionCommand("takeIt");
 	take.addActionListener(this);
+	ButtonGroup finalsDayButtons = new ButtonGroup();
+	finalsDayButtons.add(skip);
+	finalsDayButtons.add(cheat);
+	finalsDayButtons.add(sleep);
+	finalsDayButtons.add(take);
+	interact.add(skip);
+	interact.add(cheat);
+	interact.add(sleep);
+	interact.add(take);
 	JButton b = new JButton("Submit");
 	b.setActionCommand("finalsDayResponse");
 	b.addActionListener(this);
@@ -519,6 +533,22 @@ public class GUI extends JFrame implements ActionListener{
 	sleep.setFont(eventFont);
 	take.setFont(eventFont);
 	b.setFont(buttonFont);
+    }
+
+    /////////////////////////
+    ////// conclusion ///////
+    /////////////////////////
+    public void conclusion(){
+	reset();
+	autoUpdate();
+	
+	if (player.getHomework() == true){
+	    player.setGrade(player.getGrade() + r.nextInt(10));
+	}
+
+	
+
+	
     }
 
     /////////////////////////
@@ -706,18 +736,18 @@ public class GUI extends JFrame implements ActionListener{
 	    displayResponse();
 	}
 	////////continue////////
-	if (action.equals("cont") && dayi != 4){
-	    if (player.time == 7){
-		morning();
-	    }else if (player.time >= 9 && player.time <= 13){
-		inSchool();
-	    }else if (player.time >= 15 || player.time <= 7){
-		afterSchool();
+	if (action.equals("cont")){
+	    if (dayi != 4){
+		if (player.time == 7){
+		    morning();
+		}else if (player.time >= 9 && player.time <= 13){
+		    inSchool();
+		}else if (player.time >= 15 || player.time <= 7){
+		    afterSchool();
+		}
+	    } else if (dayi == 4 && player.time < 15) {
+		finalsDay();
 	    }
-	}
-	///continue to finals///
-	if (action.equals("cont") && dayi == 4 && player.time < 3){
-	    finalsDay();
 	}
     }
     

@@ -190,7 +190,7 @@ abstract class Student{
 	    return "<html>You decide to cheat...<br>" + cheat(false) + "</html>";
 	} else {
 	    int score = calculateChancePos();
-	    score += 25;
+	    score += r.nextInt(25);
 	    setGrade(getGrade() + score / 10);
 	    setStress(getStress() + 5);
 	    setEnergy(getEnergy() - 5);
@@ -303,10 +303,10 @@ abstract class Student{
 	    setEnergy(getEnergy() + 20);
 	    return "<html>You slept through the final exam. At least you got some z's before you get your f. </html>";
 	} else {
-	    double g = calculateChancePos() + r.nextInt(15); //extra (up to) 15 pts b/c scoring can be a bit low...
-	    g = g * (0.25 / 3.0);
-	    setGrade(getGrade() + g);
-	    String ans = "<html>You took your final exam. Three #2 pencils and two hours later, you score a " + calculateChancePos() + ".</html>";
+	    double g = calculateChancePos() + r.nextInt(25); //extra (up to) 25 pts b/c scoring can be a bit low...
+	    String ans = "<html>You took your final exam. Three #2 pencils and two hours later, you score a " + g + ".</html>";
+	    double gr = g * (0.25 / 3.0);
+	    setGrade(getGrade() + gr);
 	    return ans;
 	}
     }
