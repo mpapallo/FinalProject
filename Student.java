@@ -238,11 +238,7 @@ abstract class Student{
 	    setGrade(getGrade() - 5);
 	    setStress(getStress() - 10);
 	    setEnergy(getEnergy() - 5);
-<<<<<<< HEAD
-	    return "<html>You passed notes all period.<br><br>You didn't learn anything useful, but at least you're up to date with the latest season of <i>Keeping Up With the Kardashians.</i><br><br><br> </html>";
-=======
 	    return Responses.passNotes();
->>>>>>> FETCH_HEAD
 	} else {
 	    setEnergy(getEnergy() - 10);
 	    setKnow(getKnow() + 15);
