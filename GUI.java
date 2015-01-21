@@ -26,12 +26,12 @@ public class GUI extends JFrame implements ActionListener{
     private String s = "";
     private JLabel extraSpace = new JLabel("<html><br><br><br></html>"); 
     private JLabel tPic = new JLabel();
-    
+    private JLabel dayNight = new JLabel();
     Font font = new Font("Optima", Font.PLAIN, 20);
     Font eventFont = new Font("Optima", Font.PLAIN, 16);
     Font statsFont = new Font("Optima", Font.PLAIN, 14);
     Font buttonFont = new Font("Optima", Font.BOLD, 14);
-    Font resultFont = new Font("Optima", Font.BOLD, 36);
+    Font resultFont = new Font("Optima", Font.BOLD, 50);
     /////////////////////////
     public GUI(){
 	player = new Freshman();
@@ -48,7 +48,7 @@ public class GUI extends JFrame implements ActionListener{
 	stats = new JPanel();
 
 	this.setTitle("Stuyvesant Finals Week Simulator");
-   	this.setSize(800, 400);
+   	this.setSize(800, 600);
 	this.setLocation(100, 100);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	window = this.getContentPane();
@@ -88,9 +88,9 @@ public class GUI extends JFrame implements ActionListener{
 	energy = new JLabel("energy: ");
 	energy.setBorder(BorderFactory.createEmptyBorder());
 	stats.add(energy);
-	time = new JLabel("time: ");
-	time.setBorder(BorderFactory.createEmptyBorder());
-	stats.add(time);
+	//	time = new JLabel("time: ");
+	//	time.setBorder(BorderFactory.createEmptyBorder());
+	//stats.add(time);
 	day = new JLabel("Today is ");
 	day.setBorder(BorderFactory.createEmptyBorder());
 	stats.add(day);
@@ -98,7 +98,7 @@ public class GUI extends JFrame implements ActionListener{
 	stress.setFont(statsFont);
 	energy.setFont(statsFont);
 	day.setFont(statsFont);
-	time.setFont(statsFont);
+	//	time.setFont(statsFont);
 	knowledge.setFont(statsFont);
     }
     public void setupInteractPanel(){
@@ -170,11 +170,18 @@ public class GUI extends JFrame implements ActionListener{
     }
     public void updateTime(int t){
 	if (t <= 12){
-	    tPic = new JLabel(new ImageIcon(GUI.class.getResource("/images/" + t + ".png")));
+	    tPic.setIcon(new ImageIcon(GUI.class.getResource("/images/" + t + ".png")));
 	    tPic.setHorizontalAlignment(JLabel.CENTER);
 	} else {
-	    tPic = new JLabel(new ImageIcon(GUI.class.getResource("/images/" + (t-12) + ".png")));
+	    tPic.setIcon(new ImageIcon(GUI.class.getResource("/images/" + (t-12) + ".png")));
 	    tPic.setHorizontalAlignment(JLabel.CENTER);
+	}
+	if (t > 6 && t < 19) {
+	    dayNight.setIcon(new ImageIcon(GUI.class.getResource("/images/sun.png")));
+	    dayNight.setHorizontalAlignment(JLabel.CENTER);
+	} else {	    
+	    dayNight.setIcon(new ImageIcon(GUI.class.getResource("/images/moon.png")));
+	    dayNight.setHorizontalAlignment(JLabel.CENTER);
 	}
     }
     public void updateDay(String d){
@@ -185,7 +192,8 @@ public class GUI extends JFrame implements ActionListener{
 	updateKnowledge(player.getKnow());
 	updateEnergy(player.getEnergy());
 	updateTime(player.time);
-	updateDay(days[dayi]);
+	updateDay(days[dayi]);	
+	stats.add(dayNight);
 	stats.add(tPic);
 	window.repaint();
     }
@@ -239,6 +247,7 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
+	chance += 5;
 	if (r.nextInt(100) < chance && dayi != 4){
 	    int x = r.nextInt(4);
 	    switch (x) {
@@ -309,7 +318,6 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
-	chance -= 7;
 	if (r.nextInt(100) < chance){
 	    int e = r.nextInt(3);
 	    switch (e) {
@@ -423,7 +431,7 @@ public class GUI extends JFrame implements ActionListener{
 	interact.add(story);
 
 	int chance = player.calculateChanceNeg();
-	chance -= 10;
+	chance -= 5;
 
 	if ((r.nextInt(100) < chance) && (player.time == 3)) {
 	    JLabel l = new JLabel("<html>Your friend asks you to help them rehearse for SING!. Of course, this will reduce your precious free time. What do you do?<br><br> </html>");
