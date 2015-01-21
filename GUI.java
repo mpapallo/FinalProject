@@ -43,6 +43,8 @@ public class GUI extends JFrame implements ActionListener{
 	days[2] = "Wednesday";
 	days[3] = "Thursday";
 	days[4] = "Friday";
+	interact = new JPanel();
+	stats = new JPanel();
 
 	this.setTitle("Stuyvesant Finals Week Simulator");
    	this.setSize(800, 400);
@@ -70,7 +72,6 @@ public class GUI extends JFrame implements ActionListener{
     ///       setup       ///
     /////////////////////////
     public void setupStatsPanel(){
-	stats = new JPanel();
 	BoxLayout b = new BoxLayout(stats, BoxLayout.Y_AXIS);
 	stats.setLayout(b);
 	stats.setBorder(BorderFactory.createCompoundBorder(
@@ -100,7 +101,6 @@ public class GUI extends JFrame implements ActionListener{
 	knowledge.setFont(statsFont);
     }
     public void setupInteractPanel(){
-	interact = new JPanel();
 	BoxLayout b = new BoxLayout(interact, BoxLayout.Y_AXIS);
 	interact.setLayout(b);
 	interact.setBorder(BorderFactory.createCompoundBorder(
@@ -301,6 +301,7 @@ public class GUI extends JFrame implements ActionListener{
 	    story.setText("<html>Another period of learning. At least it means lunch is closer.<br><br></html>");
 	}else{
 	    story.setText("One eternity later, you are finally in your last class of the day!<br><br>");
+
 	}
 	story.setHorizontalAlignment(JLabel.LEFT);
 	interact.add(story);
@@ -409,6 +410,8 @@ public class GUI extends JFrame implements ActionListener{
     ///// after school /////
     public void afterSchool(){
 	reset();
+	player.checkStats();
+	player.checkTime();
 	autoUpdate();
 	if (player.time == 15){
 	    story.setText("<html>School's out for the day! Now you have some time to do whatever you want.<br></html>");
@@ -510,7 +513,8 @@ public class GUI extends JFrame implements ActionListener{
 	    finalNum = "last";
 	}
 
-	JLabel l = new JLabel("<html>It's time for your " + finalNum + " final. All of your hard work (or not so hard work) comes down to this. What do you want to do?<br><br><br><br></html>");
+	JLabel l = new JLabel("<html>It's time for your " + finalNum + " final. All of your hard work (or not so hard work) comes down to this. What do you want to do?<br><br><br></html>");
+
 	l.setFont(eventFont);
 	interact.add(l);
 	finalsDayResponse();
@@ -615,7 +619,7 @@ public class GUI extends JFrame implements ActionListener{
 	} else if (g >= 75) {
 	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>C</html>");
-	    e = new JLabel("<html>Congratulations! You're a slightly below average, and while that may not please your parents, it's good enough for you!</html>");
+	    e = new JLabel("<html>Congratulations! You're slightly below average, and while that may not please your parents, it's good enough for you!</html>");
 	} else if (g >= 70) {
 	    z = new JLabel("<html>After all your blood, sweat, and tears, you have earned a...</html>");
 	    l = new JLabel("<html>C-</html>");
@@ -868,6 +872,10 @@ public class GUI extends JFrame implements ActionListener{
 
 	if (action.equals("playAgain")) {
 	    reset();
+	    stats.removeAll();
+	    stats.revalidate();
+	    window.repaint();
+	    setupStatsPanel();
 	    setupInteractPanel();
 	}
 
