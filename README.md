@@ -129,6 +129,11 @@ created Student class and subclasses
 * fixed final grade scoring (was subtracting too much if you doze off, cut class, etc)
 * fixed other minor bugs
 
+<h4>
+1/20/15
+</h4>
+* 
+
 <h3>
 To do list
 </h3>
@@ -136,7 +141,6 @@ To do list
 <h4>
 Most important
 </h4>
-* fix try again button
 
 <h4>
 Extra stuff
