@@ -137,11 +137,7 @@ abstract class Student{
 	    setGrade(getGrade() - 5);
 	    setEnergy(100);
 	    setStress(getStress() - 10);
-<<<<<<< HEAD
 	    return Responses.homeSick();
-=======
-	    return "<html>Instead of going to school, you lie in bed and marathon all 8 <i>Harry Potter</i> movies. <br>24 hours well spent.<br><br><br></html>";
->>>>>>> origin/master
 	}else{
 	    //there should still be a chance that you're too sick to go to school
 	    return "<html>The sacrifices you make for your education are truly heroic. <br>On the other hand, none of your classmates will sit within 10 feet of you.<br><br><br></html>";
@@ -164,11 +160,7 @@ abstract class Student{
     public String subwayDelay(){
 	setGrade(getGrade() - 5);
 	time += 4;
-<<<<<<< HEAD
 	return Responses.subwayDelay();
-=======
-	return "<html>A dead rat on the subway tracks caused a major delay and you end up missing your first class.<br> Thanks, MTA...<br><br><br></html>";	
->>>>>>> origin/master
     }
 
     /////////////////////////
@@ -178,22 +170,14 @@ abstract class Student{
 	time += 2;
 	setStress(getStress() - 5);
 	setEnergy(getEnergy() - 5);
-<<<<<<< HEAD
 	return Responses.fireDrill();
-=======
-	return "<html>FIIRREEEEE (drill)!<br><br>The microwave in the chemistry department office goes up in flames, so you miss an entire period of class time.<br><br><br></html>";
->>>>>>> origin/master
     }
 
     public String brokenEscalator(String ans){
 	time += 2;
 	if (ans == "climb up the stairs"){
 	    setEnergy(getEnergy() - 15);
-<<<<<<< HEAD
 	    return Responses.brokenEscalator();
-=======
-	    return "<html>It's a physical struggle that makes you feel like one of those guys who just free-climbed El Capitan, but you bear the pain for the sake of learning.<br> How inspiring.<br><br><br></html>";
->>>>>>> origin/master
 	} else {
 	    setGrade(getGrade() - 5);
 	    setStress(getStress() - 10);
@@ -251,11 +235,7 @@ abstract class Student{
 	    setGrade(getGrade() - 5);
 	    setStress(getStress() - 10);
 	    setEnergy(getEnergy() - 5);
-<<<<<<< HEAD
 	    return Responses.passNotes();
-=======
-	    return "<html>You passed notes all period.<br><br>You didn't learn anything useful, but at least you're up to date with the latest season of <i>Keeping Up With the Kardashians.</i><br><br><br></html>";
->>>>>>> origin/master
 	} else {
 	    setEnergy(getEnergy() - 10);
 	    setKnow(getKnow() + 15);
@@ -270,36 +250,21 @@ abstract class Student{
     public String afterSchoolTime(String response){
 	if (response == "study"){
 	    study(2);
-<<<<<<< HEAD
-	    return "<html>You studied your class materials, ignoring the temptation of your electronics. Impressive.</html>";
-=======
-	    return "<html>You studied your class materials, ignoring the temptation of your Wii and iPhone. Impressive.<br><br><br></html>";
->>>>>>> origin/master
+	    return "<html>You studied your class materials, ignoring the temptation of your electronics. Impressive.<br><br><br></html>";
 	} else if (response == "homework"){
 	    doHomework();
 	    return "<html>You completed your homework. Even though your teacher won't check it, you're glad you did it. It feels nice to be a good student once in a while.<br><br><br></html>"; 
 	} else if (response == "facebook"){
 	    socialize(2);
-<<<<<<< HEAD
 	    return Responses.facebook();
-=======
-	    return "<html>You surfed Facebook for a while, Facebook-stalking random aquaintances. Dang it! You accidentally liked a post from three years ago! Unlike, unlike, unlike!<br><br><br></html>";
->>>>>>> origin/master
 	} else {
 	    if (time > 6) {
 		sleep(24-time);
 	    } else {
 		sleep(7-time);
 	    }
-
-	    return "<html>You decided to turn in for the night and hit the hay. Good for you!<br><br><br></html>";
-
 	    time = 7;
-<<<<<<< HEAD
 	    return Responses.sleep();
-=======
-
->>>>>>> origin/master
 	}
     }
    
