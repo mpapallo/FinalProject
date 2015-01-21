@@ -883,6 +883,7 @@ public class GUI extends JFrame implements ActionListener{
 	if (action.equals("playAgain")) {
 	    reset();
 	    player = new Freshman();
+	    dayi = 0;
 	    stats.removeAll();
 	    stats.revalidate();
 	    window.repaint();
