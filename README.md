@@ -134,6 +134,8 @@ created Student class and subclasses
 </h4>
 * fixed the try again button
 * added a Responses class so that the same string is not always returned when an event occurs
+* new graphics
+* tweaked chances of events occurring
 
 <h3>
 To do list
@@ -142,13 +144,12 @@ To do list
 <h4>
 Most important
 </h4>
-
+* Done!
 <h4>
 Extra stuff
 </h4>
 * array with teacher names, can choose a random one to incorporate
 * array with classes, can choose a random one to incorporate
-* can have different text for same events, randomly chosen
 * add more text specific to difficulty level (ex. seniors, something about college recs) --> make the different levels more different in general
 * prettify more --> maybe add pictures, graphics, etc? make energy, etc. bars colored? add delay?
 
