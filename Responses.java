@@ -1,19 +1,6 @@
 import java.util.*;
 public class Responses{
     private static Random r = new Random();    
-    public static ArrayList<String> teachers = new ArrayList<String>();
-
-    public static ArrayList<String> classes = new ArrayList<String>();
-
-    public static String oneOfTeachers(){
-	int i = r.nextInt(teachers.size());
-	return teachers.get(i);
-    }
-
-    public static String oneOfClasses(){
-	int i = r.nextInt(classes.size());
-	return classes.get(i);
-    }
 
     public static String homeSick(){
 	if (r.nextInt(2) == 0){
