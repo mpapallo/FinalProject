@@ -7,12 +7,12 @@ public class Responses{
 
     public static String oneOfTeachers(){
 	int i = r.nextInt(teachers.size());
-	return teachers[i];
+	return teachers.get(i);
     }
 
     public static String oneOfClasses(){
 	int i = r.nextInt(classes.size());
-	return classes[i];
+	return classes.get(i);
     }
 
     public static String homeSick(){

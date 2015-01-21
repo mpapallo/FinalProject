@@ -26,7 +26,7 @@ public class GUI extends JFrame implements ActionListener{
     private String s = "";
     private JLabel extraSpace = new JLabel("<html><br><br><br></html>");
     
-    Font font = new Font("Optima", Font.PLAIN, 20);
+    Font font = new Font("Optima", Font.PLAIN, 18);
     Font eventFont = new Font("Optima", Font.PLAIN, 16);
     Font statsFont = new Font("Optima", Font.PLAIN, 14);
     Font buttonFont = new Font("Optima", Font.BOLD, 14);
@@ -872,6 +872,7 @@ public class GUI extends JFrame implements ActionListener{
 
 	if (action.equals("playAgain")) {
 	    reset();
+	    player = new Freshman();
 	    stats.removeAll();
 	    stats.revalidate();
 	    window.repaint();
@@ -885,4 +886,3 @@ public class GUI extends JFrame implements ActionListener{
     }
     
 }
-
